@@ -1,5 +1,8 @@
 import { User } from "../models/user.model.js";
 import { v2 as cloudinary } from 'cloudinary';
+import bycryp from 'bcryptjs';
+import createTokenAndSaveCookies from "../jwt/AuthToken.js"
+
 export const register=async(req,res) => {
 
     if(!req.files || Object.keys(req.files).length === 0){
@@ -7,8 +10,8 @@ export const register=async(req,res) => {
     }
     const {photo}=req.files;
 
-    const allowedFormats = ["jpeg", "jpg", "png"];
-    if(!allowedFormats.includes(photo.minetype)){
+    const allowedFormats = ["image/jpeg", "image/jpg", "image/png"];
+    if(!allowedFormats.includes(photo.mimetype)){
         return res.status(400).json({message: "Please upload a valid image. Only JPG and PNG are allowed."});
     }
     
@@ -31,12 +34,15 @@ export const register=async(req,res) => {
     if(!cloudinaryResponse || cloudinaryResponse.error){
         console.log(cloudinaryResponse.error)
     }
-    const newUser =new  User({email,name,password,phone,education,role,photo:{
+
+    const hashedPassword = await bycryp .hash(password, 10);
+    const newUser =new  User({email,name,password: hashedPassword,phone,education,role,photo:{
         public_id: cloudinaryResponse.public_id,
         url: cloudinaryResponse.url
     }});
     await newUser.save();
     if (newUser){
-        res.status(201).json({message:"User registered successfully", newUser});
+        const token =  await createTokenAndSaveCookies(newUser._id,res)
+        res.status(201).json({message:"User registered successfully", newUser, token: token});
     }
 };
