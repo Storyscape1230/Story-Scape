@@ -4,7 +4,8 @@ import bcrypt from "bcryptjs";
 import createTokenAndSaveCookies from "../jwt/AuthToken.js";
 
 
-/*-----------------Register---------------- */
+
+/*-----------------Register----------------*/
 
 export const register = async (req, res) => {
   try {
@@ -40,14 +41,7 @@ export const register = async (req, res) => {
     }
   
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
-      email,
-      name,
-      password: hashedPassword,
-      phone,
-      education,
-      role,
-      photo: {
+    const newUser = new User({ email, name, password: hashedPassword, phone, education, role, photo: {
         public_id: cloudinaryResponse.public_id,
         url: cloudinaryResponse.url,
       },
@@ -64,7 +58,8 @@ export const register = async (req, res) => {
   }
 }
 
-/*-----------------Login---------------- */
+
+/*-----------------Login------------------*/
 
 export const login = async (req, res) => {  
   const { email, password, role } = req.body;
@@ -92,8 +87,7 @@ export const login = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-      },
-      token: token,
+      },token: token,
     });
   } catch (error) {
     console.log(error);
@@ -101,7 +95,9 @@ export const login = async (req, res) => {
   }
 };
 
-/*-----------------Logout---------------- */
+
+
+/*-----------------Logout-----------------*/
 
 export const logout = (req, res) => {
   try {
@@ -114,11 +110,15 @@ export const logout = (req, res) => {
 };
 
 
+/*-----------------My Profile----------------*/
 
 export const getMyProfile = async (req, res) => {
   const user = await req.user;
   res.status(200).json({ user });
 };
+
+
+/*---------------All Admins show--------------*/
 
 export const getAdmins = async (req, res) => {
   const admins = await User.find({ role: "admin" });
