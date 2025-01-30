@@ -3,7 +3,7 @@
 function Blogs() {
   return (
     <div>
-      
+      blog
     </div>
   )
 }
