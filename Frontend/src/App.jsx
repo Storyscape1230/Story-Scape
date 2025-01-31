@@ -1,14 +1,18 @@
-// import React from "react";
+/* eslint-disable no-unused-vars */
+import { Route , Routes, useLocation} from "react-router-dom";
+
 import Navbar from "../src/components/Navbar.jsx";
 import Home from "../src/components/Home.jsx";
 import Footer from "../src/components/Footer.jsx";
-import { Route , Routes, useLocation} from "react-router-dom";
 import Blogs from "../src/Pages/Blogs.jsx";
 import About from "../src/Pages/About.jsx";
 import Contact from "../src/Pages/Contact.jsx";
 import Login from "../src/Pages/Login.jsx";
 import Register from "../src/Pages/Register.jsx";
 import Dashboard from "../src/Pages/Dashboard.jsx";
+import Creators from "../src/Pages/Creators.jsx"
+import { useAuth } from "./context/AuthProvider.jsx";
+
 
 function App() {
 
@@ -16,7 +20,8 @@ function App() {
   const hideNavbarFooter = ["/dashboard" , "/login" , "/register"].includes(
     location.pathname
   );
-  
+  const {Blogs}=useAuth();
+  console.log(Blogs);
   return <div>
     {!hideNavbarFooter && <Navbar/>}
       <Routes>  

@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import userRoute from './routes/user.route.js';
 import blogRoute from './routes/blog.route.js';
 
+import cors from "cors";
 const app = express()
 dotenv.config();
 
@@ -17,7 +18,11 @@ const MONOGO_URL=process.env.MONOG_URL;
 //middleware
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  Credential:true,
+  method: ["GET","POST","PUT","DELET"]
+}));
 app.use(
   fileUpload({
       useTempFiles: true,
