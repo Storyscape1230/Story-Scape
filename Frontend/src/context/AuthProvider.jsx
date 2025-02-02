@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) =>{
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const { data } = await axios.get(""); // Specify valid URL here
+                const { data } = await axios.get("http://localhost:8001/api/blogs/my-blog"); // Specify valid URL here
                 console.log(data);
                 setBlogs(data);
             } catch (error) {
