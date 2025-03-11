@@ -2,7 +2,7 @@
 function Creators() {
   return (
     <div>
-      Creater
+      Creator
     </div>
   )
 }
