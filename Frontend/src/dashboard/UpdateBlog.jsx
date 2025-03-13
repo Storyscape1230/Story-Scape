@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
+import { LuImageUp } from "react-icons/lu";
 
 function UpdateBlog() {
   const navigateTo = useNavigate();
@@ -11,22 +12,32 @@ function UpdateBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
 
+  const editor = useRef(null);
+  const [about, setAbout] = useState("");
+
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
 
-    const editor = useRef(null);
-    const [about, setAbout] = useState("");
+    
 
+  // const changePhotoHandler = (e) => {
+  //   console.log(e);
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     setBlogImagePreview(reader.result);
+  //     setBlogImage(file);
+  //   };
+  // };
   const changePhotoHandler = (e) => {
-    console.log(e);
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setBlogImagePreview(reader.result);
+    if (file) {
+      setBlogImagePreview(URL.createObjectURL(file));
       setBlogImage(file);
-    };
+    }
   };
+  
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -55,12 +66,17 @@ function UpdateBlog() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("category", category);
     formData.append("about", about);
-
-    formData.append("blogImage", blogImage);
+  
+    // Ensure we send the image only if a new one is selected
+    if (blogImage instanceof File) {
+      formData.append("blogImage", blogImage);
+    }
+  
     try {
       const { data } = await axios.put(
         `http://localhost:8001/api/blogs/update/${id}`,
@@ -72,16 +88,14 @@ function UpdateBlog() {
           },
         }
       );
-      console.log(data);
       toast.success(data.message || "Blog updated successfully");
       navigateTo("/");
     } catch (error) {
-      console.log(error);
-      toast.error(
-        error.response.data.message || "Please fill the required fields"
-      );
+      console.error(error);
+      toast.error(error.response?.data?.message || "Failed to update blog");
     }
   };
+  
 
   return (
     <div>
@@ -114,24 +128,33 @@ function UpdateBlog() {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="mb-4">
-              <label className="block mb-2 font-semibold">BLOG IMAGE</label>
-              <img
-                src={
-                  blogImagePreview
-                    ? blogImagePreview
-                    : blogImage
-                    ? blogImage
-                    : "/imgPL.webp"
-                }
-                alt="Blog Main"
-                className="w-full h-48 object-cover mb-4 rounded-md"
-              />
-              <input
-                type="file"
-                className="w-full p-2 border rounded-md"
-                onChange={changePhotoHandler}
-              />
-            </div>
+  <label className="block mb-2 font-semibold">BLOG IMAGE</label>
+  <div
+    className="w-full h-48 rounded-md overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
+    onClick={() => document.getElementById("fileInput").click()} // Trigger file input on click
+  >
+    {blogImagePreview || blogImage ? (
+      <img
+        src={blogImagePreview || blogImage}
+        alt="Blog Main"
+        className="w-full h-full object-cover"
+      />
+    ) : (
+      <div className="flex flex-col items-center justify-center text-gray-400">
+        <LuImageUp className="w-12 h-12" /> {/* Icon for no image */}
+        <p className="mt-2 text-sm">Upload an image</p>
+      </div>
+    )}
+  </div>
+
+  {/* Hidden file input */}
+  <input
+    type="file"
+    id="fileInput"
+    className="hidden"
+    onChange={changePhotoHandler}
+  />
+</div>
             {/* <textarea
               rows="6"
               className="w-full p-2 mb-4 border rounded-md"

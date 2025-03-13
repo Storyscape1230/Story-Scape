@@ -48,57 +48,69 @@ function Sidebar({ setComponent }) {
 
       {/* Sidebar */}
       <div
-        className={`w-64 h-full shadow-lg fixed top-0 left-0 bg-gray-50 transition-transform duration-300 transform sm:translate-x-0 ${
-          show ? "translate-x-0" : "-translate-x-full"
-        } z-40`}
-      >
-        <div
-          className="sm:hidden absolute top-4 right-4 text-xl cursor-pointer"
-          onClick={() => setShow(!show)}
-        >
-          <BiSolidLeftArrowAlt className="text-2xl" />
-        </div>
-        <div className="text-center">
-          <img
-            className="w-24 h-24 rounded-full mx-auto m-2"
-            src={profile?.photo?.url || "https://via.placeholder.com/150"}
-            alt="Profile"
-          />
-          <p className="text-lg font-semibold mb-2">{profile?.name}</p>
-        </div>
-        <ul className="space-y-6 mx-4">
-          <button
-            onClick={() => handleComponents("My Blogs")}
-            className="w-full px-4 py-2 bg-green-500 rounded-lg hover:bg-green-700 transition duration-300"
-          >
-            MY BLOGS
-          </button>
-          <button
-            onClick={() => handleComponents("Create Blog")}
-            className="w-full px-4 py-2 bg-blue-400 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            CREATE BLOG
-          </button>
-          <button
-            onClick={() => handleComponents("My Profile")}
-            className="w-full px-4 py-2 bg-pink-500 rounded-lg hover:bg-pink-700 transition duration-300"
-          >
-            MY PROFILE
-          </button>
-          <button
-            onClick={gotoHome}
-            className="w-full px-4 py-2 bg-red-500 rounded-lg hover:bg-red-700 transition duration-300"
-          >
-            HOME
-          </button>
-          <button
-            onClick={handleLogout}
-            className="w-full px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-700 transition duration-300"
-          >
-            LOGOUT
-          </button>
-        </ul>
-      </div>
+  className={`w-64 h-screen shadow-lg fixed top-0 left-0 bg-gray-50 transition-transform duration-300 transform sm:translate-x-0 ${
+    show ? "translate-x-0" : "-translate-x-full"
+  } z-40 flex flex-col`}
+>
+  {/* Close Sidebar Button for Mobile */}
+  <div
+    className="sm:hidden absolute top-4 right-4 text-xl cursor-pointer"
+    onClick={() => setShow(!show)}
+  >
+    <BiSolidLeftArrowAlt className="text-2xl" />
+  </div>
+
+  {/* Profile Section */}
+  <div className="flex flex-col items-center justify-center m-4">
+    <div className="w-32 h-32 rounded-full overflow-hidden mb-2 flex items-center justify-center">
+      <img
+        className="w-full h-full object-cover"
+        src={profile?.photo?.url || "https://via.placeholder.com/150"}
+        alt="Profile"
+      />
+    </div>
+    <p className="text-lg font-semibold">{profile?.name}</p>
+  </div>
+
+  {/* Sidebar Buttons - Uses flex-grow to push Logout to the bottom */}
+  <div className="flex flex-col flex-grow space-y-4 px-4">
+    <button
+      onClick={() => handleComponents("My Blogs")}
+      className="w-full px-4 py-2 bg-green-500 rounded-lg hover:bg-green-700 transition duration-300"
+    >
+      MY BLOGS
+    </button>
+    <button
+      onClick={() => handleComponents("Create Blog")}
+      className="w-full px-4 py-2 bg-blue-400 rounded-lg hover:bg-blue-700 transition duration-300"
+    >
+      CREATE BLOG
+    </button>
+    <button
+      onClick={() => handleComponents("My Profile")}
+      className="w-full px-4 py-2 bg-pink-500 rounded-lg hover:bg-pink-700 transition duration-300"
+    >
+      MY PROFILE
+    </button>
+    <button
+      onClick={gotoHome}
+      className="w-full px-4 py-2 bg-red-500 rounded-lg hover:bg-red-700 transition duration-300"
+    >
+      HOME
+    </button>
+  </div>
+
+  {/* Logout Button at the Bottom */}
+  <div className="p-4">
+    <button
+      onClick={handleLogout}
+      className="w-full px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-700 transition duration-300"
+    >
+      LOGOUT
+    </button>
+  </div>
+</div>
+
     </>
   );
 }

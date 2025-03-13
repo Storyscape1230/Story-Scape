@@ -4,8 +4,9 @@ function MyProfile() {
   const { profile } = useAuth();
   console.log(profile?.user);
   return (
-    <div>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 md:ml-64"> {/* Added md:ml-64 here */}
+    <div className="min-h-screen md:ml-64">
+      <p className="text-3xl font-bold  text-xxl p-4 ">My Profile</p>
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 "> {/* Added md:ml-64 here */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full">
           <div className="relative">
             <img
@@ -15,7 +16,7 @@ function MyProfile() {
             />
             <div className="absolute inset-x-0 bottom-0 transform translate-y-1/2">
               <img
-                src={profile?.photo?.url}
+                src={profile?.photo?.url || "default-avatar.png"}
                 alt="avatar"
                 className="w-24 h-24 rounded-full mx-auto border-4 border-gray-700"
               />

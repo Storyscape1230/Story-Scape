@@ -19,7 +19,7 @@ function MyBlogs() {
       }
     };
     fetchMyBlogs();
-  }, []);
+  }, [myBlogs]);
 
   const handleDelete = async (id) => {
     await axios
@@ -37,6 +37,7 @@ function MyBlogs() {
 
   return (
     <div className="flex-1 min-h-screen p-4 md:ml-64 overflow-hidden">
+      <p className="text-3xl font-bold  text-xxl">My Blogs</p>
       <div className="container mx-auto my-12 px-4 w-full overflow-hidden">
         {/* Reduced gap and removed forced margins */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full">
@@ -46,13 +47,16 @@ function MyBlogs() {
                 className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col w-full"
                 key={element._id}
               >
-                {element?.blogImage && (
+                {element?.blogImage?.url ? (
                   <img
-                    src={element?.blogImage.url}
-                    alt="blogImg"
+                    src={element.blogImage.url}
+                    alt="blogImg" 
                     className="w-full h-40 object-cover"
                   />
+                ) : (
+                  <p className="text-gray-500">No image available</p>
                 )}
+
                 <div className="p-4 flex-1 flex flex-col">
                   <span className="text-sm text-gray-600">
                     {element.category}

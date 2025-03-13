@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import JoditEditor from "jodit-react";
+import { LuImageUp } from "react-icons/lu";
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
@@ -94,20 +95,36 @@ function CreateBlog() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-lg">Blog Image</label>
-              <div className="flex items-center justify-center">
-                <img
-                  src={blogImagePreview ? blogImagePreview : "/imgPL.webp"}
-                  alt="Blog Preview"
-                  className="w-full max-w-sm h-auto rounded-md object-cover"
-                />
-              </div>
-              <input
-                type="file"
-                onChange={changePhotoHandler}
-                className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
-              />
-            </div>
+  <label className="block text-lg">Blog Image</label>
+  <div className="flex items-center justify-center">
+    {/* Container for image preview and file input */}
+    <div
+      className="w-full max-w-sm h-48 rounded-md overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
+      onClick={() => document.getElementById("fileInput").click()} // Trigger file input on click
+    >
+      {blogImagePreview ? (
+        <img
+          src={blogImagePreview}
+          alt="Blog Preview"
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <div className="flex flex-col items-center justify-center text-gray-400">
+          <LuImageUp className="w-12 h-12" /> {/* Icon for no image */}
+          <p className="mt-2 text-sm">Upload an image</p>
+        </div>
+      )}
+    </div>
+
+    {/* Hidden file input */}
+    <input
+      type="file"
+      id="fileInput"
+      className="hidden"
+      onChange={changePhotoHandler} // Handle file selection
+    />
+  </div>
+</div>
 
             <div className="space-y-2">
               <label className="block text-lg">About</label>
@@ -124,7 +141,9 @@ function CreateBlog() {
                 value={about}
                 onChange={(newContent) => setAbout(newContent)}
                 config={{
+                  askBeforePasteHTML: false,
                   askBeforePasteFromWord: false, // Prevents Word formatting popup
+                  defaultActionOnPaste: "insert_only_text",
                 }}
                 className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
               />

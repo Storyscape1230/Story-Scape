@@ -10,7 +10,7 @@ export const createBlog = async (req, res) => {
       return res.status(400).json({ message: "Blog Image is required" });
     }
     const { blogImage } = req.files;
-    const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
+    const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
     if (!allowedFormats.includes(blogImage.mimetype)) {
       return res.status(400).json({
         message: "Invalid photo format. Only jpg and png are allowed",

@@ -1,6 +1,6 @@
 import axios from "axios";
-import  { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+// import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
 function Detail() {
@@ -16,7 +16,7 @@ function Detail() {
           {
             withCredentials: true,
             headers: {
-                "Content-Type": "application/json",
+              "Content-Type": "application/json",
             },
           }
         );
@@ -47,15 +47,21 @@ function Detail() {
             </div>
 
             <div className="flex flex-col md:flex-row">
-              {blogs?.blogImage && (
+              {blogs?.blogImage?.url ? (
                 <img
-                  src={blogs?.blogImage?.url}
+                  src={blogs.blogImage.url}
                   alt="mainblogsImg"
                   className="md:w-1/2 w-full h-[500px] mb-6 rounded-lg shadow-lg cursor-pointer border"
                 />
+              ) : (
+                <p className="text-gray-500">No image available</p>
               )}
+
               <div className="md:w-1/2 w-full md:pl-6">
-              <div className="text-lg mb-6" dangerouslySetInnerHTML={{ __html: blogs?.about }}></div>
+                <div
+                  className="text-lg mb-6"
+                  dangerouslySetInnerHTML={{ __html: blogs?.about }}
+                ></div>
                 {/* Add more content here if needed */}
               </div>
             </div>

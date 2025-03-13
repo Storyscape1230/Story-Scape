@@ -33,7 +33,7 @@ function Trending() {
             return (
               <div
                 key={element._id}
-                className="p-4 bg-white border border-gray-400 rounded-lg shadow-md mx-2"
+                className="p-3 bg-white border border-gray-400 rounded-lg shadow-md mx-2"
               >
                 <Link to={`/blog/${element._id}`}>
                   <div className="relative">
@@ -46,7 +46,7 @@ function Trending() {
                       {element.category}
                     </div>
                   </div>
-                  <div className="p-4 bg-gray-50 rounded-b-lg h-36 flex flex-col justify-between">
+                  <div className="p-4 bg-gray-50 rounded-b-lg h-25 flex flex-col justify-between">
                     <h1
                       className="text-lg font-bold mb-2 overflow-hidden text-ellipsis"
                       style={{ whiteSpace: "nowrap" }}
