@@ -1,14 +1,17 @@
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import JoditEditor from "jodit-react";
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [about, setAbout] = useState("");
 
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
+
+  const editor = useRef(null);
+  const [about, setAbout] = useState("");
 
   const changePhotoHandler = (e) => {
     console.log(e);
@@ -41,7 +44,7 @@ function CreateBlog() {
         }
       );
       console.log(data);
-      toast.success(data.message || "User registered successfully");
+      toast.success(data.message || "Blog created successfully");
       setTitle("");
       setCategory("");
       setAbout("");
@@ -49,13 +52,18 @@ function CreateBlog() {
       setBlogImagePreview("");
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Please fill the required fields");
+      toast.error(
+        error.response?.data?.message || "Please fill the required fields"
+      );
     }
   };
+
   return (
     <div>
-      <div className="min-h-screen  py-10">
-        <div className="max-w-4xl mx-auto p-6 border  rounded-lg shadow-lg">
+      <div className="min-h-screen py-10 md:ml-64">
+        {" "}
+        {/* Added md:ml-64 to account for the sidebar */}
+        <div className="max-w-4xl mx-auto p-6 border rounded-lg shadow-lg">
           <h3 className="text-2xl font-semibold mb-8">Create Blog</h3>
           <form onSubmit={handleCreateBlog} className="space-y-6">
             <div className="space-y-2">
@@ -81,7 +89,7 @@ function CreateBlog() {
                 placeholder="Enter your blog title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-400   rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
               />
             </div>
 
@@ -89,26 +97,36 @@ function CreateBlog() {
               <label className="block text-lg">Blog Image</label>
               <div className="flex items-center justify-center">
                 <img
-                  src={blogImagePreview ? `${blogImagePreview}` : "/imgPL.webp"}
-                  alt="Image"
+                  src={blogImagePreview ? blogImagePreview : "/imgPL.webp"}
+                  alt="Blog Preview"
                   className="w-full max-w-sm h-auto rounded-md object-cover"
                 />
               </div>
               <input
                 type="file"
                 onChange={changePhotoHandler}
-                className="w-full px-3 py-2 border border-gray-400   rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
               />
             </div>
 
             <div className="space-y-2">
               <label className="block text-lg">About</label>
-              <textarea
+              {/* <textarea
                 rows="5"
                 placeholder="Write something about your blog"
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
-                className="w-full px-3 py-2  border border-gray-400  rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
+              /> */}
+              <JoditEditor
+                ref={editor}
+                placeholder="Write something about your blog"
+                value={about}
+                onChange={(newContent) => setAbout(newContent)}
+                config={{
+                  askBeforePasteFromWord: false, // Prevents Word formatting popup
+                }}
+                className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
               />
             </div>
 

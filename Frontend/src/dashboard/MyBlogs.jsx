@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 function MyBlogs() {
   const [myBlogs, setMyBlogs] = useState([]);
+
   useEffect(() => {
     const fetchMyBlogs = async () => {
       try {
@@ -12,7 +13,6 @@ function MyBlogs() {
           "http://localhost:8001/api/blogs/my-blog",
           { withCredentials: true }
         );
-        console.log(data);
         setMyBlogs(data);
       } catch (error) {
         console.log(error);
@@ -31,43 +31,45 @@ function MyBlogs() {
         setMyBlogs((value) => value.filter((blog) => blog._id !== id));
       })
       .catch((error) => {
-        toast.error(error.response.message || "Failed to delete blog");
+        toast.error(error.response?.data?.message || "Failed to delete blog");
       });
   };
+
   return (
-    <div>
-      <div className="container mx-auto my-12 p-4">
-        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 md:ml-20">
+    <div className="flex-1 min-h-screen p-4 md:ml-64 overflow-hidden">
+      <div className="container mx-auto my-12 px-4 w-full overflow-hidden">
+        {/* Reduced gap and removed forced margins */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full">
           {myBlogs && myBlogs.length > 0 ? (
             myBlogs.map((element) => (
               <div
-                className="bg-white shadow-lg rounded-lg overflow-hidden"
+                className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col w-full"
                 key={element._id}
               >
                 {element?.blogImage && (
                   <img
                     src={element?.blogImage.url}
                     alt="blogImg"
-                    className="w-full h-48 object-cover"
+                    className="w-full h-40 object-cover"
                   />
                 )}
-                <div className="p-4">
+                <div className="p-4 flex-1 flex flex-col">
                   <span className="text-sm text-gray-600">
                     {element.category}
                   </span>
-                  <h4 className="text-xl font-semibold my-2">
+                  <h4 className="text-lg font-semibold my-2 line-clamp-2">
                     {element.title}
                   </h4>
-                  <div className="flex justify-between mt-4">
+                  <div className="flex justify-between mt-4 gap-2">
                     <Link
                       to={`/blog/update/${element._id}`}
-                      className="text-blue-500 bg-white rounded-md shadow-lg px-3 py-1 border border-gray-400 hover:underline"
+                      className="text-blue-500 bg-white rounded-md shadow-sm px-3 py-1 border border-gray-400 hover:underline flex-1 text-center"
                     >
                       UPDATE
                     </Link>
                     <button
                       onClick={() => handleDelete(element._id)}
-                      className="text-red-500 bg-white rounded-md shadow-lg px-3 py-1 border border-gray-400 hover:underline"
+                      className="text-red-500 bg-white rounded-md shadow-sm px-3 py-1 border border-gray-400 hover:underline flex-1 text-center"
                     >
                       DELETE
                     </button>

@@ -55,7 +55,7 @@ function Detail() {
                 />
               )}
               <div className="md:w-1/2 w-full md:pl-6">
-                <p className="text-lg mb-6">{blogs?.about}</p>
+              <div className="text-lg mb-6" dangerouslySetInnerHTML={{ __html: blogs?.about }}></div>
                 {/* Add more content here if needed */}
               </div>
             </div>

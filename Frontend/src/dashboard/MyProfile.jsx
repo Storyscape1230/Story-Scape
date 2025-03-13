@@ -5,7 +5,7 @@ function MyProfile() {
   console.log(profile?.user);
   return (
     <div>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 md:ml-64"> {/* Added md:ml-64 here */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full">
           <div className="relative">
             <img

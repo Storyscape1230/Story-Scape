@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import JoditEditor from "jodit-react";
 
 function UpdateBlog() {
   const navigateTo = useNavigate();
@@ -9,10 +10,12 @@ function UpdateBlog() {
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [about, setAbout] = useState("");
 
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
+
+    const editor = useRef(null);
+    const [about, setAbout] = useState("");
 
   const changePhotoHandler = (e) => {
     console.log(e);
@@ -30,7 +33,6 @@ function UpdateBlog() {
       try {
         const { data } = await axios.get(
           `http://localhost:8001/api/blogs/single-blog/${id}`,
-
           {
             withCredentials: true,
             headers: {
@@ -83,7 +85,9 @@ function UpdateBlog() {
 
   return (
     <div>
-      <div className="container mx-auto my-12 p-4">
+      <div className="container mx-auto my-12 p-4 md:ml-64">
+        {" "}
+        {/* Added md:ml-64 here */}
         <section className="max-w-2xl mx-auto">
           <h3 className="text-2xl font-bold mb-6">UPDATE BLOG</h3>
           <form>
@@ -128,12 +132,22 @@ function UpdateBlog() {
                 onChange={changePhotoHandler}
               />
             </div>
-            <textarea
+            {/* <textarea
               rows="6"
               className="w-full p-2 mb-4 border rounded-md"
               placeholder="Something about your blog atleast 200 characters!"
               value={about}
               onChange={(e) => setAbout(e.target.value)}
+            /> */}
+            <JoditEditor
+              ref={editor}
+              placeholder="Write something about your blog"
+              value={about}
+              onChange={(newContent) => setAbout(newContent)}
+              config={{
+                askBeforePasteFromWord: false, // Prevents Word formatting popup
+              }}
+              className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
             />
 
             <button

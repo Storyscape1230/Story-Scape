@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
 function Register() {
-  const { isAuthenticated, setIsAuthenticated, setProfile } = useAuth();
+  // const { isAuthenticated, setIsAuthenticated, setProfile } = useAuth();
+  const {  setIsAuthenticated, setProfile } = useAuth();
 
   const navigateTo = useNavigate();
 

@@ -5,7 +5,7 @@ import axios from "axios";
 import { CiMenuBurger } from "react-icons/ci";
 import { BiSolidLeftArrowAlt } from "react-icons/bi";
 import toast from "react-hot-toast";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 
 function Sidebar({ setComponent }) {
   const { profile, setIsAuthenticated } = useAuth();
@@ -28,28 +28,29 @@ function Sidebar({ setComponent }) {
         { withCredentials: true }
       );
       toast.success(data.message);
-      localStorage.removeItem("jwt"); // Remove token from localStorage
+      localStorage.removeItem("jwt");
       setIsAuthenticated(false);
       navigateTo("/login");
     } catch (error) {
-      console.log(error);
       toast.error(error.response?.data?.message || "Failed to logout");
     }
   };
 
-  console.log(profile)
   return (
     <>
+      {/* Mobile Sidebar Toggle */}
       <div
         className="sm:hidden fixed top-4 left-4 z-50"
         onClick={() => setShow(!show)}
       >
         <CiMenuBurger className="text-2xl" />
       </div>
+
+      {/* Sidebar */}
       <div
         className={`w-64 h-full shadow-lg fixed top-0 left-0 bg-gray-50 transition-transform duration-300 transform sm:translate-x-0 ${
           show ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } z-40`}
       >
         <div
           className="sm:hidden absolute top-4 right-4 text-xl cursor-pointer"
@@ -60,10 +61,10 @@ function Sidebar({ setComponent }) {
         <div className="text-center">
           <img
             className="w-24 h-24 rounded-full mx-auto m-2"
-            src={profile?.photo?.url || "https://via.placeholder.com/150"} // Fallback image
+            src={profile?.photo?.url || "https://via.placeholder.com/150"}
             alt="Profile"
           />
-          <p className="text-lg font-semibold">{profile?.user?.name}</p>
+          <p className="text-lg font-semibold mb-2">{profile?.name}</p>
         </div>
         <ul className="space-y-6 mx-4">
           <button
