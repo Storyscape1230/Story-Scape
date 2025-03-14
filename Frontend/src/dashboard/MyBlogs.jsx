@@ -36,7 +36,7 @@ function MyBlogs() {
   };
 
   return (
-    <div className="flex-1 min-h-screen p-4 md:ml-64 overflow-hidden">
+    <div className="flex-1 min-h-screen p-4 md:ml-64 overflow-hidden bg-gradient-to-r from-blue-100 to-purple-100">
       <p className="text-3xl font-bold  text-xxl">My Blogs</p>
       <div className="container mx-auto my-12 px-4 w-full overflow-hidden">
         {/* Reduced gap and removed forced margins */}

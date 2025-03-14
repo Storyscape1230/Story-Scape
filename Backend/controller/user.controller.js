@@ -124,14 +124,15 @@ const getAdmins = async (req, res) => {
 };
 
 /*----------------- Update Profile ----------------*/
-  const updateProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { name, email, phone, education } = req.body;
+    const { name, email, phone } = req.body;
 
     if (req.files && req.files.photo) {
       const { photo } = req.files;
@@ -156,13 +157,12 @@ const getAdmins = async (req, res) => {
     user.name = name || user.name;
     user.email = email || user.email;
     user.phone = phone || user.phone;
-    user.education = education || user.education;
 
     await user.save();
 
     res.status(200).json({ message: "Profile updated successfully", user });
   } catch (error) {
-    console.log(error);
+    console.error("Update profile error:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
