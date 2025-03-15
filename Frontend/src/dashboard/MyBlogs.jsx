@@ -19,7 +19,7 @@ function MyBlogs() {
       }
     };
     fetchMyBlogs();
-  }, [myBlogs]);
+  }, []);
 
   const handleDelete = async (id) => {
     await axios
