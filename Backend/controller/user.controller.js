@@ -167,5 +167,8 @@ const updateProfile = async (req, res) => {
   }
 };
 
+
+
+
 /*----------------- Export All Controllers ----------------*/
 export { register, login, logout, getMyProfile, getAdmins, updateProfile };

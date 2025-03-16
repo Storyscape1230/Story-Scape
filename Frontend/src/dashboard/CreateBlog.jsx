@@ -1,37 +1,74 @@
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import JoditEditor from "jodit-react";
 import { LuImageUp } from "react-icons/lu";
+import EditorJS from "@editorjs/editorjs";
+import { tools } from "../../../Backend/controller/tools.controller"; 
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
+  const editorInstance = useRef(null);
 
-  const editor = useRef(null);
-  const [about, setAbout] = useState("");
+  // Initialize EditorJS
+  useEffect(() => {
+    if (!editorInstance.current) {
+      editorInstance.current = new EditorJS({
+        holder: "textEditor",
+        tools: tools,
+        placeholder: "Let's write something awesome!",
+        onReady: () => {
+          console.log("EditorJS is ready");
+        },
+        onChange: async () => {
+          // Optional: Handle changes in the editor
+        },
+      });
+    }
+  
+    return () => {
+      if (editorInstance.current) {
+        editorInstance.current.destroy();
+        editorInstance.current = null;
+      }
+    };
+  }, []); 
 
+  // Handle blog image upload
   const changePhotoHandler = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setBlogImagePreview(reader.result);
-      setBlogImage(file);
-    };
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setBlogImagePreview(reader.result);
+        setBlogImage(file);
+      };
+    }
   };
 
+  // Handle blog creation
   const handleCreateBlog = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("category", category);
-    formData.append("about", about);
-    formData.append("blogImage", blogImage);
-
+  
+    // Validate required fields
+    if (!title || !category || !blogImage) {
+      toast.error("Please fill all the required fields");
+      return;
+    }
+  
     try {
+      // Get the content from EditorJS
+      const editorData = await editorInstance.current.save();
+  
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("category", category);
+      formData.append("about", JSON.stringify(editorData)); // Add EditorJS content
+      formData.append("blogImage", blogImage);
+  
       const { data } = await axios.post(
         "http://localhost:8001/api/blogs/create",
         formData,
@@ -42,15 +79,23 @@ function CreateBlog() {
           },
         }
       );
+  
       toast.success(data.message || "Blog created successfully");
+  
+      // Reset form fields
       setTitle("");
       setCategory("");
-      setAbout("");
       setBlogImage("");
       setBlogImagePreview("");
+  
+      // Clear EditorJS content
+      if (editorInstance.current) {
+        editorInstance.current.clear();
+      }
     } catch (error) {
+      console.error("Error creating blog:", error);
       toast.error(
-        error.response?.data?.message || "Please fill the required fields"
+        error.response?.data?.message || "An error occurred while creating the blog"
       );
     }
   };
@@ -70,6 +115,7 @@ function CreateBlog() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
               >
                 <option value="">Select Category</option>
                 <option value="Devotion">Devotion</option>
@@ -91,6 +137,7 @@ function CreateBlog() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
               />
             </div>
 
@@ -122,6 +169,7 @@ function CreateBlog() {
                   id="fileInput"
                   className="hidden"
                   onChange={changePhotoHandler}
+                  required
                 />
               </div>
             </div>
@@ -131,18 +179,7 @@ function CreateBlog() {
               <label className="block text-lg font-medium text-gray-700">
                 About
               </label>
-              <JoditEditor
-                ref={editor}
-                placeholder="Write something about your blog"
-                value={about}
-                onChange={(newContent) => setAbout(newContent)}
-                config={{
-                  askBeforePasteHTML: false,
-                  askBeforePasteFromWord: false,
-                  defaultActionOnPaste: "insert_only_text",
-                }}
-                className="w-full border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
+              <div id="textEditor" className="w-full border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></div>
             </div>
 
             {/* Submit Button */}

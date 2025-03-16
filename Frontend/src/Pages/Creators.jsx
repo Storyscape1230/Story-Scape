@@ -15,7 +15,7 @@ function Creators() {
         );
         setCreators(data.admins);
       } catch (error) {
-        console.log(error);
+        console.log("c :",error);
       }
     };
     fetchCreators();

@@ -21,6 +21,6 @@ router.get("/my-profile", isAuthenticated, getMyProfile);
 router.put("/update-profile", isAuthenticated, updateProfile);
 
 // Admin-only routes
-router.get("/admins", isAuthenticated, isAdmin("admin"), getAdmins);
+router.get("/admins", isAuthenticated, getAdmins);
 
 export default router;

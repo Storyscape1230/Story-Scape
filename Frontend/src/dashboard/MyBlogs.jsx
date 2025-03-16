@@ -19,7 +19,11 @@ function MyBlogs() {
       }
     };
     fetchMyBlogs();
+<<<<<<< HEAD
   }, []);
+=======
+  }, []); // Remove `myBlogs` from the dependency array
+>>>>>>> 8202448 (added)
 
   const handleDelete = async (id) => {
     await axios
@@ -39,7 +43,6 @@ function MyBlogs() {
     <div className="flex-1 min-h-screen p-4 md:ml-64 overflow-hidden bg-gradient-to-r from-blue-100 to-purple-100">
       <p className="text-3xl font-bold  text-xxl">My Blogs</p>
       <div className="container mx-auto my-12 px-4 w-full overflow-hidden">
-        {/* Reduced gap and removed forced margins */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full">
           {myBlogs && myBlogs.length > 0 ? (
             myBlogs.map((element) => (
@@ -50,7 +53,7 @@ function MyBlogs() {
                 {element?.blogImage?.url ? (
                   <img
                     src={element.blogImage.url}
-                    alt="blogImg" 
+                    alt="blogImg"
                     className="w-full h-40 object-cover"
                   />
                 ) : (

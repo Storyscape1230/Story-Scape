@@ -7,7 +7,7 @@ function Contact() {
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     formState: { errors },
   } = useForm();
 
@@ -22,9 +22,10 @@ function Contact() {
       await axios.post("https://api.web3forms.com/submit", userInfo);
       toast.success("Message sent successfully");
     } catch (error) {
-      toast.error("An error occurred");
+      toast.error("An error occurred", error);
     }
   };
+  
   return (
     <div>
       <div className="bg-gray-50 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
