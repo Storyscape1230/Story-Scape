@@ -9,9 +9,8 @@ export const uploadImage = async (req, res) => {
     }
 
     const { blogImage } = req.files;
-    console.log("Uploading image:", blogImage.name);
-
     const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
     if (!allowedFormats.includes(blogImage.mimetype)) {
       return res.status(400).json({
         message: "Invalid file format. Only JPEG, JPG, PNG, and WEBP are allowed.",
@@ -19,10 +18,9 @@ export const uploadImage = async (req, res) => {
     }
 
     const cloudinaryResponse = await cloudinary.uploader.upload(blogImage.tempFilePath);
-    console.log("Cloudinary response:", cloudinaryResponse);
 
     if (!cloudinaryResponse || cloudinaryResponse.error) {
-      console.error("Cloudinary error:", cloudinaryResponse.error);
+      console.error(cloudinaryResponse.error);
       return res.status(500).json({ message: "Failed to upload image to Cloudinary." });
     }
 

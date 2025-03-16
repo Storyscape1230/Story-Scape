@@ -19,11 +19,7 @@ function MyBlogs() {
       }
     };
     fetchMyBlogs();
-<<<<<<< HEAD
   }, []);
-=======
-  }, []); // Remove `myBlogs` from the dependency array
->>>>>>> 8202448 (added)
 
   const handleDelete = async (id) => {
     await axios
