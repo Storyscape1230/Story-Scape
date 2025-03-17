@@ -43,3 +43,10 @@ span{
     font-variation-settings:
       "MORF" 0;
   }
+  .sofia-regular {
+    font-family: "Sofia", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  

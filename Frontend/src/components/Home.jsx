@@ -2,12 +2,12 @@ import Hero from "../Home/Hero";
 import Trending from "../Home/Trending";
 import Devotional from "../Home/Devotional";
 import Creator from "../Home/Creator";
-import Waves from "../Home/Waves";
+// import Waves from "../Home/Waves";
 
 function Home() {
   return (
     <div > 
-      <div className="shadow" style={{ position: "relative", width: "100%", height: "40vh" }}>
+      {/* <div className="shadow" style={{ position: "relative", width: "100%", height: "40vh" }}>
         <Waves
         lineColor="black"
         backgroundColor="rgba(255, 255, 255, 0.2)"
@@ -21,7 +21,7 @@ function Home() {
         xGap={12}
         yGap={36}
       />
-      </div>
+      </div> */}
       
       <Hero />
       <Trending />

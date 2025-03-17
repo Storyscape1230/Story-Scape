@@ -12,7 +12,7 @@ import Creators from "./pages/Creators";
 import { useAuth } from "./context/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import UpdateBlog from "./dashboard/UpdateBlog";
-import Detail from "./pages/Detail";
+import Detail from "./Pages/Detail";
 // import NotFound from "./pages/NotFound";
 function App() {
   const location = useLocation();
