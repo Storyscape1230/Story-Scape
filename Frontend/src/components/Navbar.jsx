@@ -50,7 +50,7 @@ function Navbar() {
         {/* Desktop Links */}
         <div className="mx-6">
           <ul className="hidden md:flex space-x-6">
-            {["/", "/blogs", "/creators", "/about", "/contact"].map((path) => (
+            {["/", "/blogs", "/creators", "/about", "/contact","/save"].map((path) => (
               <Link
                 key={path}
                 to={path}

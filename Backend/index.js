@@ -53,3 +53,13 @@ cloudinary.config({
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+app.get("/api/blogs", async (req, res) => {
+  try {
+    const blogs = await Blog.find();
+    res.json(blogs);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});

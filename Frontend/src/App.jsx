@@ -5,14 +5,16 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Blogs from "../src/pages/Blogs";
 import About from "../src/pages/About";
 import Contact from "../src/pages/Contact";
-import Login from "../src/pages/Login";
-import Register from "../src/pages/Register";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 import Dashboard from "../src/pages/Dashboard";
 import Creators from "./pages/Creators";
 import { useAuth } from "./context/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import UpdateBlog from "./dashboard/UpdateBlog";
 import Detail from "./Pages/Detail";
+import Save from "./Pages/Save";
+import CreatorProfile from "./components/CreatorProfile"; 
 // import NotFound from "./pages/NotFound";
 function App() {
   const location = useLocation();
@@ -40,6 +42,9 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/save" element={<Save />} />
+        <Route path="/creator/:creatorId" element={<CreatorProfile />} /> {/* Add this route */}
+        <Route path="/creators" element={<Creators />} />
 
         {/* Single page route */}
         <Route exact path="/blog/:id" element={<Detail />} />
