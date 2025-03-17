@@ -1,65 +1,63 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Blogs from "../pages/Blogs";
-
+import { useParams, useNavigate } from "react-router-dom";
 
 function CreatorProfile() {
-  const { creatorId } = useParams(); // Get creatorId from the URL
+  const { creatorId } = useParams();
+  const navigate = useNavigate();
   const [creator, setCreator] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCreatorAndBlogs = async () => {
       try {
-        // Fetch creator details
-        const creatorResponse = await axios.get(
-          `http://localhost:8001/api/users/${creatorId}`,
+        const response = await axios.get(
+          `http://localhost:8001/api/blogs/creator/${creatorId}`,
           { withCredentials: true }
         );
-        console.log("Creator Response:", creatorResponse.data);
 
-        if (!creatorResponse.data || !creatorResponse.data.user) {
-          console.log("Invalid creator data");
+        if (!response.data || !response.data.creator || !response.data.blogs) {
+          setError("Invalid data received");
           setCreator(null);
-          return;
-        }
-
-        setCreator(creatorResponse.data.user);
-
-        // Fetch blogs by creator
-        const blogsResponse = await axios.get(
-          `http://localhost:8001/api/blogs?creator=${creatorId}`,
-          { withCredentials: true }
-        );
-        console.log("Blogs Response:", blogsResponse.data);
-
-        if (!blogsResponse.data || !blogsResponse.data.blogs) {
-          console.log("Invalid blogs data");
           setBlogs([]);
           return;
         }
 
-        setBlogs(blogsResponse.data.blogs);
+        setCreator(response.data.creator);
+        setBlogs(response.data.blogs);
+        setError(null); // Clear any previous errors
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log("Creator not found");
-          setCreator(null); // Set creator to null to show a "Not Found" message
+          setError("Creator not found or has not created any blogs yet.");
         } else {
-          console.log("Error fetching creator or blogs:", error);
+          setError("Error fetching creator profile and blogs. Please try again later.");
         }
+        setCreator(null);
+        setBlogs([]);
       }
     };
+
     fetchCreatorAndBlogs();
   }, [creatorId]);
+
+  const handleBlogClick = (blogId) => {
+    navigate(`/blog/${blogId}`); // Redirect to the single blog page
+  };
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <h1 className="text-2xl font-bold text-gray-800">Creator blog not created</h1>
+        <p className="text-gray-600 mt-2">{error}</p>
+      </div>
+    );
+  }
 
   if (!creator) {
     return (
       <div className="text-center py-8">
-        <h1 className="text-2xl font-bold text-gray-800">Creator Not Found</h1>
-        <p className="text-gray-600 mt-2">
-          The creator you are looking for does not exist.
-        </p>
+        <h1 className="text-2xl font-bold text-gray-800">Loading...</h1>
       </div>
     );
   }
@@ -80,24 +78,25 @@ function CreatorProfile() {
         </div>
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Blogs by {creator.name}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map((Blog) => (
+          {blogs.map((blog) => (
             <div
-              key={Blogs._id.$oid} // Use blog._id.$oid for MongoDB ObjectId
-              className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              key={blog._id}
+              className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer"
+              onClick={() => handleBlogClick(blog._id)} // Add click handler
             >
               <img
-                src={Blog.blogImage.url}
+                src={blog.blogImage.url}
                 alt="blog"
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-800">
-                  {blogs.title}
+                  {blog.title}
                 </h3>
-                <p className="text-gray-600 mt-2">{blogs.category}</p>
+                <p className="text-gray-600 mt-2">{blog.category}</p>
                 <div
-                  className="text-gray-600 mt-2"
-                  dangerouslySetInnerHTML={{ __html: blogs.about }} // Render HTML content
+                  className="text-gray-600 mt-2 line-clamp-4" // Add line-clamp-4 for truncation
+                  dangerouslySetInnerHTML={{ __html: blog.about }}
                 />
               </div>
             </div>

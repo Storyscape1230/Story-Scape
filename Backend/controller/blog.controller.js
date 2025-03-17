@@ -1,41 +1,9 @@
 import { Blog } from "../models/blog.model.js";
+import { User } from "../models/user.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
 
-export const uploadImage = async (req, res) => {
-  try {
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({ message: "No files were uploaded." });
-    }
 
-    const { blogImage } = req.files;
-    const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-
-    if (!allowedFormats.includes(blogImage.mimetype)) {
-      return res.status(400).json({
-        message: "Invalid file format. Only JPEG, JPG, PNG, and WEBP are allowed.",
-      });
-    }
-
-    const cloudinaryResponse = await cloudinary.uploader.upload(blogImage.tempFilePath);
-
-    if (!cloudinaryResponse || cloudinaryResponse.error) {
-      console.error(cloudinaryResponse.error);
-      return res.status(500).json({ message: "Failed to upload image to Cloudinary." });
-    }
-
-    res.status(200).json({
-      message: "Image uploaded successfully",
-      image: {
-        public_id: cloudinaryResponse.public_id,
-        url: cloudinaryResponse.url,
-      },
-    });
-  } catch (error) {
-    console.error("Error uploading image:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-};
 
 export const createBlog = async (req, res) => {
   try {
@@ -195,7 +163,70 @@ export const updateBlog = async (req, res) => {
   }
 };
 
+/*-----------------Upload Blog------------------*/
 
+export const uploadImage = async (req, res) => {
+  try {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({ message: "No files were uploaded." });
+    }
+
+    const { blogImage } = req.files;
+    const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+    if (!allowedFormats.includes(blogImage.mimetype)) {
+      return res.status(400).json({
+        message: "Invalid file format. Only JPEG, JPG, PNG, and WEBP are allowed.",
+      });
+    }
+
+    const cloudinaryResponse = await cloudinary.uploader.upload(blogImage.tempFilePath);
+
+    if (!cloudinaryResponse || cloudinaryResponse.error) {
+      console.error(cloudinaryResponse.error);
+      return res.status(500).json({ message: "Failed to upload image to Cloudinary." });
+    }
+
+    res.status(200).json({
+      message: "Image uploaded successfully",
+      image: {
+        public_id: cloudinaryResponse.public_id,
+        url: cloudinaryResponse.url,
+      },
+    });
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+/*-----------------Creator Profile Show Blog------------------*/
+
+export const getCreatorProfile = async (req, res) => {
+  try {
+    const { creatorId } = req.params;
+
+    // Fetch creator details
+    const creator = await User.findById(creatorId).select("-password");
+
+    if (!creator) {
+      return res.status(404).json({ message: "Creator not found " });
+    }
+
+    // Fetch blogs created by the specific creator
+    const blogs = await Blog.find({ createdBy: creatorId });
+
+    if (!blogs || blogs.length === 0) {
+      return res.status(404).json({ message: "No blogs found for this creator" });
+    }
+
+    res.status(200).json({ creator, blogs });
+  } catch (error) {
+    console.error("Error fetching creator profile and blogs:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 
 
@@ -208,4 +239,5 @@ export default {
   getSingleBlogs,
   getMyBlogs,
   updateBlog,
+  getCreatorProfile,
 };
