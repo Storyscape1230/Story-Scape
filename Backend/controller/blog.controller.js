@@ -39,48 +39,56 @@ export const uploadImage = async (req, res) => {
 
 export const createBlog = async (req, res) => {
   try {
-    if (!req.files || Object.keys(req.files).length === 0) {
+    console.log("Request Body:", req.body); // Debugging: Log the request body
+    console.log("Request Files:", req.files); // Debugging: Log the request files
+
+    // Check if blogImage is present
+    if (!req.files || !req.files.blogImage) {
       return res.status(400).json({ message: "Blog Image is required" });
     }
 
     const { blogImage } = req.files;
     const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+    // Validate image format
     if (!allowedFormats.includes(blogImage.mimetype)) {
       return res.status(400).json({
-        message: "Invalid photo format. Only jpg and png are allowed",
+        message: "Invalid file format. Only JPEG, JPG, PNG, and WEBP are allowed.",
       });
     }
 
+    // Validate required fields
     const { title, category, about } = req.body;
+    console.log("Received About:", about); // Debugging: Log the about field
     if (!title || !category || !about) {
       return res
         .status(400)
         .json({ message: "title, category & about are required fields" });
     }
 
-    const adminName = req?.user?.name;
-    const adminPhoto = req?.user?.photo?.url;
-    const createdBy = req?.user?._id;
-
+    // Upload image to Cloudinary
     const cloudinaryResponse = await cloudinary.uploader.upload(blogImage.tempFilePath);
+
     if (!cloudinaryResponse || cloudinaryResponse.error) {
-      console.log(cloudinaryResponse.error);
+      console.error(cloudinaryResponse.error);
       return res.status(500).json({ message: "Failed to upload image to Cloudinary." });
     }
 
+    // Create blog data
     const blogData = {
       title,
-      about,
       category,
-      adminName,
-      adminPhoto,
-      createdBy,
+      about,
       blogImage: {
         public_id: cloudinaryResponse.public_id,
         url: cloudinaryResponse.url,
       },
+      adminName: req.user?.name,
+      adminPhoto: req.user?.photo?.url,
+      createdBy: req.user?._id,
     };
 
+    // Save blog to database
     const blog = await Blog.create(blogData);
 
     res.status(201).json({
@@ -88,10 +96,13 @@ export const createBlog = async (req, res) => {
       blog,
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: "Internal Server error" });
+    console.error("Error creating blog:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+
 /*-----------------Delete Blog------------------*/
 
 export const deleteBlog = async (req, res) => {

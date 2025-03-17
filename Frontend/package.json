@@ -23,6 +23,7 @@
     "@emotion/styled": "^11.14.0",
     "axios": "^1.8.3",
     "dompurify": "^3.2.4",
+    "editorjs-html": "^4.0.5",
     "framer-motion": "^12.5.0",
     "frontend": "file:",
     "jodit-react": "^5.2.15",
