@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState ,useCallback } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
@@ -15,10 +15,13 @@ function UpdateBlog() {
   const editor = useRef(null);
   const [about, setAbout] = useState("");
 
+  // Debounced onChange handler for JoditEditor
+  const handleEditorChange = useCallback((newContent) => {
+    setAbout(newContent);
+  }, []);
+
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
-
-    
 
   // const changePhotoHandler = (e) => {
   //   console.log(e);
@@ -37,7 +40,6 @@ function UpdateBlog() {
       setBlogImage(file);
     }
   };
-  
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -66,17 +68,17 @@ function UpdateBlog() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("category", category);
     formData.append("about", about);
-  
+
     // Ensure we send the image only if a new one is selected
     if (blogImage instanceof File) {
       formData.append("blogImage", blogImage);
     }
-  
+
     try {
       const { data } = await axios.put(
         `http://localhost:8001/api/blogs/update/${id}`,
@@ -95,7 +97,6 @@ function UpdateBlog() {
       toast.error(error.response?.data?.message || "Failed to update blog");
     }
   };
-  
 
   return (
     <div>
@@ -128,33 +129,34 @@ function UpdateBlog() {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="mb-4">
-  <label className="block mb-2 font-semibold">BLOG IMAGE</label>
-  <div
-    className="w-full h-48 rounded-md overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
-    onClick={() => document.getElementById("fileInput").click()} // Trigger file input on click
-  >
-    {blogImagePreview || blogImage ? (
-      <img
-        src={blogImagePreview || blogImage}
-        alt="Blog Main"
-        className="w-full h-full object-cover"
-      />
-    ) : (
-      <div className="flex flex-col items-center justify-center text-gray-400">
-        <LuImageUp className="w-12 h-12" /> {/* Icon for no image */}
-        <p className="mt-2 text-sm">Upload an image</p>
-      </div>
-    )}
-  </div>
+              <label className="block mb-2 font-semibold">BLOG IMAGE</label>
+              <div
+                className="w-full h-48 rounded-md overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
+                onClick={() => document.getElementById("fileInput").click()} // Trigger file input on click
+              >
+                {blogImagePreview || blogImage ? (
+                  <img
+                    src={blogImagePreview || blogImage}
+                    alt="Blog Main"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-gray-400">
+                    <LuImageUp className="w-12 h-12" />{" "}
+                    {/* Icon for no image */}
+                    <p className="mt-2 text-sm">Upload an image</p>
+                  </div>
+                )}
+              </div>
 
-  {/* Hidden file input */}
-  <input
-    type="file"
-    id="fileInput"
-    className="hidden"
-    onChange={changePhotoHandler}
-  />
-</div>
+              {/* Hidden file input */}
+              <input
+                type="file"
+                id="fileInput"
+                className="hidden"
+                onChange={changePhotoHandler}
+              />
+            </div>
             {/* <textarea
               rows="6"
               className="w-full p-2 mb-4 border rounded-md"
@@ -163,12 +165,14 @@ function UpdateBlog() {
               onChange={(e) => setAbout(e.target.value)}
             /> */}
             <JoditEditor
-              ref={editor}
+              ref={editor}  
               placeholder="Write something about your blog"
               value={about}
-              onChange={(newContent) => setAbout(newContent)}
+              onChange={handleEditorChange}
               config={{
-                askBeforePasteFromWord: false, // Prevents Word formatting popup
+                askBeforePasteFromWord: false,
+                askBeforePasteHTML: false,
+                defaultActionOnPaste: "insert_only_text",
               }}
               className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
             />

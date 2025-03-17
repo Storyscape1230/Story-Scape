@@ -1,59 +1,57 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { LuImageUp } from "react-icons/lu";
-import EditorJS from "@editorjs/editorjs";
-import { tools } from "../components/tools.controller.jsx"; // Import the tools configuration
+import JoditEditor from "jodit-react";
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [blogImage, setBlogImage] = useState("");
+  const [blogImage, setBlogImage] = useState(null);
   const [blogImagePreview, setBlogImagePreview] = useState("");
-  const editorInstance = useRef(null);
+  const editor = useRef(null);
+  const [about, setAbout] = useState("");
 
-  // Initialize EditorJS
-  useEffect(() => {
-    if (!editorInstance.current) {
-      editorInstance.current = new EditorJS({
-        holder: "textEditor",
-        tools: tools,
-        placeholder: "Let's write something awesome!",
-      });
-    }
-
-    // Cleanup EditorJS instance on unmount
-    return () => {
-      if (editorInstance.current) {
-        editorInstance.current.destroy();
-        editorInstance.current = null;
-      }
-    };
-  }, []);
+  // Handle editor content change
+  // const handleEditorChange = useCallback((newContent) => { setAbout(newContent);
+  // }, []);
 
   // Handle blog image upload
   const changePhotoHandler = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setBlogImagePreview(reader.result);
+    if (file) {
       setBlogImage(file);
-    };
+      setBlogImagePreview(URL.createObjectURL(file));
+    }
   };
 
   // Handle blog creation
   const handleCreateBlog = async (e) => {
     e.preventDefault();
 
-    // Get the content from EditorJS
-    const editorData = await editorInstance.current.save();
+    // Debugging: Log the form data
+    console.log("Title:", title);
+    console.log("Category:", category);
+    console.log("About:", about); // Ensure this is not empty
+    console.log("Blog Image:", blogImage);
 
+    // Validate required fields
+    if (!title || !category || !about || !blogImage) {
+      toast.error("Please fill all the required fields and upload an image");
+      return;
+    }
+
+    // Create FormData object
     const formData = new FormData();
     formData.append("title", title);
     formData.append("category", category);
-    formData.append("about", JSON.stringify(editorData)); // Add EditorJS content
+    formData.append("about", about); // Ensure this is not empty
     formData.append("blogImage", blogImage);
+
+    // Debugging: Log FormData entries
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     try {
       const { data } = await axios.post(
@@ -67,13 +65,17 @@ function CreateBlog() {
         }
       );
       toast.success(data.message || "Blog created successfully");
+      // Reset form fields
       setTitle("");
       setCategory("");
-      setBlogImage("");
+      setAbout("");
+      setBlogImage(null);
       setBlogImagePreview("");
     } catch (error) {
+      console.error("Error creating blog:", error.response?.data);
       toast.error(
-        error.response?.data?.message || "Please fill the required fields"
+        error.response?.data?.message ||
+          "Failed to create blog. Please try again."
       );
     }
   };
@@ -145,6 +147,7 @@ function CreateBlog() {
                   id="fileInput"
                   className="hidden"
                   onChange={changePhotoHandler}
+                  accept="image/*"
                 />
               </div>
             </div>
@@ -154,7 +157,17 @@ function CreateBlog() {
               <label className="block text-lg font-medium text-gray-700">
                 About
               </label>
-              <div id="textEditor" className="w-full border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></div>
+              <JoditEditor
+                ref={editor}
+                value={about}
+                onChange={(newContent) => setAbout(newContent)}
+                config={{
+                  askBeforePasteFromWord: false,
+                  askBeforePasteHTML: false,
+                  defaultActionOnPaste: "insert_only_text",
+                }}
+                className="w-full px-3 py-2 border border-gray-400 rounded-md outline-none"
+              />
             </div>
 
             {/* Submit Button */}
