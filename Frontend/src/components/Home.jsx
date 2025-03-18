@@ -1,7 +1,7 @@
 import Hero from "../Home/Hero";
 import Trending from "../Home/Trending";
 import Devotional from "../Home/Devotional";
-// import Join from "../Home/Join";
+import Join from "../Home/Join";
 // import Creator from "../Home/Creator";
 // import Waves from "../Home/Waves";
 
@@ -27,7 +27,7 @@ function Home() {
       <Hero />
       <Trending />
       <Devotional />
-      {/* <Join /> */}
+      <Join />
       {/* <Creator />  */}
 
 

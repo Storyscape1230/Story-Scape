@@ -73,7 +73,6 @@ function CreatorProfile() {
           />
           <h1 className="text-3xl font-bold text-gray-800 mt-4">{creator.name}</h1>
           <p className="text-gray-600">{creator.email}</p>
-          <p className="text-gray-600">{creator.phone}</p>
           <p className="text-gray-600">{creator.role}</p>
         </div>
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Blogs by {creator.name}</h2>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useEffect, useState ,useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
@@ -12,13 +12,14 @@ function UpdateBlog() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
 
-  const editor = useRef(null);
+  const editor = useRef();
   const [about, setAbout] = useState("");
 
   // Debounced onChange handler for JoditEditor
-  const handleEditorChange = useCallback((newContent) => {
-    setAbout(newContent);
-  }, []);
+  // const handleEditorChange = useCallback((newContent) => {
+  //   console.log("Editor content changed:", newContent); // Debug log
+  //   setAbout(newContent);
+  // }, []);
 
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
@@ -68,17 +69,21 @@ function UpdateBlog() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("category", category);
-    formData.append("about", about);
-
-    // Ensure we send the image only if a new one is selected
+    formData.append("about", about); // Ensure `about` is included
+  
     if (blogImage instanceof File) {
       formData.append("blogImage", blogImage);
     }
-
+  
+    // Debug: Log FormData content
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+  
     try {
       const { data } = await axios.put(
         `http://localhost:8001/api/blogs/update/${id}`,
@@ -90,10 +95,11 @@ function UpdateBlog() {
           },
         }
       );
+      console.log("Update response:", data);
       toast.success(data.message || "Blog updated successfully");
       navigateTo("/");
     } catch (error) {
-      console.error(error);
+      console.error("Update error:", error);
       toast.error(error.response?.data?.message || "Failed to update blog");
     }
   };
@@ -165,10 +171,10 @@ function UpdateBlog() {
               onChange={(e) => setAbout(e.target.value)}
             /> */}
             <JoditEditor
-              ref={editor}  
+              ref={editor}
               placeholder="Write something about your blog"
               value={about}
-              onChange={handleEditorChange}
+              onChange={(newContent) => setAbout(newContent)}
               config={{
                 askBeforePasteFromWord: false,
                 askBeforePasteHTML: false,

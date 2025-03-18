@@ -117,22 +117,31 @@ export const getMyBlogs = async (req, res) => {
 export const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Validate blog ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid Blog ID" });
     }
 
+    // Find the blog by ID
     const blog = await Blog.findById(id);
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 
+    // Extract fields from request body
     const { title, category, about } = req.body;
-    let updatedBlogData = { title, category, about };
+    console.log("Received data:", { title, category, about }); // Debug log
 
+    // Prepare updated data
+    let updatedBlogData = { title, category, about }; // Ensure `about` is included
+
+    // Handle image upload if a new image is provided
     if (req.files && req.files.blogImage) {
       const { blogImage } = req.files;
+
+      // Validate image format
       const allowedFormats = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-      
       if (!allowedFormats.includes(blogImage.mimetype)) {
         return res.status(400).json({ message: "Only JPG, PNG, and WEBP are allowed" });
       }
@@ -144,24 +153,29 @@ export const updateBlog = async (req, res) => {
 
       // Upload the new image to Cloudinary
       const cloudinaryResponse = await cloudinary.uploader.upload(blogImage.tempFilePath);
-      
       if (!cloudinaryResponse || cloudinaryResponse.error) {
         return res.status(500).json({ message: "Failed to upload image to Cloudinary" });
       }
 
+      // Add new image data to updatedBlogData
       updatedBlogData.blogImage = {
         public_id: cloudinaryResponse.public_id,
         url: cloudinaryResponse.url,
       };
     }
 
+    // Update the blog in the database
     const updatedBlog = await Blog.findByIdAndUpdate(id, updatedBlogData, { new: true });
+    console.log("Blog updated successfully:", updatedBlog); // Debug log
+
+    // Send success response
     res.status(200).json({ message: "Blog updated successfully", blog: updatedBlog });
   } catch (error) {
-    console.error("Error updating blog:", error);
+    console.error("Error updating blog:", error); // Debug log
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 /*-----------------Upload Blog------------------*/
 

@@ -9,7 +9,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "../src/pages/Dashboard";
 import Creators from "./pages/Creators";
-// import { useAuth } from "./context/AuthProvider";
+import { useAuth } from "./context/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import UpdateBlog from "./dashboard/UpdateBlog";
 import Detail from "./Pages/Detail";
@@ -21,10 +21,10 @@ function App() {
   const hideNavbarFooter = ["/dashboard", "/login", "/register"].includes(
     location.pathname
   );
-  // const { blogs, isAuthenticated } = useAuth();
+  const { blogs, isAuthenticated } = useAuth();
   let token = localStorage.getItem("jwt"); // Retrieve the token directly from the localStorage to maininting the routes protect (Go to login.jsx)
-  // console.log(blogs);
-  // console.log(isAuthenticated); // it is not using because every page refresh it was redirected to /login
+  console.log(blogs);
+  console.log(isAuthenticated); // it is not using because every page refresh it was redirected to /login
 
   return (
     <div className="flex flex-col min-h-screen">

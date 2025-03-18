@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
 import toast from "react-hot-toast";
+import Join from "../Home/Join";
 
 function Detail() {
   const { id } = useParams();
@@ -133,7 +134,11 @@ function Detail() {
           className="text-gray-700 mt-6"
           dangerouslySetInnerHTML={{ __html: blogs?.about }}
         ></div>
+        
       </div>
+      <div>
+        <Join />
+        </div>
     </div>
   );
 }
