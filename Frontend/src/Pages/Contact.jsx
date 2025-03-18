@@ -2,7 +2,6 @@ import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { motion } from "framer-motion";
 
 function Contact() {
   const {
@@ -22,62 +21,27 @@ function Contact() {
       await axios.post("https://api.web3forms.com/submit", userInfo);
       toast.success("Message sent successfully");
     } catch (error) {
-      toast.error("An error occurred");
+      toast.error("An error occurred", error);
     }
   };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
-    <motion.div
-      className="min-h-screen flex items-center justify-center bg-white relative overflow-hidden"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <div className="min-h-screen flex items-center justify-center bg-white relative overflow-hidden">
       {/* Floating Contact Card */}
-      <motion.div
-        className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl p-8 md:p-12 relative z-10"
-        variants={itemVariants}
-        whileHover={{ y: -10, boxShadow: "0px 20px 40px rgba(0, 0, 0, 0.1)" }}
-        transition={{ type: "spring", stiffness: 300 }}
-      >
+      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-lg p-8 md:p-12 relative z-10 transition-shadow duration-300 hover:shadow-2xl">
         <div className="text-center">
-          <motion.h2
-            className="text-4xl font-extrabold text-gray-900 mb-4"
-            variants={itemVariants}
-          >
+          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
             Contact Us
-          </motion.h2>
-          <motion.p
-            className="text-lg text-gray-600"
-            variants={itemVariants}
-          >
-            We'd love to hear from you! Reach out to us for any inquiries or
+          </h2>
+          <p className="text-lg text-gray-600">
+            We love to hear from you! Reach out to us for any inquiries or
             feedback.
-          </motion.p>
+          </p>
         </div>
 
         <div className="flex flex-col md:flex-row justify-between mt-8">
           {/* Contact Form */}
-          <motion.div
-            className="w-full md:w-1/2 mb-8 md:mb-0 md:pr-4"
-            variants={itemVariants}
-          >
+          <div className="w-full md:w-1/2 mb-8 md:mb-0 md:pr-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-6">
               Send us a message
             </h3>
@@ -125,57 +89,43 @@ function Contact() {
                 )}
               </div>
               <div>
-                <motion.button
+                <button
                   type="submit"
                   className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   Send Message
-                </motion.button>
+                </button>
               </div>
             </form>
-          </motion.div>
+          </div>
 
           {/* Contact Information */}
-          <motion.div
-            className="w-full md:w-1/2 md:pl-4"
-            variants={itemVariants}
-          >
+          <div className="w-full md:w-1/2 md:pl-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-6">
               Contact Information
             </h3>
             <ul className="space-y-6">
-              <motion.li
-                className="flex items-center space-x-4"
-                variants={itemVariants}
-              >
+              <li className="flex items-center space-x-4">
                 <FaPhone className="text-blue-600 text-2xl" />
                 <span className="text-lg text-gray-700">+91 9316624108</span>
-              </motion.li>
-              <motion.li
-                className="flex items-center space-x-4"
-                variants={itemVariants}
-              >
+              </li>
+              <li className="flex items-center space-x-4">
                 <FaEnvelope className="text-blue-600 text-2xl" />
                 <span className="text-lg text-gray-700">
                   storyscape1230@gmail.com
                 </span>
-              </motion.li>
-              <motion.li
-                className="flex items-center space-x-4"
-                variants={itemVariants}
-              >
+              </li>
+              <li className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-blue-600 text-2xl" />
                 <span className="text-lg text-gray-700">
                   Sabrgam, Surat, Gujarat
                 </span>
-              </motion.li>
+              </li>
             </ul>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 

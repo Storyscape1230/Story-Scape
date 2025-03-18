@@ -12,10 +12,11 @@ function Trending() {
     if (blogs && blogs.length > 0) {
       // Sort blogs by creation date to show the latest first
       const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setTrendingBlogs(sortedBlogs.slice(0, 6));
+      setTrendingBlogs(sortedBlogs.slice(0, 6)); // Show only the first 6 blogs
     }
   }, [blogs]);
 
+  // Responsive configuration for the carousel
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -39,13 +40,21 @@ function Trending() {
     <div className="bg-gradient-to-r from-purple-50 to-blue-50 py-16">
       <div className="container mx-auto px-6">
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">Trending</h1>
-        <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={3000}>
+        <Carousel
+          responsive={responsive}
+          infinite={true}
+          autoPlay={true} // Enable auto-play
+          autoPlaySpeed={1500} // Slide every 3 seconds
+          keyBoardControl={true} // Enable keyboard navigation
+          transitionDuration={500} // Smooth transition
+          removeArrowOnDeviceType={["tablet", "mobile"]} // Remove arrows on smaller devices
+        >
           {trendingBlogs.length > 0 ? (
             trendingBlogs.map((blog) => (
               <div key={blog._id} className="p-2">
                 <Link to={`/blog/${blog._id}`}>
                   <div className="bg-white rounded-lg shadow-lg hover:shadow-md transition-shadow duration-300 overflow-hidden h-[60vh] relative">
-                    {/* Image covering the full card */}
+                    {/* Blog image covering the full card */}
                     <img
                       src={blog.blogImage.url}
                       alt={blog.title}

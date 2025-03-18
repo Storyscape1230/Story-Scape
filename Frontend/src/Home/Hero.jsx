@@ -27,7 +27,7 @@ function NewsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left big blog post */}
           <div className="md:col-span-1">
-            <div className="bg-white shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50">
               <Link to={`/blog/${sortedBlogs[0]._id}`}>
                 <img
                   alt="Main blog image"
@@ -47,7 +47,7 @@ function NewsPage() {
                     <p className="text-sm text-gray-500">Author</p>
                   </div>
                 </div>
-                <h1 className="text-3xl font-bold mb-2 text-gray-800 hover:text-red-500 transition-colors duration-300">
+                <h1 className="text-3xl font-bold mb-2 text-gray-800 group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-blue-500 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
                   <Link to={`/blog/${sortedBlogs[0]._id}`}>{sortedBlogs[0].title}</Link>
                 </h1>
                 <div className="flex items-center text-sm text-gray-500 mb-4">
@@ -67,7 +67,7 @@ function NewsPage() {
             {sortedBlogs.slice(1, 4).map((blog) => (
               <div
                 key={blog._id}
-                className="bg-white shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="bg-white shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50"
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Content on the left (65% width) */}
@@ -78,7 +78,7 @@ function NewsPage() {
                       <span className="text-gray-500 text-sm">6 min read</span>
                     </div>
                     <Link to={`/blog/${blog._id}`}>
-                      <h2 className="text-2xl font-semibold mb-2 text-gray-800 hover:text-red-500 transition-colors duration-300">
+                      <h2 className="text-2xl font-semibold mb-2 text-gray-800 group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-blue-500 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
                         {blog.title}
                       </h2>
                     </Link>
@@ -91,7 +91,7 @@ function NewsPage() {
                   <Link to={`/blog/${blog._id}`} className="md:w-[35%]">
                     <img
                       alt="Blog image"
-                      className="w-full h-48 md:h-48 object-cover" // Fixed height for consistency
+                      className="w-full h-48 md:h-full object-cover"
                       src={blog.blogImage.url}
                     />
                   </Link>
