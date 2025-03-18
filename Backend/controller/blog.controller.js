@@ -228,7 +228,30 @@ export const getCreatorProfile = async (req, res) => {
   }
 };
 
+export const likeBlog = async (req, res) => {
+  try {
+    let blog = await Blog.findById(req.params.blogId);
 
+    if (!blog) {
+      return res.status(404).json({ success: false, message: "Blog not found" });
+    }
+
+    const userId = req.user.id;
+    const index = blog.likes.indexOf(userId);
+
+    if (index === -1) {
+      blog.likes.push(userId);
+      await blog.save();
+      return res.status(200).json({ success: true, message: "Blog liked successfully", blog });
+    } else {
+      blog.likes.splice(index, 1);
+      await blog.save();
+      return res.status(200).json({ success: true, message: "Blog unliked successfully", blog });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 
 export default {

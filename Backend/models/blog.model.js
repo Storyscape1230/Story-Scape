@@ -30,6 +30,12 @@ const blogSchema = new mongoose.Schema({
   adminPhoto: {
     type: String,
   },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: "User",

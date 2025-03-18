@@ -1,46 +1,57 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [blogs, setBlogs] = useState([]); // Initialize blogs as an empty array
-  const [profile, setProfile] = useState(null); // Initialize profile as null
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [blogs, setBlogs] = useState([]); // Store blogs
+  const [profile, setProfile] = useState(null); // Store final profile
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
+  const [loading, setLoading] = useState(true); // Loading state
+  const [tempProfile, setTempProfile] = useState(null); // Temporary profile holder
 
-  // Fetch user profile
+  // Fetch user profile if the token exists
   const fetchProfile = async () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      console.warn("No token found, skipping profile fetch.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const token = localStorage.getItem("jwt"); // Retrieve token from localStorage
-      console.log("Token:", token); // Log the token
+      const { data } = await axios.get(
+        "http://localhost:8001/api/users/my-profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
-      if (token) {
-        const { data } = await axios.get(
-          "http://localhost:8001/api/users/my-profile",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Send token in the Authorization header
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
-
-        console.log("Profile data:", data.user); // Log the profile data
-        setProfile(data.user); // Update profile state
-        setIsAuthenticated(true); // Set authentication status to true
-      }
+      setTempProfile(data.user); // Store in temp state first
     } catch (error) {
-      console.error("Error fetching profile:", error);
+      console.error("Error fetching profile:", error.response?.data || error);
 
-      // Clear token and redirect to login if the token is invalid or expired
       if (error.response?.status === 401) {
-        localStorage.removeItem("jwt"); // Clear the token
-        setIsAuthenticated(false); // Set authentication status to false
+        localStorage.removeItem("jwt"); // Remove invalid token
+        setIsAuthenticated(false);
       }
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Once loading is done, move tempProfile to profile
+  useEffect(() => {
+    if (!loading && tempProfile) {
+      setProfile(tempProfile);
+      setIsAuthenticated(true);
+    }
+  }, [loading, tempProfile]);
 
   // Fetch all blogs
   const fetchBlogs = async () => {
@@ -49,9 +60,7 @@ export const AuthProvider = ({ children }) => {
         "http://localhost:8001/api/blogs/all-blogs",
         { withCredentials: true }
       );
-
-      console.log("Blogs data:", data); // Log the blogs data
-      setBlogs(data); // Update blogs state
+      setBlogs(data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     }
@@ -59,19 +68,20 @@ export const AuthProvider = ({ children }) => {
 
   // Fetch data on component mount
   useEffect(() => {
-    fetchProfile(); // Fetch user profile
-    fetchBlogs(); // Fetch blogs
+    fetchProfile();
+    fetchBlogs();
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
         blogs,
-        profile,
+        profile, // Final profile state
         setProfile,
         isAuthenticated,
         setIsAuthenticated,
         fetchProfile,
+        loading, // Expose loading state
       }}
     >
       {children}
@@ -79,9 +89,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Add PropTypes validation
+// PropTypes validation
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+// Custom hook to use AuthContext
 export const useAuth = () => useContext(AuthContext);

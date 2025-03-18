@@ -1,12 +1,13 @@
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
 
-function Hero() {
+// Utility function to strip HTML tags
+const stripHtmlTags = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};
+
+function NewsPage() {
   const { blogs } = useAuth();
 
   if (!blogs || blogs.length < 4) {
@@ -17,74 +18,91 @@ function Hero() {
     );
   }
 
+  // Reverse the blogs array to show the newest blog first
+  const sortedBlogs = [...blogs].reverse();
+
   return (
-    <div className="bg-gray-100 p-6 h-screen flex items-center justify-center">
-      {/* Main Blog Slider (70% width, 80vh height, 50px below navbar, and 60px margin-bottom) */}
-      <div className="w-[70%] h-[80vh] mt-[50px] mb-[60px] relative">
-        <Swiper
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          }}
-          loop={true} // Enable looping
-          modules={[Autoplay, Pagination, Navigation]}
-          className="h-full rounded-lg"
-        >
-          {blogs.slice(0, 4).map((blog) => (
-            <SwiperSlide key={blog._id}>
-              <Link to={`/blog/${blog._id}`}>
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-12">
+      <div className="mx-auto w-[90%]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Left big blog post */}
+          <div className="md:col-span-1">
+            <div className="bg-white shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <Link to={`/blog/${sortedBlogs[0]._id}`}>
                 <img
                   alt="Main blog image"
-                  className="w-full h-full object-cover rounded-lg"
-                  src={blog.blogImage.url}
+                  className="w-full h-96 object-cover"
+                  src={sortedBlogs[0].blogImage.url}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-lg"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <div className="flex items-center mb-4">
-                    <img
-                      alt="Author's profile picture"
-                      className="w-12 h-12 rounded-full mr-3"
-                      src={blog.adminPhoto}
-                    />
-                    <div>
-                      <p className="text-sm font-semibold">{blog.adminName}</p>
-                      <p className="text-sm text-gray-300">Author</p>
-                    </div>
-                  </div>
-                  <h1 className="text-4xl font-bold mb-2">{blog.title}</h1>
-                  <div className="flex items-center text-sm text-gray-300 mb-4">
-                    <span className="text-red-500">{blog.category}</span>
-                    <span className="mx-2">|</span>
-                    <span>6 minute read</span>
-                  </div>
-                  <button className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">
-                    Read More
-                  </button>
-                </div>
               </Link>
-            </SwiperSlide>
-          ))}
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <img
+                    alt="Author's profile picture"
+                    className="w-10 h-10 rounded-full mr-3"
+                    src={sortedBlogs[0].adminPhoto}
+                  />
+                  <div>
+                    <p className="text-sm font-semibold">{sortedBlogs[0].adminName}</p>
+                    <p className="text-sm text-gray-500">Author</p>
+                  </div>
+                </div>
+                <h1 className="text-3xl font-bold mb-2 text-gray-800 hover:text-red-500 transition-colors duration-300">
+                  <Link to={`/blog/${sortedBlogs[0]._id}`}>{sortedBlogs[0].title}</Link>
+                </h1>
+                <div className="flex items-center text-sm text-gray-500 mb-4">
+                  <span className="text-red-500">{sortedBlogs[0].category}</span>
+                  <span className="mx-2">|</span>
+                  <span>6 minute read</span>
+                </div>
+                <p className="text-gray-600 line-clamp-3">
+                  {stripHtmlTags(sortedBlogs[0].about)} {/* Render plain text */}
+                </p>
+              </div>
+            </div>
+          </div>
 
-          {/* Simple Navigation Arrows */}
-          <div className="swiper-button-next !text-white !text-2xl">
-            &#10095;
+          {/* Right-side smaller blog cards */}
+          <div className="md:col-span-1 space-y-6">
+            {sortedBlogs.slice(1, 4).map((blog) => (
+              <div
+                key={blog._id}
+                className="bg-white shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="flex flex-col md:flex-row">
+                  {/* Content on the left (65% width) */}
+                  <div className="p-6 md:w-[65%]">
+                    <div className="flex items-center mb-2">
+                      <span className="text-red-500 text-sm">{blog.category}</span>
+                      <span className="mx-2 text-gray-500 text-sm">|</span>
+                      <span className="text-gray-500 text-sm">6 min read</span>
+                    </div>
+                    <Link to={`/blog/${blog._id}`}>
+                      <h2 className="text-2xl font-semibold mb-2 text-gray-800 hover:text-red-500 transition-colors duration-300">
+                        {blog.title}
+                      </h2>
+                    </Link>
+                    <p className="text-gray-600 text-sm line-clamp-4">
+                      {stripHtmlTags(blog.about)} {/* Render plain text */}
+                    </p>
+                  </div>
+
+                  {/* Image on the right (35% width) */}
+                  <Link to={`/blog/${blog._id}`} className="md:w-[35%]">
+                    <img
+                      alt="Blog image"
+                      className="w-full h-48 md:h-48 object-cover" // Fixed height for consistency
+                      src={blog.blogImage.url}
+                    />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="swiper-button-prev !text-white !text-2xl">
-            &#10094;
-          </div>
-        </Swiper>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Hero;
+export default NewsPage;

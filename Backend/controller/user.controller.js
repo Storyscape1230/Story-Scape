@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import bcrypt from "bcryptjs";
 import createTokenAndSaveCookies from "../jwt/AuthToken.js";
+import { Blog } from "../models/blog.model.js";
 
 /*----------------- Register ----------------*/
 const register = async (req, res) => {
@@ -167,8 +168,64 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const saveBlog = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const blog = await Blog.findById(req.params.blogId);
+
+    if (!blog) {
+      return res.status(404).json({ success: false, message: "Blog not found" });
+    }
+
+    if (user.saved.includes(blog._id)) {
+      return res.status(400).json({ success: false, message: "Blog already saved" });
+    }
+
+    user.saved.push(blog._id);
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Blog saved successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const getSavedBlogs = async (req, res) => {
+  try {
+    const userId = req.user.id; // Extract user ID from authenticated request
+    const user = await User.findById(userId).populate("saved"); // Populate saved blogs
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user.saved); // Return saved blogs
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
 
 
+// Remove a saved blog from the user's profile
+const removeSavedBlog = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { blogId } = req.params; // Get blog ID from params
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Remove blog ID from saved array
+    user.saved = user.saved.filter((id) => id.toString() !== blogId);
+    await user.save();
+
+    res.status(200).json({ message: "Blog removed from saved list", saved: user.saved });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
 
 /*----------------- Export All Controllers ----------------*/
-export { register, login, logout, getMyProfile, getAdmins, updateProfile };
+export { register, login, logout, getMyProfile, getAdmins, updateProfile, saveBlog, getSavedBlogs, removeSavedBlog };
