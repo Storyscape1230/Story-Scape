@@ -7,7 +7,7 @@ const stripHtmlTags = (html) => {
   return doc.body.textContent || "";
 };
 
-function NewsPage() {
+function Hero() {
   const { blogs } = useAuth();
 
   if (!blogs || blogs.length < 4) {
@@ -105,4 +105,4 @@ function NewsPage() {
   );
 }
 
-export default NewsPage;
+export default Hero;
