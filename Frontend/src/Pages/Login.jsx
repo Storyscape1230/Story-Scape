@@ -55,9 +55,14 @@ function Login() {
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
           <form onSubmit={handleLogin}>
             <div className="font-semibold text-xl items-center text-center ruslan-display-regular">
-              Story<span className="text-blue-500 ruslan-display-regular">Scape</span>
+              <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
+                Story
+                <span className="text-red-500 ruslan-display-regular">
+                  Scape
+                </span>
+              </span>
             </div>
-            
+
             <h1 className="text-xl font-semibold mb-6">Login</h1>
             <select
               value={role}
@@ -97,7 +102,7 @@ function Login() {
             </p>
             <button
               type="submit"
-              className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white"
+              className="w-full p-2 bg-red-500 hover:bg-red-800 duration-300 rounded-md text-white"
             >
               Login
             </button>

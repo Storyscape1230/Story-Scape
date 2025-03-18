@@ -35,13 +35,21 @@ function Register() {
   // Handle form submission
   const handleRegister = async (e) => {
     e.preventDefault();
-  
+
     // Basic validation
-    if (!name || !email || !phone || !password || !role || !education || !photo) {
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !password ||
+      !role ||
+      !education ||
+      !photo
+    ) {
       toast.error("Please fill all the required fields");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -50,12 +58,12 @@ function Register() {
     formData.append("role", role);
     formData.append("education", education);
     formData.append("photo", photo);
-  
+
     // Log form data for debugging
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-  
+
     try {
       const { data } = await axios.post(
         "http://localhost:8001/api/users/register",
@@ -67,13 +75,13 @@ function Register() {
           },
         }
       );
-  
+
       // Handle success
       localStorage.setItem("jwt", data.token); // Store token in localStorage
       toast.success(data.message || "User registered successfully");
       setProfile(data);
       setIsAuthenticated(true);
-  
+
       // Reset form fields
       setName("");
       setEmail("");
@@ -83,11 +91,14 @@ function Register() {
       setEducation("");
       setPhoto("");
       setPhotoPreview("");
-  
+
       // Navigate to home page
       navigateTo("/");
     } catch (error) {
-      console.error("Registration Error:", error.response?.data || error.message);
+      console.error(
+        "Registration Error:",
+        error.response?.data || error.message
+      );
       toast.error(
         error.response?.data?.message || "An error occurred during registration"
       );
@@ -100,7 +111,12 @@ function Register() {
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
           <form onSubmit={handleRegister}>
             <div className="font-semibold text-xl items-center text-center">
-              Cilli<span className="text-blue-500">Blog</span>
+              <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
+                Story
+                <span className="text-red-500 ruslan-display-regular">
+                  Scape
+                </span>
+              </span>
             </div>
             <h1 className="text-xl font-semibold mb-6">Register</h1>
 
@@ -176,10 +192,14 @@ function Register() {
               <option value="MCA">MCA</option>
               <option value="MBA">MBA</option>
               <option value="BBA">BBA</option>
+              <option value="BCOM">BCOM</option>
+              <option value="10th PASS">10th PASS</option>
+              <option value="12th PASS">12th PASS</option>
+              <option value="ABHAN">ABHAN</option>
             </select>
 
             {/* Photo Upload */}
-            <div className="flex items-center mb-4">
+            <div className="flex items-center justify-center mb-4">
               <div
                 className="w-20 h-20 mr-4 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
                 onClick={() => document.getElementById("photoInput").click()}
@@ -217,7 +237,7 @@ function Register() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full p-2 bg-blue-500 hover:bg-blue-800 duration-300 rounded-md text-white"
+              className="w-full p-2 bg-red-500 hover:bg-red-800 duration-300 rounded-md text-white"
             >
               Register
             </button>
