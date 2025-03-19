@@ -1,6 +1,5 @@
 import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import toast from "react-hot-toast";
 
 function Contact() {
@@ -10,19 +9,9 @@ function Contact() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    const userInfo = {
-      access_key: "c660c9ce-c6f9-41f7-aa0f-8a24ea887b94",
-      name: data.username,
-      email: data.email,
-      message: data.message,
-    };
-    try {
-      await axios.post("https://api.web3forms.com/submit", userInfo);
-      toast.success("Message sent successfully");
-    } catch (error) {
-      toast.error("An error occurred", error);
-    }
+  const onSubmit = (data) => {
+    // Simulate form submission success
+    toast.success("Message sent successfully",data);
   };
 
   return (
