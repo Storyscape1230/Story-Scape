@@ -44,10 +44,12 @@ const Footer = () => {
                         className="h-5 w-5 mr-1" // Adjust size and spacing
                       />
                       {/* Logo Text */}
+                      <div className="items-center">
                       <span className=" font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
                         Story
                         <span className="text-red-500 ruslan-display-regular">Scape</span>
                       </span>
+                      </div>
                     </Link>
             <p className="mt-4 text-sm text-gray-400">
               Crafting digital experiences that inspire and engage.
