@@ -1,66 +1,81 @@
 import { useAuth } from "../context/AuthProvider";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-
-// Utility function to strip HTML tags
-const stripHtmlTags = (html) => {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent || "";
-};
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Devotional() {
   const { blogs } = useAuth();
-  const [devotionalBlogs, setDevotionalBlogs] = useState([]);
+  const navigate = useNavigate(); // Initialize navigate
+  const devotionalBlogs = blogs?.filter(blog => blog.category === "Devotion").reverse().slice(0, 4);
 
-  // Filter and sort devotional blogs by their order in the array (newest last)
-  useEffect(() => {
-    if (blogs && blogs.length > 0) {
-      const filteredBlogs = blogs.filter((blog) => blog.category === "Devotion");
-      // Assume the last blog in the array is the newest
-      const sortedBlogs = [...filteredBlogs].reverse(); // Reverse to show newest first
-      setDevotionalBlogs(sortedBlogs.slice(0, 4)); // Show only the first 4 blogs
-    }
-  }, [blogs]);
+  // Function to handle blog click
+  const handleBlogClick = (blogId) => {
+    // Scroll to top immediately
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    // Then navigate
+    navigate(`/blog/${blogId}`);
+  };
 
   return (
-    <div className="bg-gradient-to-r from-purple-50 to-blue-50 py-12">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Devotional</h1>
-        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-          Explore the divine and spiritual insights through our collection of devotional blogs.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {devotionalBlogs.length > 0 ? (
-            devotionalBlogs.map((blog) => (
-              <div
+    <div className="bg-gradient-to-b from-rose-50 to-white py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl font-bold text-rose-800 mb-3">Spiritual Nourishment</h2>
+          <p className="text-rose-600 max-w-2xl mx-auto">
+            Uplifting devotionals to nourish your soul
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {devotionalBlogs?.length > 0 ? (
+            devotionalBlogs.map((blog, index) => (
+              <motion.div
                 key={blog._id}
-                className="bg-white shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer" // Added cursor-pointer
+                onClick={() => handleBlogClick(blog._id)} // Added onClick handler
               >
-                <Link to={`/blog/${blog._id}`} className="block">
+                <div className="relative h-48 overflow-hidden">
                   <img
                     src={blog.blogImage.url}
                     alt={blog.title}
-                    className="w-full h-56 object-cover"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="p-5">
-                    <h2 className="text-xl font-bold text-gray-800 mb-2">{blog.title}</h2>
-                    <p className="text-sm text-gray-600 line-clamp-3">
-                      {stripHtmlTags(blog.about)} {/* Render plain text */}
-                    </p>
-                    <div className="flex items-center mt-4">
-                      <img
-                        src={blog.adminPhoto}
-                        alt={blog.adminName}
-                        className="w-8 h-8 rounded-full mr-2"
-                      />
-                      <span className="text-sm text-gray-700">{blog.adminName}</span>
-                    </div>
+                  <div className="absolute top-3 left-3 bg-white/90 text-rose-700 px-3 py-1 rounded-full text-xs font-medium">
+                    Devotional
                   </div>
-                </Link>
-              </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold text-rose-800 mb-2 line-clamp-2">
+                    {blog.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-xs text-rose-400">
+                    <span>{blog.adminName}</span>
+                    <span className="flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                      </svg>
+                      5 min read
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
             ))
           ) : (
-            <div className="text-center text-gray-600 col-span-full">No devotional blogs found.</div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full text-center py-12"
+            >
+              <div className="text-5xl text-rose-300 mb-4">🙏</div>
+              <p className="text-rose-600">No devotionals available yet</p>
+            </motion.div>
           )}
         </div>
       </div>

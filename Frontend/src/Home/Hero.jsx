@@ -22,7 +22,7 @@ function Hero() {
   const sortedBlogs = [...blogs].reverse();
 
   return (
-    <div className="bg-white min-h-screen p-12">
+    <div className="bg-gradient-to-red from-rose-50 to-white py-16 px-4">
       <div className="mx-auto w-[90%]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left big blog post */}

@@ -1,58 +1,73 @@
 import { useState } from "react";
-import Joinbackground from "../assets/Joinbackground.png";
+import { motion } from "framer-motion";
+import joinBg from "../assets/Joinbackground.png"; // Add your background image
 
 const Join = () => {
-  const [email, setEmail] = useState(""); // State to store the email input
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    if (email) { // Check if the email is not empty
-      setIsSubmitted(true); // Show the success message
-      setEmail(""); // Clear the input field
+    e.preventDefault();
+    if (email) {
+      setIsSubmitted(true);
+      setEmail("");
+      setTimeout(() => setIsSubmitted(false), 3000);
     }
   };
 
   return (
-    <div className="mb-10 mt-20">
-      {/* Hero Section */}
-      <div className="relative w-full">
-        <img
-          alt="A vast green agricultural field with trees in the background"
-          className="w-full h-[500px] object-cover"
-          src={Joinbackground}
+    <div className="relative py-20 overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src={joinBg} 
+          alt="Community background"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white">
-          <h1 className="text-4xl md:text-6xl font-bold text-center px-4">
-            Get Involved in the Agricultural Uprising
-          </h1>
-          <p className="mt-4 text-lg md:text-xl text-center px-4 max-w-2xl">
-            Join us in revolutionizing agriculture for a sustainable future. Together, we can make a difference.
-          </p>
-          <form onSubmit={handleSubmit} className="mt-8 flex flex-col md:flex-row items-center gap-4 w-full max-w-md px-4">
-            <input
-              className="w-full md:w-2/3 p-4 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-gray-600"
-              placeholder="Type your email address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)} // Update the email state
-              required // Ensure the input is not empty
-            />
-            <button
-              type="submit"
-              className="w-full md:w-1/3 bg-green-500 text-white px-6 py-4 rounded-full hover:bg-green-600 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
-            >
-              Join Now
-            </button>
-          </form>
-          {/* Success Message */}
-          {isSubmitted && (
-            <p className="mt-4 text-lg text-green-400 font-semibold">
-              Successfully joined! Thank you for being part of the movement.
-            </p>
-          )}
-        </div>
+        <div className="absolute inset-0 bg-rose-700/30"></div>
       </div>
+      
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="max-w-4xl mx-auto px-4 text-center relative z-10"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          Join Our Storytelling Community
+        </h2>
+        <p className="text-xl text-rose-100 mb-8 max-w-2xl mx-auto">
+          Be the first to discover new stories and connect with fellow readers
+        </p>
+        
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your email address"
+            className="flex-grow px-6 py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-300 text-rose-900"
+            required
+          />
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            type="submit"
+            className="px-8 py-4 bg-rose-600 text-white font-medium rounded-full hover:bg-rose-700 transition-colors shadow-lg"
+          >
+            Subscribe
+          </motion.button>
+        </form>
+        
+        {isSubmitted && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-6 text-rose-100 font-medium"
+          >
+            Welcome to our community! Check your inbox for confirmation.
+          </motion.div>
+        )}
+      </motion.div>
     </div>
   );
 };
