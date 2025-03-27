@@ -22,12 +22,12 @@ function Hero() {
   const sortedBlogs = [...blogs].reverse();
 
   return (
-    <div className="bg-gradient-to-red from-rose-50 to-white py-16 px-4">
+    <div className="bg-gradient-to-red from-rose-50 to-white py-8 px-4">
       <div className="mx-auto w-[90%]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left big blog post */}
           <div className="md:col-span-1">
-            <div className="bg-white overflow-hidden transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 h-full rounded-lg">
+            <div className="bg-gradient-to-red overflow-hidden transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 h-full rounded-lg">
               <div className="overflow-hidden rounded-lg"> {/* Ensure rounded corners for the image container */}
                 <Link to={`/blog/${sortedBlogs[0]._id}`}>
                   <img
@@ -37,7 +37,7 @@ function Hero() {
                   />
                 </Link>
               </div>
-              <div className="p-6 bg-white">
+              <div className="p-6 bg-gradient-to-red">
                 {" "}
                 {/* Consistent background color */}
                 <div className="flex items-center mb-4">
@@ -53,7 +53,7 @@ function Hero() {
                     <p className="text-sm text-gray-500">Author</p>
                   </div>
                 </div>
-                <h1 className="text-3xl font-bold mb-2 text-gray-800 group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-blue-500 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
+                <h1 className="text-3xl font-bold mb-2 text-gray group-hover:bg-gradient-to-r group-hover:text-red-700 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
                   <Link to={`/blog/${sortedBlogs[0]._id}`}>
                     {sortedBlogs[0].title}
                   </Link>
@@ -78,11 +78,11 @@ function Hero() {
             {sortedBlogs.slice(1, 4).map((blog) => (
               <div
                 key={blog._id}
-                className="bg-white overflow-hidden transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 flex-1 rounded-lg"
+                className="bg-gradient-to-red overflow-hidden transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 flex-1 rounded-lg"
               >
                 <div className="flex flex-col md:flex-row h-full">
                   {/* Content on the left (63% width) */}
-                  <div className="p-4 md:w-[63%] flex flex-col justify-between bg-white">
+                  <div className="p-4 md:w-[63%] flex flex-col justify-between bg-gradient-to-red">
                     {" "}
                     {/* Consistent background color */}
                     <div>
@@ -96,7 +96,7 @@ function Hero() {
                         </span>
                       </div>
                       <Link to={`/blog/${blog._id}`}>
-                        <h2 className="text-2xl font-semibold mb-2 text-gray-800 group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-blue-500 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
+                        <h2 className="text-2xl font-semibold mb-2 text-gray-800 group-hover:bg-gradient-to-r group-hover:text-red-700 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300">
                           {blog.title}
                         </h2>
                       </Link>

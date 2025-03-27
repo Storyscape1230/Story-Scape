@@ -42,24 +42,27 @@ function Navbar() {
           />
           {/* Logo Text */}
           <div className="items-center">
-          <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular ">
-            Story
-            <span className="text-red-500 ruslan-display-regular">Scape</span>
-          </span></div>
+            <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular ">
+              Story
+              <span className="text-red-500 ruslan-display-regular">Scape</span>
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Links */}
         <div className="mx-6">
           <ul className="hidden md:flex space-x-6">
-            {["/", "/blogs", "/creators", "/about", "/contact","/save"].map((path) => (
-              <Link
-                key={path}
-                to={path}
-                className="hover:text-red-500 transition-colors duration-300"
-              >
-                {path === "/" ? "HOME" : path.slice(1).toUpperCase()}
-              </Link>
-            ))}
+            {["/", "/blogs", "/creators", "/about", "/contact", "/save"].map(
+              (path) => (
+                <Link
+                  key={path}
+                  to={path}
+                  className="hover:text-red-500 transition-colors duration-300"
+                >
+                  {path === "/" ? "HOME" : path.slice(1).toUpperCase()}
+                </Link>
+              )
+            )}
           </ul>
 
           {/* Mobile Menu Toggle */}
