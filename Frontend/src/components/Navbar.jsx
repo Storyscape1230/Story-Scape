@@ -38,13 +38,14 @@ function Navbar() {
           <img
             src={logo} // Use the imported logo
             alt="StoryScape Logo"
-            className="h-5 w-5 mr-1" // Adjust size and spacing
+            className="h-5 w-5 mr-1 " // Adjust size and spacing
           />
           {/* Logo Text */}
-          <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
+          <div className="items-center">
+          <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular ">
             Story
             <span className="text-red-500 ruslan-display-regular">Scape</span>
-          </span>
+          </span></div>
         </Link>
 
         {/* Desktop Links */}
