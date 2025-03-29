@@ -17,6 +17,11 @@ function Detail() {
   const [views, setViews] = useState(0);
   const [showShareModal, setShowShareModal] = useState(false);
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Unique decorative elements
   const decorativeIcons = ["✍️", "📖", "✨", "🖋️", "🌟"];
   const randomIcon = decorativeIcons[Math.floor(Math.random() * decorativeIcons.length)];

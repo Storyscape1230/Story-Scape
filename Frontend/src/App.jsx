@@ -15,6 +15,8 @@ import UpdateBlog from "./dashboard/UpdateBlog";
 import Detail from "./Pages/Detail";
 import Save from "./Pages/Save";
 import CreatorProfile from "./components/CreatorProfile";
+import ScrollToTop from "./components/ScrollToTop";
+import UserProfile from "./components/UserProfile";
 // import NotFound from "./pages/NotFound";
 function App() {
   const location = useLocation();
@@ -28,6 +30,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
+        <ScrollToTop />
       {!hideNavbarFooter && <Navbar />}
 
       {/* Main Content should take all available space */}
@@ -49,6 +52,7 @@ function App() {
           <Route path="/creator/:creatorId" element={<CreatorProfile />} />
           <Route exact path="/blog/:id" element={<Detail />} />
           <Route exact path="/blog/update/:id" element={<UpdateBlog />} />
+          <Route exact path="/profile" element={<UserProfile />} />
         </Routes>
       </div>
 

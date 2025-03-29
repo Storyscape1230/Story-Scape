@@ -81,7 +81,7 @@ function Creators() {
                 </div>
 
                 {/* Content overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-red-900/90 via-red-900/70 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
                   <div className="flex items-end justify-between">
                     <div>
                       <h2 className="text-2xl font-bold text-white mb-1">

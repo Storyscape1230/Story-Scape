@@ -1,5 +1,5 @@
 
-
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 // Uncomment these when you have the images
 // import team1 from "../assets/krish.jpg";
@@ -38,6 +38,11 @@ function About() {
     "Dynamic admin dashboard",
     "Real-time like & comment features"
   ];
+
+   // Scroll to top when component mounts
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   return (
     <div className="bg-gradient-to-r from-red-50 to-pink-50 py-16 px-4 min-h-screen">
