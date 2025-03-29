@@ -1,4 +1,3 @@
-
 import { FaGithub, FaLinkedin, FaRegHeart } from "react-icons/fa";
 import { BsYoutube, BsArrowUpCircle } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -35,22 +34,23 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Brand section */}
           <div className="md:col-span-1">
-           
             <Link to="/" className="flex items-center">
-                      {/* Logo Image */}
-                      <img
-                        src={logo} // Use the imported logo
-                        alt="StoryScape Logo"
-                        className="h-5 w-5 mr-1" // Adjust size and spacing
-                      />
-                      {/* Logo Text */}
-                      <div className="items-center">
-                      <span className=" font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
-                        Story
-                        <span className="text-red-500 ruslan-display-regular">Scape</span>
-                      </span>
-                      </div>
-                    </Link>
+              {/* Logo Image */}
+              <img
+                src={logo} // Use the imported logo
+                alt="StoryScape Logo"
+                className="h-5 w-5 mr-1" // Adjust size and spacing
+              />
+              {/* Logo Text */}
+              <div className="items-center">
+                <span className=" font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
+                  Story
+                  <span className="text-red-500 ruslan-display-regular">
+                    Scape
+                  </span>
+                </span>
+              </div>
+            </Link>
             <p className="mt-4 text-sm text-gray-400">
               Crafting digital experiences that inspire and engage.
             </p>

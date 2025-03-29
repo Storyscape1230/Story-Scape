@@ -45,6 +45,7 @@ function Navbar() {
   };
 
   return (
+<<<<<<< HEAD
     <nav className="bg-black text-white sticky top-0 z-50 shadow-lg">
       <div className="w-[90%] mx-auto px-2 py-3">
         <div className="flex items-center justify-between">
@@ -73,6 +74,49 @@ function Navbar() {
                 </Link>
               ))}
             </ul>
+=======
+    <nav className="bg-black text-white shadow-lg px-4 py-2">
+      <div className="flex items-center justify-between container mx-auto">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          {/* Logo Image */}
+          <img
+            src={logo} // Use the imported logo
+            alt="StoryScape Logo"
+            className="h-5 w-5 mr-1 " // Adjust size and spacing
+          />
+          {/* Logo Text */}
+          <div className="items-center">
+            <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular ">
+              Story
+              <span className="text-red-500 ruslan-display-regular">Scape</span>
+            </span>
+          </div>
+        </Link>
+
+        {/* Desktop Links */}
+        <div className="mx-6">
+          <ul className="hidden md:flex space-x-6">
+            {["/", "/blogs", "/creators", "/about", "/contact", "/save"].map(
+              (path) => (
+                <Link
+                  key={path}
+                  to={path}
+                  className="hover:text-red-500 transition-colors duration-300"
+                >
+                  {path === "/" ? "HOME" : path.slice(1).toUpperCase()}
+                </Link>
+              )
+            )}
+          </ul>
+
+          {/* Mobile Menu Toggle */}
+          <div
+            className="md:hidden cursor-pointer"
+            onClick={() => setShow(!show)}
+          >
+            {show ? <IoCloseSharp size={24} /> : <AiOutlineMenu size={24} />}
+>>>>>>> 6ad1dce931a9a3b04bc2ca61a8aeb21321f69258
           </div>
 
           {/* Right section - desktop */}

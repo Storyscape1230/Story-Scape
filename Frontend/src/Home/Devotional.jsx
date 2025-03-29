@@ -1,22 +1,19 @@
 import { useAuth } from "../context/AuthProvider";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function Devotional() {
   const { blogs } = useAuth();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const devotionalBlogs = blogs?.filter(blog => blog.category === "Devotion").reverse().slice(0, 4);
 
-  // Function to handle blog click
   const handleBlogClick = (blogId) => {
-    // Scroll to top immediately
     window.scrollTo({ top: 0, behavior: 'instant' });
-    // Then navigate
     navigate(`/blog/${blogId}`);
   };
 
   return (
-    <div className="bg-gradient-to-b from-rose-50 to-white py-16 px-4">
+    <div className="bg-gradient-to-red to-white py-16 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -38,8 +35,8 @@ function Devotional() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5 }}
-                className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer" // Added cursor-pointer
-                onClick={() => handleBlogClick(blog._id)} // Added onClick handler
+                className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer"
+                onClick={() => handleBlogClick(blog._id)}
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -51,11 +48,11 @@ function Devotional() {
                     Devotional
                   </div>
                 </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-semibold text-rose-800 mb-2 line-clamp-2">
+                <div className="p-5 bg-white"> {/* Added bg-white here for clarity */}
+                  <h3 className="text-lg font-semibold text-black mb-2 line-clamp-2"> {/* Changed to text-black */}
                     {blog.title}
                   </h3>
-                  <div className="flex items-center justify-between text-xs text-rose-400">
+                  <div className="flex items-center justify-between text-xs text-gray-500"> {/* Changed to text-gray-500 */}
                     <span>{blog.adminName}</span>
                     <span className="flex items-center">
                       <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
