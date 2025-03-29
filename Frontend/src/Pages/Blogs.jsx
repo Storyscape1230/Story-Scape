@@ -7,8 +7,8 @@ function Blogs() {
   const { blogs } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Sort blogs by upload date (newest first)
-  const sortedBlogs = blogs?.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+  // Reverse the order of blogs (first blog last, last blog first)
+  const sortedBlogs = blogs ? [...blogs].reverse() : [];
 
   // Get all unique categories
   const categories = ["All", ...new Set(blogs?.map(blog => blog.category))];
@@ -85,8 +85,7 @@ function Blogs() {
                         alt={blog.title}
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                       />
-                      {/* New Badge for first 5 blogs */}
-                      {index < 5 && (
+                      {index < 3 && (
                         <span className="absolute top-3 left-3 bg-rose-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
                           New
                         </span>
