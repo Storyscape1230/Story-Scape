@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [blogs, setBlogs] = useState([]); // Store blogs
-  const [profile, setProfile] = useState(null); // Store final profile
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Authentication state
-  const [loading, setLoading] = useState(true); // Loading state
-  const [tempProfile, setTempProfile] = useState(null); // Temporary profile holder
+  const [blogs, setBlogs] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [tempProfile, setTempProfile] = useState(null);
 
   // Fetch user profile if the token exists
   const fetchProfile = async () => {
@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     if (!token) {
       console.warn("No token found, skipping profile fetch.");
       setLoading(false);
+      setIsAuthenticated(false);
       return;
     }
 
@@ -32,13 +33,15 @@ export const AuthProvider = ({ children }) => {
         }
       );
 
-      setTempProfile(data.user); // Store in temp state first
+      setTempProfile(data.user);
+      setIsAuthenticated(true);
     } catch (error) {
       console.error("Error fetching profile:", error.response?.data || error);
 
       if (error.response?.status === 401) {
-        localStorage.removeItem("jwt"); // Remove invalid token
+        localStorage.removeItem("jwt");
         setIsAuthenticated(false);
+        setTempProfile(null);
       }
     } finally {
       setLoading(false);
@@ -49,7 +52,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!loading && tempProfile) {
       setProfile(tempProfile);
-      setIsAuthenticated(true);
     }
   }, [loading, tempProfile]);
 
@@ -72,16 +74,42 @@ export const AuthProvider = ({ children }) => {
     fetchBlogs();
   }, []);
 
+  // Function to handle login
+  const login = async (credentials) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8001/api/users/login",
+        credentials,
+        { withCredentials: true }
+      );
+      localStorage.setItem("jwt", data.token);
+      await fetchProfile();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Function to handle logout
+  const logout = () => {
+    localStorage.removeItem("jwt");
+    setProfile(null);
+    setTempProfile(null);
+    setIsAuthenticated(false);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         blogs,
-        profile, // Final profile state
+        profile,
         setProfile,
         isAuthenticated,
         setIsAuthenticated,
         fetchProfile,
-        loading, // Expose loading state
+        loading,
+        login,
+        logout,
       }}
     >
       {children}

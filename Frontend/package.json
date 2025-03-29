@@ -27,7 +27,7 @@
     "confetti-js": "^0.0.18",
     "dompurify": "^3.2.4",
     "editorjs-html": "^4.0.5",
-    "framer-motion": "^12.5.0",
+    "framer-motion": "^12.6.2",
     "frontend": "file:",
     "jodit-react": "^5.2.15",
     "react": "^18.3.1",
