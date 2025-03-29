@@ -131,18 +131,10 @@ function Profile() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen md:ml-64 flex flex-col bg-gradient-to-br from-[#0A0F1C] via-[#0D1425] to-[#1A1F2E] relative overflow-hidden"
+      className="min-h-screen md:ml-64 flex flex-col bg-[#0A0F1C] relative overflow-hidden"
     >
-      {/* Optimized Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Static Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] opacity-10"></div>
-        
-        {/* Reduced Number of Floating Elements */}
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-r from-[#3B82F6] to-[#1E40AF] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animation-delay-2000"></div>
-        
-        {/* Static Grid Pattern */}
+      {/* Simplified Background */}
+      <div className="absolute inset-0 bg-[#0A0F1C]">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
       </div>
 
@@ -152,18 +144,11 @@ function Profile() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="relative bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.5rem] overflow-hidden group"
+          className="relative bg-[#0D1425] rounded-[2.5rem] overflow-hidden group"
         >
           {/* Simplified Border Effect */}
           <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute inset-[1px] bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.4rem]" />
-          
-          {/* Static Background Effects */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/10 via-[#3B82F6]/5 to-transparent rounded-[2.4rem]" />
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 rounded-[2.4rem]" />
-          
-          {/* Simplified Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#60A5FA]/0 via-[#60A5FA]/20 to-[#60A5FA]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[2.4rem]" />
+          <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
           
           <div className="relative p-8 md:p-12">
             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -175,7 +160,7 @@ function Profile() {
                 className="relative group"
               >
                 <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-[#2A3B5C] to-[#1E3A8A] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-300"
+                  className="absolute -inset-1 bg-gradient-to-r from-[#2A3B5C] to-[#1E3A8A] rounded-full opacity-30 group-hover:opacity-50 transition duration-300"
                 />
                 <motion.img
                   whileHover={{ scale: 1.05 }}
@@ -201,7 +186,7 @@ function Profile() {
                       <motion.span 
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="inline-block bg-[#2A3B5C]/30 text-[#60A5FA] px-4 py-1 rounded-full text-sm font-medium border border-[#2A3B5C]/40"
+                        className="inline-block bg-[#2A3B5C] text-[#60A5FA] px-4 py-1 rounded-full text-sm font-medium border border-[#2A3B5C]"
                       >
                         Admin
                       </motion.span>
@@ -211,7 +196,7 @@ function Profile() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowModal(true)}
-                    className="bg-gradient-to-r from-[#2A3B5C] to-[#1E3A8A] hover:from-[#1E3A8A] hover:to-[#2A3B5C] text-[#E5E7EB] font-semibold px-8 py-3 rounded-full shadow-lg shadow-[#2A3B5C]/20 transition flex items-center gap-3 border border-[#2A3B5C]/30"
+                    className="bg-[#2A3B5C] text-[#E5E7EB] font-semibold px-8 py-3 rounded-full shadow-lg transition flex items-center gap-3 border border-[#2A3B5C] hover:bg-[#1E3A8A]"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -239,23 +224,16 @@ function Profile() {
           {/* Phone Card */}
           <motion.div 
             whileHover="hover"
-            className="relative bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.5rem] p-8 group"
+            className="relative bg-[#0D1425] rounded-[2.5rem] p-8 group"
           >
             {/* Simplified Border Effect */}
             <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[1px] bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.4rem]" />
-            
-            {/* Static Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/10 via-[#3B82F6]/5 to-transparent rounded-[2.4rem]" />
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 rounded-[2.4rem]" />
-            
-            {/* Simplified Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#60A5FA]/0 via-[#60A5FA]/20 to-[#60A5FA]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[2.4rem]" />
+            <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
             
             <div className="relative flex flex-col items-center text-center space-y-4">
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="bg-[#2A3B5C]/30 p-4 rounded-[1.5rem]"
+                className="bg-[#2A3B5C] p-4 rounded-[1.5rem]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -284,23 +262,16 @@ function Profile() {
           {/* Role Card */}
           <motion.div 
             whileHover="hover"
-            className="relative bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.5rem] p-8 group"
+            className="relative bg-[#0D1425] rounded-[2.5rem] p-8 group"
           >
             {/* Simplified Border Effect */}
             <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[1px] bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.4rem]" />
-            
-            {/* Static Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/10 via-[#3B82F6]/5 to-transparent rounded-[2.4rem]" />
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 rounded-[2.4rem]" />
-            
-            {/* Simplified Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#60A5FA]/0 via-[#60A5FA]/20 to-[#60A5FA]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[2.4rem]" />
+            <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
             
             <div className="relative flex flex-col items-center text-center space-y-4">
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="bg-[#2A3B5C]/30 p-4 rounded-[1.5rem]"
+                className="bg-[#2A3B5C] p-4 rounded-[1.5rem]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -328,23 +299,16 @@ function Profile() {
           {profile.role === "admin" && (
             <motion.div 
               whileHover="hover"
-              className="relative bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.5rem] p-8 group"
+              className="relative bg-[#0D1425] rounded-[2.5rem] p-8 group"
             >
               {/* Simplified Border Effect */}
               <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute inset-[1px] bg-[#0D1425]/90 backdrop-blur-xl rounded-[2.4rem]" />
-              
-              {/* Static Background Effects */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#60A5FA]/10 via-[#3B82F6]/5 to-transparent rounded-[2.4rem]" />
-              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 rounded-[2.4rem]" />
-              
-              {/* Simplified Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#60A5FA]/0 via-[#60A5FA]/20 to-[#60A5FA]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[2.4rem]" />
+              <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
               
               <div className="relative flex flex-col items-center text-center space-y-4">
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
-                  className="bg-[#2A3B5C]/30 p-4 rounded-[1.5rem]"
+                  className="bg-[#2A3B5C] p-4 rounded-[1.5rem]"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -444,7 +408,7 @@ function Profile() {
                     <motion.div 
                       whileHover={{ opacity: 1 }}
                       initial={{ opacity: 0 }}
-                      className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm"
+                      className="absolute inset-0 bg-black/60 flex items-center justify-center"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -486,7 +450,7 @@ function Profile() {
                     placeholder="Your name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full p-2 bg-[#1D3461]/30 border border-[#64FFDA]/20 rounded-lg outline-none focus:ring-2 focus:ring-[#64FFDA]/50 text-[#CCD6F6] placeholder-[#8892B0]/50"
+                    className="w-full p-2 bg-[#1D3461] border border-[#64FFDA]/20 rounded-lg outline-none focus:ring-2 focus:ring-[#64FFDA]/50 text-[#CCD6F6] placeholder-[#8892B0]/50"
                     required
                   />
                 </motion.div>
@@ -505,7 +469,7 @@ function Profile() {
                     placeholder="Your email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 bg-[#1D3461]/30 border border-[#64FFDA]/20 rounded-lg outline-none focus:ring-2 focus:ring-[#64FFDA]/50 text-[#CCD6F6] placeholder-[#8892B0]/50"
+                    className="w-full p-2 bg-[#1D3461] border border-[#64FFDA]/20 rounded-lg outline-none focus:ring-2 focus:ring-[#64FFDA]/50 text-[#CCD6F6] placeholder-[#8892B0]/50"
                     required
                   />
                 </motion.div>
@@ -524,7 +488,7 @@ function Profile() {
                     placeholder="Your phone number"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full p-2 bg-[#1D3461]/30 border border-[#64FFDA]/20 rounded-lg outline-none focus:ring-2 focus:ring-[#64FFDA]/50 text-[#CCD6F6] placeholder-[#8892B0]/50"
+                    className="w-full p-2 bg-[#1D3461] border border-[#64FFDA]/20 rounded-lg outline-none focus:ring-2 focus:ring-[#64FFDA]/50 text-[#CCD6F6] placeholder-[#8892B0]/50"
                   />
                 </motion.div>
 
@@ -540,7 +504,7 @@ function Profile() {
                     whileTap={{ scale: 0.95 }}
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 bg-[#1D3461]/30 border border-[#64FFDA]/20 rounded-lg text-[#8892B0] hover:bg-[#1D3461]/50 transition"
+                    className="px-4 py-2 bg-[#1D3461] border border-[#64FFDA]/20 rounded-lg text-[#8892B0] hover:bg-[#1D3461]/80 transition"
                     disabled={isLoading}
                   >
                     Cancel
@@ -549,7 +513,7 @@ function Profile() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     type="submit"
-                    className="px-4 py-2 bg-gradient-to-r from-[#64FFDA] to-[#00B4D8] hover:from-[#00B4D8] hover:to-[#64FFDA] text-[#0A192F] font-semibold rounded-lg transition flex items-center border border-[#64FFDA]/20"
+                    className="px-4 py-2 bg-[#64FFDA] text-[#0A192F] font-semibold rounded-lg transition flex items-center border border-[#64FFDA]/20 hover:bg-[#64FFDA]/90"
                     disabled={isLoading}
                   >
                     {isLoading ? (

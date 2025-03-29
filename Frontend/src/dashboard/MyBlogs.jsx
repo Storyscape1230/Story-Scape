@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function MyBlogs() {
   const [myBlogs, setMyBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMyBlogs = async () => {
@@ -16,6 +18,9 @@ function MyBlogs() {
         setMyBlogs(data);
       } catch (error) {
         console.log(error);
+        toast.error("Failed to fetch blogs");
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchMyBlogs();
@@ -35,59 +40,132 @@ function MyBlogs() {
       });
   };
 
-  return (
-    <div className="flex-1 min-h-screen p-4 md:ml-64 overflow-hidden bg-gradient-to-r from-blue-100 to-purple-100">
-      <p className="text-3xl font-bold  text-xxl">My Blogs</p>
-      <div className="container mx-auto my-12 px-4 w-full overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full">
-          {myBlogs && myBlogs.length > 0 ? (
-            myBlogs.map((element) => (
-              <div
-                className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col w-full"
-                key={element._id}
-              >
-                {element?.blogImage?.url ? (
-                  <img
-                    src={element.blogImage.url}
-                    alt="blogImg"
-                    className="w-full h-40 object-cover"
-                  />
-                ) : (
-                  <p className="text-gray-500">No image available</p>
-                )}
+  if (isLoading) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="min-h-screen flex justify-center items-center"
+      >
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="w-12 h-12 border-4 border-[#2A3B5C] border-t-transparent rounded-full mx-auto"
+          />
+          <p className="text-lg mt-4 text-[#6B7280]">Loading blogs...</p>
+        </div>
+      </motion.div>
+    );
+  }
 
-                <div className="p-4 flex-1 flex flex-col">
-                  <span className="text-sm text-gray-600">
-                    {element.category}
-                  </span>
-                  <h4 className="text-lg font-semibold my-2 line-clamp-2">
-                    {element.title}
-                  </h4>
-                  <div className="flex justify-between mt-4 gap-2">
-                    <Link
-                      to={`/blog/update/${element._id}`}
-                      className="text-blue-500 bg-white rounded-md shadow-sm px-3 py-1 border border-gray-400 hover:underline flex-1 text-center"
-                    >
-                      UPDATE
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(element._id)}
-                      className="text-red-500 bg-white rounded-md shadow-sm px-3 py-1 border border-gray-400 hover:underline flex-1 text-center"
-                    >
-                      DELETE
-                    </button>
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="min-h-screen md:ml-64 flex flex-col relative overflow-hidden"
+    >
+      {/* Simplified Background */}
+      <div className="absolute inset-0 bg-[#0A0F1C]">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+      </div>
+
+      <div className="w-full p-4 md:p-8 space-y-8 relative z-10">
+        <motion.h1 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="text-4xl font-bold text-[#E5E7EB]"
+        >
+          My Blogs
+        </motion.h1>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {myBlogs && myBlogs.length > 0 ? (
+            myBlogs.map((blog, index) => (
+              <motion.div
+                key={blog._id}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+                className="relative group"
+              >
+                {/* Card Container */}
+                <div className="relative bg-[#0D1425] rounded-[2.5rem] overflow-hidden">
+                  {/* Border Effect */}
+                  <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
+                  
+                  <div className="relative p-6">
+                    {/* Blog Image */}
+                    <div className="relative rounded-[1.5rem] overflow-hidden mb-4">
+                      {blog?.blogImage?.url ? (
+                        <img
+                          src={blog.blogImage.url}
+                          alt="blogImg"
+                          className="w-full h-48 object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-48 bg-[#2A3B5C] flex items-center justify-center">
+                          <p className="text-[#6B7280]">No image available</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Blog Info */}
+                    <div className="space-y-4">
+                      <span className="inline-block bg-[#2A3B5C] text-[#60A5FA] px-3 py-1 rounded-full text-sm font-medium">
+                        {blog.category}
+                      </span>
+                      <h4 className="text-xl font-semibold text-[#E5E7EB] line-clamp-2">
+                        {blog.title}
+                      </h4>
+                      
+                      {/* Action Buttons */}
+                      <div className="flex gap-3 pt-4">
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex-1"
+                        >
+                          <Link
+                            to={`/blog/update/${blog._id}`}
+                            className="block w-full px-4 py-2 bg-[#2A3B5C] text-[#60A5FA] rounded-[1rem] text-center font-medium hover:bg-[#1E3A8A] transition duration-300 border border-[#2A3B5C]"
+                          >
+                            UPDATE
+                          </Link>
+                        </motion.div>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex-1"
+                        >
+                          <button
+                            onClick={() => handleDelete(blog._id)}
+                            className="w-full px-4 py-2 bg-[#FF6B6B]/20 text-[#FF6B6B] rounded-[1rem] text-center font-medium hover:bg-[#FF6B6B]/30 transition duration-300 border border-[#FF6B6B]/30"
+                          >
+                            DELETE
+                          </button>
+                        </motion.div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))
           ) : (
-            <p className="text-center text-gray-500">
-              You have not posted any blog to see!
-            </p>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full text-center py-12"
+            >
+              <p className="text-[#6B7280] text-xl">
+                You have not posted any blog to see!
+              </p>
+            </motion.div>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
