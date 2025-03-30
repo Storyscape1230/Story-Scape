@@ -14,6 +14,7 @@ export default {
         "card-hover": "card-hover 0.3s ease-in-out",
         "light-pulse": "light-pulse 3s ease-in-out infinite",
         "border-glow": "border-glow 2s ease-in-out infinite",
+        'twinkle': 'twinkle 2s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -79,6 +80,10 @@ export default {
             boxShadow: "0 0 10px #60A5FA, 0 0 20px #60A5FA, 0 0 30px #60A5FA, inset 0 0 10px #60A5FA, inset 0 0 20px #60A5FA, inset 0 0 30px #60A5FA",
           },
         },
+        twinkle: {
+          '0%, 100%': { opacity: 0.2 },
+          '50%': { opacity: 1 },
+        }
       },
     },
   },

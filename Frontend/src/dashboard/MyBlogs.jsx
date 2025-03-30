@@ -65,8 +65,20 @@ function MyBlogs() {
       animate={{ opacity: 1 }}
       className="min-h-screen md:ml-64 flex flex-col relative overflow-hidden"
     >
-      {/* Simplified Background */}
-      <div className="absolute inset-0 bg-[#0A0F1C]">
+      {/* Galaxy Background */}
+      <div className="absolute inset-0 bg-[#0A0F1C]/90">
+        {/* Stars Effect */}
+        <div className="absolute inset-0">
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[10%] left-[20%] animate-twinkle"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[30%] left-[40%] animate-twinkle animation-delay-200"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[50%] left-[60%] animate-twinkle animation-delay-400"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[70%] left-[80%] animate-twinkle animation-delay-600"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[20%] left-[70%] animate-twinkle animation-delay-800"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[40%] left-[30%] animate-twinkle animation-delay-1000"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[60%] left-[90%] animate-twinkle animation-delay-1200"></div>
+          <div className="absolute w-1 h-1 bg-white rounded-full top-[80%] left-[10%] animate-twinkle animation-delay-1400"></div>
+        </div>
+        {/* Subtle Grid Pattern */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
       </div>
 

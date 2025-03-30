@@ -39,7 +39,6 @@ function Profile() {
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file type and size
       if (!file.type.match("image.*")) {
         setError("Please select an image file");
         return;
@@ -131,233 +130,184 @@ function Profile() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen md:ml-64 flex flex-col bg-[#0A0F1C] relative overflow-hidden"
+      className="min-h-screen md:ml-64 flex flex-col bg-[#151c4dc8] relative overflow-hidden"
     >
-      {/* Simplified Background */}
-      <div className="absolute inset-0 bg-[#0A0F1C]">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        {/* Simple dark blue background with slight transparency */}
+        <div className="absolute inset-0 bg-[#151247]"></div>
       </div>
 
-      <div className="w-full p-4 md:p-8 space-y-8 relative z-10">
-        {/* First Section - Profile Header */}
+      <div className="w-full px-4 sm:px-6 relative z-10">
+        {/* Main Profile Card */}
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="relative bg-[#0D1425] rounded-[2.5rem] overflow-hidden group"
+          className="relative mt-6"
         >
-          {/* Simplified Border Effect */}
-          <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
-          
-          <div className="relative p-8 md:p-12">
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              {/* Profile Image */}
-              <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="relative group"
-              >
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-[#2A3B5C] to-[#1E3A8A] rounded-full opacity-30 group-hover:opacity-50 transition duration-300"
-                />
-                <motion.img
+          {/* Top Banner with Edit Button */}
+          <div className="h-48 rounded-t-3xl bg-gradient-to-r from-[#3B82F6] via-[#6366F1] to-[#2563EB] p-[1px]">
+            <div className="h-full w-full bg-[#1F2937] rounded-t-3xl relative overflow-hidden">
+              <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(59,130,246,0.1),rgba(37,99,235,0.1))]"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(99,102,241,0.2),transparent)]"></div>
+              
+              {/* Edit Button - Moved to top right */}
+              <div className="absolute top-4 right-4">
+                <motion.button
                   whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  src={photoPreview || profile?.photo?.url || "https://via.placeholder.com/150"}
-                  alt="Profile"
-                  className="relative w-40 h-40 rounded-full border-4 border-[#0D1425] shadow-lg object-cover"
-                />
-              </motion.div>
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowModal(true)}
+                  className="relative group"
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#3B82F6] to-[#2563EB] rounded-xl opacity-50 group-hover:opacity-100 blur transition duration-300"></div>
+                  <div className="relative px-6 py-3 bg-[#1F2937] rounded-xl flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    <span className="text-white font-medium">Edit Profile</span>
+                  </div>
+                </motion.button>
+              </div>
+            </div>
+          </div>
+
+          {/* Profile Content */}
+          <div className="bg-[#1F2937] rounded-b-3xl border border-[#4B5563] shadow-2xl">
+            <div className="px-4 sm:px-8 pb-8 relative">
+              {/* Profile Image - Removed edit button from here */}
+              <div className="relative -mt-24 mb-6 flex justify-center sm:justify-start">
+                <motion.div 
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  className="relative group"
+                >
+                  <div className="absolute -inset-1 bg-gradient-to-r from-[#3B82F6] to-[#2563EB] rounded-full opacity-70 blur-sm group-hover:opacity-100 transition duration-300"></div>
+                  <div className="relative h-40 w-40 rounded-full border-4 border-[#1F2937] overflow-hidden">
+                    <img
+                      src={photoPreview || profile?.photo?.url || "https://via.placeholder.com/150"}
+                      alt="Profile"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </motion.div>
+              </div>
 
               {/* Profile Info */}
-              <div className="flex-1 text-center md:text-left">
-                <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
-                  <div className="space-y-4">
-                    <motion.h2 
-                      whileHover={{ scale: 1.02 }}
-                      className="text-5xl font-bold text-[#E5E7EB]"
-                    >
-                      {profile.name || "User Name"}
-                    </motion.h2>
-                    <p className="text-[#6B7280] text-xl">{profile.email}</p>
-                    {profile.role === "admin" && (
-                      <motion.span 
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="inline-block bg-[#2A3B5C] text-[#60A5FA] px-4 py-1 rounded-full text-sm font-medium border border-[#2A3B5C]"
-                      >
-                        Admin
-                      </motion.span>
-                    )}
+              <div className="text-center sm:text-left">
+                <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#3B82F6] to-[#2563EB] bg-clip-text text-transparent">
+                  {profile.name || "User Name"}
+                </h2>
+                <p className="text-[#9CA3AF] mt-2 text-base sm:text-lg">{profile.email}</p>
+                
+                {profile.role === "admin" && (
+                  <div className="mt-3">
+                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/20">
+                      Admin
+                    </span>
                   </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowModal(true)}
-                    className="bg-[#2A3B5C] text-[#E5E7EB] font-semibold px-8 py-3 rounded-full shadow-lg transition flex items-center gap-3 border border-[#2A3B5C] hover:bg-[#1E3A8A]"
+                )}
+              </div>
+
+              {/* Info Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
+                {/* Phone Card */}
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                  className="group relative"
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#3B82F6] to-[#2563EB] rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-300"></div>
+                  <div className="relative p-6 bg-[#374151] rounded-2xl border border-[#6B7280]">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-xl bg-[#3B82F6]/10">
+                        <svg className="w-6 h-6 text-[#3B82F6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[#9CA3AF] text-sm">Phone</p>
+                        <p className="text-white mt-1 font-medium">{profile.phone || "Not provided"}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Role Card */}
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="group relative"
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#2563EB] to-[#3B82F6] rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-300"></div>
+                  <div className="relative p-6 bg-[#374151] rounded-2xl border border-[#6B7280]">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-xl bg-[#2563EB]/10">
+                        <svg className="w-6 h-6 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[#9CA3AF] text-sm">Role</p>
+                        <p className="text-white mt-1 font-medium capitalize">{profile.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Admin Privileges Card */}
+                {profile.role === "admin" && (
+                  <motion.div 
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="group relative sm:col-span-2 lg:col-span-1"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                    </svg>
-                    Edit Profile
-                  </motion.button>
-                </div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#3B82F6] to-[#2563EB] rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-300"></div>
+                    <div className="relative p-6 bg-[#374151] rounded-2xl border border-[#6B7280]">
+                      <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-xl bg-gradient-to-r from-[#3B82F6]/10 to-[#2563EB]/10">
+                          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-[#9CA3AF] text-sm">Privileges</p>
+                          <p className="text-white mt-1 font-medium">Full access</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           </div>
         </motion.div>
-
-        {/* Second Section - User Details */}
-        <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {/* Phone Card */}
-          <motion.div 
-            whileHover="hover"
-            className="relative bg-[#0D1425] rounded-[2.5rem] p-8 group"
-          >
-            {/* Simplified Border Effect */}
-            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
-            
-            <div className="relative flex flex-col items-center text-center space-y-4">
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                className="bg-[#2A3B5C] p-4 rounded-[1.5rem]"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-[#60A5FA]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-              </motion.div>
-              <div>
-                <p className="text-[#6B7280] text-sm font-medium">Phone Number</p>
-                <p className="text-[#E5E7EB] text-2xl font-semibold mt-1">
-                  {profile.phone || "Not provided"}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Role Card */}
-          <motion.div 
-            whileHover="hover"
-            className="relative bg-[#0D1425] rounded-[2.5rem] p-8 group"
-          >
-            {/* Simplified Border Effect */}
-            <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
-            
-            <div className="relative flex flex-col items-center text-center space-y-4">
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                className="bg-[#2A3B5C] p-4 rounded-[1.5rem]"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-[#60A5FA]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              </motion.div>
-              <div>
-                <p className="text-[#6B7280] text-sm font-medium">User Role</p>
-                <p className="text-[#E5E7EB] text-2xl font-semibold mt-1 capitalize">{profile.role}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Admin Privileges Card */}
-          {profile.role === "admin" && (
-            <motion.div 
-              whileHover="hover"
-              className="relative bg-[#0D1425] rounded-[2.5rem] p-8 group"
-            >
-              {/* Simplified Border Effect */}
-              <div className="absolute -inset-[1px] bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#1E40AF] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute inset-[1px] bg-[#0D1425] rounded-[2.4rem]" />
-              
-              <div className="relative flex flex-col items-center text-center space-y-4">
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-[#2A3B5C] p-4 rounded-[1.5rem]"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 text-[#60A5FA]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                    />
-                  </svg>
-                </motion.div>
-                <div>
-                  <p className="text-[#6B7280] text-sm font-medium">Admin Privileges</p>
-                  <p className="text-[#E5E7EB] text-2xl font-semibold mt-1">Full access</p>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </motion.div>
       </div>
 
-      {/* Edit Profile Modal */}
+      {/* Modal code remains but with updated colors */}
       <AnimatePresence>
         {showModal && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-50 p-4"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
           >
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 20 }}
-              className="bg-[#112240] p-6 rounded-2xl w-full max-w-md border border-[#64FFDA]/20"
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-[#1F2937] border border-[#6B7280] rounded-2xl p-6 w-full max-w-md shadow-2xl"
             >
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold text-[#CCD6F6]">Edit Profile</h2>
+                <h2 className="text-xl font-semibold text-[#F3F4F6]">Edit Profile</h2>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setShowModal(false)}
-                  className="text-[#8892B0] hover:text-[#CCD6F6]"
+                  className="text-[#D1D5DB] hover:text-[#F3F4F6]"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -432,7 +382,7 @@ function Profile() {
                       </svg>
                     </motion.div>
                   </label>
-                  <p className="text-sm text-[#8892B0] mt-2">Click to change photo</p>
+                  <p className="text-sm text-[#D1D5DB] mt-2">Click to change photo</p>
                 </motion.div>
 
                 {/* Form Fields */}
@@ -441,7 +391,7 @@ function Profile() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <label className="block text-sm font-medium text-[#8892B0] mb-1">
+                  <label className="block text-sm font-medium text-[#D1D5DB] mb-1">
                     Name
                   </label>
                   <input
@@ -460,7 +410,7 @@ function Profile() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <label className="block text-sm font-medium text-[#8892B0] mb-1">
+                  <label className="block text-sm font-medium text-[#D1D5DB] mb-1">
                     Email
                   </label>
                   <input
@@ -479,7 +429,7 @@ function Profile() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label className="block text-sm font-medium text-[#8892B0] mb-1">
+                  <label className="block text-sm font-medium text-[#D1D5DB] mb-1">
                     Phone
                   </label>
                   <input
@@ -513,7 +463,7 @@ function Profile() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     type="submit"
-                    className="px-4 py-2 bg-[#64FFDA] text-[#0A192F] font-semibold rounded-lg transition flex items-center border border-[#64FFDA]/20 hover:bg-[#64FFDA]/90"
+                    className="px-4 py-2 bg-gradient-to-r from-[#64FFDA] to-[#3B82F6] text-[#0A192F] font-semibold rounded-lg transition flex items-center border border-[#64FFDA]/20"
                     disabled={isLoading}
                   >
                     {isLoading ? (
