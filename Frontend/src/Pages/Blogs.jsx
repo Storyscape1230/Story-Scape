@@ -25,7 +25,7 @@ function Blogs() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-rose-100 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-rose-100 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
@@ -33,12 +33,22 @@ function Blogs() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-rose-800 mb-4">
-            Explore Our Stories
-          </h1>
-          <p className="text-rose-600 max-w-2xl mx-auto text-lg">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+          >
+            Explore Our <span className="text-red-500">Stories</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="text-base text-gray-600 max-w-2xl mx-auto"
+          >
             Discover stories that inspire and captivate
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Categories Filter */}

@@ -50,7 +50,7 @@ function Save() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-red-50 to-pink-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-r from-red-50 to-pink-50 py-8 px-4">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -60,20 +60,20 @@ function Save() {
         {/* Header Section */}
         <div className="text-center mb-12">
           <motion.h1
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
           >
-            Your Saved <span className="text-red-600">Stories</span>
+            Your Saved <span className="text-red-500">Stories</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="text-base text-gray-600 max-w-2xl mx-auto"
           >
-            All the stories you ve saved for later reading in one place.
+            All the stories you've saved for later reading in one place
           </motion.p>
         </div>
 

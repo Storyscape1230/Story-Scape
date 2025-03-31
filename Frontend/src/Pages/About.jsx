@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 // Uncomment these when you have the images
@@ -45,7 +44,7 @@ function About() {
     }, []);
 
   return (
-    <div className="bg-gradient-to-r from-red-50 to-pink-50 py-16 px-4 min-h-screen">
+    <div className="bg-gradient-to-r from-red-50 to-pink-50 py-8 px-4 min-h-screen">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -55,20 +54,20 @@ function About() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <motion.h1 
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
           >
-            Our StoryScape Journey
+            Our StoryScape <span className="text-red-500">Journey</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-lg text-gray-700 max-w-3xl mx-auto"
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="text-base text-gray-600 max-w-2xl mx-auto"
           >
-            StoryScape is more than just a blog platform - it s a creative universe where stories come alive, 
+            StoryScape is more than just a blog platform - it's a creative universe where stories come alive, 
             crafted with passion by three dedicated developers.
           </motion.p>
         </div>

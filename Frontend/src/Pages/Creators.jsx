@@ -31,7 +31,7 @@ function Creators() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-amber-50 py-20 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-amber-50 py-8 px-4">
       {/* Decorative elements */}
       <div className="fixed top-20 left-10 w-24 h-24 bg-red-100 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
       <div className="fixed bottom-1/4 right-16 w-24 h-24 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
@@ -44,12 +44,22 @@ function Creators() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-red-900 mb-4 tracking-tight">
-            Architectural Minds
-          </h1>
-          <p className="text-lg text-red-700/90 max-w-2xl mx-auto font-medium">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+          >
+            Meet Our <span className="text-red-500">Creators</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="text-base text-gray-600 max-w-2xl mx-auto"
+          >
             Visionaries shaping narratives through compelling storytelling
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Creative grid layout */}
