@@ -82,20 +82,19 @@ function Sidebar({ setComponent }) {
                 ))}
               </div>
               {/* Image */}
-              <div className="relative w-24 h-24 mx-auto mt-4">
+              <div className="relative w-24 h-24 mx-auto mt-4 group cursor-pointer">
                 <img
-                  className="w-full h-full object-cover rounded-lg transform rotate-12"
+                  className="w-full h-full object-cover rounded-lg transform rotate-12 group-hover:rotate-0 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all duration-300"
                   src={profile?.photo?.url || "https://via.placeholder.com/150"}
                   alt="Profile"
                 />
-                <div className="absolute inset-0 border-2 border-[#2563EB]/40 rounded-lg transform -rotate-12"></div>
+                <div className="absolute inset-0 border-2 border-[#2563EB]/40 rounded-lg transform -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-all duration-300"></div>
               </div>
             </div>
             
             {/* User Info */}
             <div className="mt-6 text-center">
               <h2 className="text-[#E5E7EB] text-xl font-bold tracking-wider">{profile?.name}</h2>
-              <p className="text-[#E5E7EB]/60 text-sm mt-1">{profile?.email}</p>
             </div>
           </div>
         </div>

@@ -356,7 +356,7 @@ function UpdateBlog() {
                   <JoditEditor
                     ref={editor}
                     value={about}
-                    onChange={(newContent) => setAbout(newContent)}
+                    onBlur={newContent => setAbout(newContent)}
                     config={{
                       theme: 'dark',
                       height: 400,
@@ -436,7 +436,12 @@ function UpdateBlog() {
         }
         .custom-jodit .jodit-wysiwyg {
           background: #1E293B !important;
+          color: #E2E8F0 !important;
           padding: 20px !important;
+        }
+        .custom-jodit .jodit-status-bar {
+          background: #1E293B !important;
+          border-top: 1px solid #334155 !important;
         }
       `}</style>
     </motion.div>
