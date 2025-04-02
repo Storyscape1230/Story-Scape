@@ -17,7 +17,8 @@ import Save from "./Pages/Save";
 import CreatorProfile from "./components/CreatorProfile";
 import ScrollToTop from "./components/ScrollToTop";
 import UserProfile from "./components/UserProfile";
-// import NotFound from "./pages/NotFound";
+import PropTypes from 'prop-types';
+
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -26,7 +27,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-[#0A0F1C] via-[#0D1425] to-[#1A1F2E]">
+      <div className="min-h-screen flex justify-center items-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-[#2A3B5C] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-lg mt-4 text-[#6B7280]">Loading...</p>
@@ -42,12 +43,15 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
 function App() {
   const location = useLocation();
   const hideNavbarFooter = ["/dashboard", "/login", "/register"].includes(
     location.pathname
   );
-  const { blogs } = useAuth();
 
   return (
     <div className="flex flex-col min-h-screen">
