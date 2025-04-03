@@ -7,11 +7,23 @@ function Blogs() {
   const { blogs } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Reverse the order of blogs (first blog last, last blog first)
+  // Use blogs directly without reversing
   const sortedBlogs = blogs ? [...blogs].reverse() : [];
 
-  // Get all unique categories
-  const categories = ["All", ...new Set(blogs?.map(blog => blog.category))];
+  // Predefined categories matching CreateBlog.jsx
+  const predefinedCategories = [
+    "All",
+    "Education",
+    "News",
+    "Olympics",
+    "Business",
+    "Devotion",
+    "Travel",
+    "Sports"
+  ];
+
+  // Use only predefined categories
+  const categories = predefinedCategories;
 
   // Filter blogs by selected category
   const filteredBlogs = selectedCategory === "All" 
@@ -22,6 +34,15 @@ function Blogs() {
   const calculateReadingTime = (text) => {
     const words = text.split(' ').length;
     return Math.ceil(words / 200); // 200 words per minute
+  };
+
+  // Helper function to format category text
+  const formatCategory = (category) => {
+    if (!category) return '';
+    return category
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
   };
 
   return (
@@ -68,7 +89,7 @@ function Blogs() {
                     : "bg-white text-rose-700 hover:bg-rose-100"
                 }`}
               >
-                {category}
+                {formatCategory(category)}
               </button>
             ))}
           </div>
@@ -109,7 +130,7 @@ function Blogs() {
                       </h2>
                       <div className="flex items-center justify-between mt-4">
                         <span className="text-xs font-medium px-3 py-1 bg-rose-100 text-rose-700 rounded-full">
-                          {blog.category}
+                          {formatCategory(blog.category)}
                         </span>
                         <span className="flex items-center text-xs text-rose-500">
                           <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">

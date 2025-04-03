@@ -28,7 +28,7 @@ function UpdateBlog() {
           `http://localhost:8001/api/blogs/single-blog/${id}`,
           { withCredentials: true }
         );
-        
+
         setTitle(data?.title);
         setCategory(data?.category);
         setAbout(data?.about);
@@ -39,7 +39,7 @@ function UpdateBlog() {
         toast.error(error.response?.data?.message || "Failed to load blog");
       }
     };
-    
+
     fetchBlog();
   }, [id]);
 
@@ -63,7 +63,7 @@ function UpdateBlog() {
   };
 
   const removeTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
   const handleUpdate = async (e) => {
@@ -96,7 +96,7 @@ function UpdateBlog() {
           },
         }
       );
-      
+
       toast.success(data.message || "Blog updated successfully");
       navigate("/");
     } catch (error) {
@@ -111,7 +111,7 @@ function UpdateBlog() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="min-h-screen flex flex-col relative bg-[#0B1120] overflow-hidden"
@@ -119,14 +119,17 @@ function UpdateBlog() {
       {/* Futuristic Particle Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Animated grid pattern */}
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: `
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
             linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px',
-        }}></div>
-        
+            backgroundSize: "50px 50px",
+          }}
+        ></div>
+
         {/* Floating particles */}
         {[...Array(30)].map((_, i) => (
           <motion.div
@@ -150,9 +153,9 @@ function UpdateBlog() {
             }}
           />
         ))}
-        
+
         {/* Glowing orbs */}
-        <motion.div 
+        <motion.div
           className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-[#3B82F6] opacity-10 blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
@@ -160,10 +163,10 @@ function UpdateBlog() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-[#8B5CF6] opacity-10 blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
@@ -172,27 +175,27 @@ function UpdateBlog() {
             duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 2
+            delay: 2,
           }}
         />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 p-4 md:p-8 relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
           className="max-w-5xl mx-auto"
         >
           {/* Header with animated gradient */}
-          <motion.div 
+          <motion.div
             className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E293B] border border-[#334155] shadow-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <motion.h1 
+            <motion.h1
               className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#38BDF8] to-[#818CF8] mb-2"
               initial={{ x: -20 }}
               animate={{ x: 0 }}
@@ -200,7 +203,7 @@ function UpdateBlog() {
             >
               Refine Your Masterpiece
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-[#94A3B8] text-lg"
               initial={{ x: -20 }}
               animate={{ x: 0 }}
@@ -211,7 +214,7 @@ function UpdateBlog() {
           </motion.div>
 
           {/* Form Container */}
-          <motion.div 
+          <motion.div
             className="bg-[#1E293B]/70 backdrop-blur-lg rounded-2xl border border-[#334155] shadow-2xl overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -232,15 +235,27 @@ function UpdateBlog() {
                       className="w-full px-5 py-3 bg-[#1E293B] border border-[#334155] rounded-xl text-[#E2E8F0] outline-none focus:ring-2 focus:ring-[#818CF8] focus:border-transparent appearance-none"
                     >
                       <option value="">Select a category</option>
-                      <option value="Technology">Technology</option>
-                      <option value="Design">Design</option>
+                      <option value="Education">Education</option>
+                      <option value="News">News</option>
+                      <option value="Olympics">Olympics</option>
                       <option value="Business">Business</option>
-                      <option value="Lifestyle">Lifestyle</option>
-                      <option value="Science">Science</option>
+                      <option value="Devotion">Devotion</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Sports">Sports</option>
                     </select>
                     <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                      <svg className="w-5 h-5 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                      <svg
+                        className="w-5 h-5 text-[#94A3B8]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        ></path>
                       </svg>
                     </div>
                   </div>
@@ -266,8 +281,12 @@ function UpdateBlog() {
                 <label className="block text-lg font-medium text-[#E2E8F0]">
                   Featured Image
                 </label>
-                <div 
-                  className={`relative group rounded-xl overflow-hidden border-2 border-dashed ${blogImagePreview ? 'border-transparent' : 'border-[#334155] hover:border-[#818CF8]'} transition-all duration-300`}
+                <div
+                  className={`relative group rounded-xl overflow-hidden border-2 border-dashed ${
+                    blogImagePreview
+                      ? "border-transparent"
+                      : "border-[#334155] hover:border-[#818CF8]"
+                  } transition-all duration-300`}
                   onClick={() => document.getElementById("fileInput").click()}
                 >
                   {blogImagePreview ? (
@@ -289,8 +308,12 @@ function UpdateBlog() {
                       <div className="p-4 rounded-full bg-[#1E293B] mb-4">
                         <LuImageUp className="w-8 h-8 text-[#818CF8]" />
                       </div>
-                      <h3 className="text-xl font-medium text-[#E2E8F0] mb-2">Update Featured Image</h3>
-                      <p className="text-[#94A3B8]">Drag & drop or click to browse (Recommended: 1200x630)</p>
+                      <h3 className="text-xl font-medium text-[#E2E8F0] mb-2">
+                        Update Featured Image
+                      </h3>
+                      <p className="text-[#94A3B8]">
+                        Drag & drop or click to browse (Recommended: 1200x630)
+                      </p>
                     </div>
                   )}
                   <input
@@ -309,15 +332,15 @@ function UpdateBlog() {
                   Tags
                 </label>
                 <div className="flex flex-wrap gap-2 items-center">
-                  {tags.map(tag => (
-                    <motion.div 
+                  {tags.map((tag) => (
+                    <motion.div
                       key={tag}
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       className="flex items-center bg-[#334155] rounded-full px-3 py-1"
                     >
                       <span className="text-[#E2E8F0] text-sm">{tag}</span>
-                      <button 
+                      <button
                         type="button"
                         onClick={() => removeTag(tag)}
                         className="ml-2 text-[#94A3B8] hover:text-[#E2E8F0]"
@@ -332,7 +355,7 @@ function UpdateBlog() {
                       placeholder="Add tag..."
                       value={currentTag}
                       onChange={(e) => setCurrentTag(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && addTag()}
+                      onKeyDown={(e) => e.key === "Enter" && addTag()}
                       className="px-3 py-1 bg-[#1E293B] border border-[#334155] rounded-l-lg text-[#E2E8F0] outline-none focus:border-[#818CF8] w-32"
                     />
                     <motion.button
@@ -356,28 +379,49 @@ function UpdateBlog() {
                   <JoditEditor
                     ref={editor}
                     value={about}
-                    onBlur={newContent => setAbout(newContent)}
+                    onBlur={(newContent) => setAbout(newContent)}
                     config={{
-                      theme: 'dark',
+                      theme: "dark",
                       height: 400,
-                      toolbarButtonSize: 'medium',
+                      toolbarButtonSize: "medium",
                       buttons: [
-                        'bold', 'italic', 'underline', 'strikethrough', '|',
-                        'ul', 'ol', '|', 
-                        'font', 'fontsize', 'brush', 'paragraph', '|', 
-                        'image', 'video', 'table', 'link', '|', 
-                        'left', 'center', 'right', 'justify', '|', 
-                        'undo', 'redo', '|', 'source'
+                        "bold",
+                        "italic",
+                        "underline",
+                        "strikethrough",
+                        "|",
+                        "ul",
+                        "ol",
+                        "|",
+                        "font",
+                        "fontsize",
+                        "brush",
+                        "paragraph",
+                        "|",
+                        "image",
+                        "video",
+                        "table",
+                        "link",
+                        "|",
+                        "left",
+                        "center",
+                        "right",
+                        "justify",
+                        "|",
+                        "undo",
+                        "redo",
+                        "|",
+                        "source",
                       ],
                       colors: {
-                        background: '#1E293B',
-                        text: '#E2E8F0',
+                        background: "#1E293B",
+                        text: "#E2E8F0",
                       },
                       style: {
-                        background: '#1E293B',
-                        border: 'none',
+                        background: "#1E293B",
+                        border: "none",
                       },
-                      editorCssClass: 'custom-jodit'
+                      editorCssClass: "custom-jodit",
                     }}
                   />
                 </div>
@@ -390,7 +434,11 @@ function UpdateBlog() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   disabled={isSubmitting}
-                  className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all duration-300 ${isSubmitting ? 'bg-[#334155]' : 'bg-gradient-to-r from-[#818CF8] to-[#7DD3FC] hover:shadow-lg hover:shadow-[#818CF8]/30'}`}
+                  className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all duration-300 ${
+                    isSubmitting
+                      ? "bg-[#334155]"
+                      : "bg-gradient-to-r from-[#818CF8] to-[#7DD3FC] hover:shadow-lg hover:shadow-[#818CF8]/30"
+                  }`}
                 >
                   {isSubmitting ? (
                     <div className="flex items-center justify-center space-x-2">
@@ -408,19 +456,29 @@ function UpdateBlog() {
       </div>
 
       {/* Floating action elements */}
-      <motion.div 
+      <motion.div
         className="fixed bottom-8 right-8 z-20"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
       >
-        <button 
+        <button
           type="button"
           onClick={() => navigate("/")}
           className="p-3 bg-[#818CF8] rounded-full shadow-lg hover:bg-[#7DD3FC] transition-colors duration-300 flex items-center justify-center"
         >
-          <svg className="w-6 h-6 text-[#0F172A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          <svg
+            className="w-6 h-6 text-[#0F172A]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
           </svg>
         </button>
       </motion.div>

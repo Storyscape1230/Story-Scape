@@ -27,7 +27,7 @@ function UserProfile() {
       });
       setPhotoPreview(profile.photo?.url || "");
     }
-  }, [profile]);
+  }, [profile?.name, profile?.email, profile?.phone, profile?.photo?.url]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +57,11 @@ function UserProfile() {
 
     try {
       const token = localStorage.getItem("jwt");
+      if (!token) {
+        toast.error("Authentication token not found. Please log in again.");
+        return;
+      }
+
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("email", formData.email);
@@ -76,11 +81,20 @@ function UserProfile() {
         }
       );
 
-      setProfile(data.user);
-      toast.success("Profile updated successfully");
-      setShowModal(false);
+      if (data && data.user) {
+        setProfile(data.user);
+        toast.success("Profile updated successfully");
+        setShowModal(false);
+      } else {
+        toast.error("Invalid response from server");
+      }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update profile");
+      console.error("Profile update error:", error);
+      if (error.response?.status === 401) {
+        toast.error("Session expired. Please log in again.");
+      } else {
+        toast.error(error.response?.data?.message || "Failed to update profile");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -122,9 +136,15 @@ function UserProfile() {
             {/* Avatar */}
             <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
               <div className="h-24 w-24 rounded-full border-4 border-white bg-white shadow-md overflow-hidden">
-                {photoPreview || profile.photo?.url ? (
+                {photoPreview ? (
                   <img 
-                    src={photoPreview || profile.photo.url} 
+                    src={photoPreview} 
+                    alt="Profile" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : profile.photo?.url ? (
+                  <img 
+                    src={profile.photo.url} 
                     alt="Profile" 
                     className="w-full h-full object-cover"
                   />
@@ -189,11 +209,23 @@ function UserProfile() {
                 {/* Profile Picture Upload */}
                 <div className="flex flex-col items-center mb-6">
                   <label className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-dashed border-gray-300 cursor-pointer">
-                    <img 
-                      src={photoPreview || profile.photo?.url || "https://via.placeholder.com/150"} 
-                      alt="Profile" 
-                      className="w-full h-full object-cover"
-                    />
+                    {photoPreview ? (
+                      <img 
+                        src={photoPreview} 
+                        alt="Profile Preview" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : profile.photo?.url ? (
+                      <img 
+                        src={profile.photo.url} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-red-100 to-pink-200 flex items-center justify-center">
+                        <FiUser className="text-red-400 w-10 h-10" />
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                       <FiCamera className="text-white w-6 h-6 mb-1" />
                       <span className="text-white text-sm">Change Photo</span>

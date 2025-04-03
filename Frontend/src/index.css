@@ -49,4 +49,48 @@ span{
     font-style: normal;
   }
 
+  /* Loading Animation */
+  @keyframes loading {
+    0% {
+      background-color: #e5e7eb;
+    }
+    50% {
+      background-color: #d1d5db;
+    }
+    100% {
+      background-color: #e5e7eb;
+    }
+  }
+
+  .loading-box {
+    animation: loading 2.5s ease-in-out infinite;
+  }
+
+  /* Custom loading animation */
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Shimmer effect */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .shimmer {
+    animation: shimmer 2.5s infinite;
+  }
   

@@ -215,11 +215,13 @@ function CreateBlog() {
                         className="w-full px-5 py-3 bg-[#1E293B] border border-[#334155] rounded-xl text-[#E2E8F0] outline-none focus:ring-2 focus:ring-[#818CF8] focus:border-transparent appearance-none"
                       >
                         <option value="">Select a category</option>
-                        <option value="Technology">Technology</option>
-                        <option value="Design">Design</option>
+                        <option value="Education">Education</option>
+                        <option value="News">News</option>
+                        <option value="Olympics">Olympics</option>
                         <option value="Business">Business</option>
-                        <option value="Lifestyle">Lifestyle</option>
-                        <option value="Science">Science</option>
+                        <option value="Devotion">Devotion</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Sports">Sports</option>
                       </select>
                       <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
                         <svg className="w-5 h-5 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -360,7 +362,15 @@ function CreateBlog() {
                           background: '#1E293B',
                           border: 'none',
                         },
-                        editorCssClass: 'custom-jodit'
+                        editorCssClass: 'custom-jodit',
+                        askBeforePasteHTML: false,
+                        askBeforePasteFromWord: false,
+                        defaultActionOnPaste: 'insert_clear_html',
+                        processPasteHTML: false,
+                        cleanHTML: {
+                          removeEmptyElements: false,
+                          fillEmptyParagraph: true
+                        }
                       }}
                     />
                   </div>

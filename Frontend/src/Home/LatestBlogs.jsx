@@ -2,12 +2,10 @@ import { useAuth } from "../context/AuthProvider";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-function Devotional() {
+function LatestBlogs() {
   const { blogs } = useAuth();
   const navigate = useNavigate();
-  const devotionalBlogs = blogs?.filter(blog => blog.category === "Devotion")
-    .reverse()
-    .slice(0, 4);
+  const latestBlogs = blogs ? [...blogs].reverse().slice(0, 4) : [];
 
   const handleBlogClick = (blogId) => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -16,43 +14,41 @@ function Devotional() {
 
   return (
     <div className="bg-white py-20 px-6 sm:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-[85%] mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-rose-800 mb-4">Spiritual Nourishment</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold text-rose-800 mb-4">Latest Blogs</h2>
           <p className="text-rose-600 max-w-2xl mx-auto text-lg">
-            Uplifting devotionals to nourish your soul
+            Explore our latest articles and stories
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-          {devotionalBlogs?.length > 0 ? (
-            devotionalBlogs.map((blog, index) => (
+          {latestBlogs?.length > 0 ? (
+            latestBlogs.map((blog, index) => (
               <motion.div
                 key={blog._id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border border-rose-100"
+                className="group bg-white overflow-hidden cursor-pointer"
                 onClick={() => handleBlogClick(blog._id)}
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
                     src={blog.blogImage.url}
                     alt={blog.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:rounded-2xl group-hover:scale-110 transition-all duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute top-4 left-4 bg-rose-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md">
-                    Devotional
+                  <div className="absolute top-4 left-4 bg-rose-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold">
+                    {blog.category}
                   </div>
                 </div>
                 <div className="p-6 sm:p-7">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 line-clamp-2 min-h-[3.5rem] group-hover:text-rose-600 transition-colors duration-300">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4 line-clamp-2 min-h-[3.5rem]">
                     {blog.title}
                   </h3>
                   <div className="flex items-center justify-between text-sm text-gray-500 pt-2">
@@ -78,8 +74,8 @@ function Devotional() {
               animate={{ opacity: 1 }}
               className="col-span-full text-center py-16"
             >
-              <div className="text-5xl text-rose-300 mb-6">🙏</div>
-              <p className="text-rose-600 text-lg">No devotionals available yet</p>
+              <div className="text-5xl text-rose-300 mb-6">📝</div>
+              <p className="text-rose-600 text-lg">No blogs available yet</p>
             </motion.div>
           )}
         </div>
@@ -88,4 +84,4 @@ function Devotional() {
   );
 }
 
-export default Devotional;
+export default LatestBlogs;

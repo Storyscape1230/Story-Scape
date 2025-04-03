@@ -26,14 +26,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#2A3B5C] border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-lg mt-4 text-[#6B7280]">Loading...</p>
-        </div>
-      </div>
-    );
+    return null;
   }   
 
   if (!isAuthenticated) {
