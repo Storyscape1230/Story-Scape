@@ -227,5 +227,22 @@ const removeSavedBlog = async (req, res) => {
   }
 };
 
+const checkSavedStatus = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { blogId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isSaved = user.saved.includes(blogId);
+    res.status(200).json({ isSaved });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
 /*----------------- Export All Controllers ----------------*/
-export { register, login, logout, getMyProfile, getAdmins, updateProfile, saveBlog, getSavedBlogs, removeSavedBlog };
+export { register, login, logout, getMyProfile, getAdmins, updateProfile, saveBlog, getSavedBlogs, removeSavedBlog, checkSavedStatus };

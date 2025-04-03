@@ -28,6 +28,10 @@ function Detail() {
 
   // Function to check saved status with useCallback to prevent unnecessary recreations
   const checkSavedStatus = useCallback(async () => {
+    if (!profile?._id) {
+      setSaved(false);
+      return;
+    }
     try {
       const { data } = await axios.get(
         `http://localhost:8001/api/users/check-saved/${id}`,
@@ -41,7 +45,7 @@ function Detail() {
       console.error("Error checking saved status:", error);
       setSaved(false);
     }
-  }, [id]);
+  }, [id, profile?._id]);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -56,22 +60,17 @@ function Detail() {
         setBlog(data);
         setLikeCount(data.likes?.length || 0);
         setViews(data.views || Math.floor(Math.random() * 1000) + 100);
-        
-        // Check saved status after fetching blog
-        await checkSavedStatus();
       } catch (error) {
         console.log(error);
       }
     };
     fetchBlog();
-  }, [id, checkSavedStatus]);
+  }, [id]);
 
-  // Check saved status when profile changes
+  // Check saved status when component mounts and when profile changes
   useEffect(() => {
-    if (profile?._id) {
-      checkSavedStatus();
-    }
-  }, [profile?._id, id, checkSavedStatus]);
+    checkSavedStatus();
+  }, [checkSavedStatus]);
 
   useEffect(() => {
     if (blog?.likes && profile?._id) {

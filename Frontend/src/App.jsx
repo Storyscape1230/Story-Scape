@@ -20,6 +20,7 @@ import UserProfile from "./components/UserProfile";
 import Legal from "./Pages/Legal";
 import PropTypes from 'prop-types';
 import Community from "./Pages/Community";
+import BlogLikes from "./dashboard/BlogLikes";
 
 
 // Protected Route Component
@@ -90,6 +91,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/blog-likes/:blogId"
+            element={
+              <ProtectedRoute>
+                <BlogLikes />
               </ProtectedRoute>
             }
           />
