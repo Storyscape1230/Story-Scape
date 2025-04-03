@@ -219,35 +219,39 @@ function MyBlogs() {
                         {blog.title}
                       </h3>
 
-                      {/* Action Buttons */}
-                      <div className="flex gap-4">
-                        <Link
-                          to={`/blog/update/${blog._id}`}
-                          className="flex-1 relative group/edit"
-                        >
-                          <div className="px-4 py-2.5 bg-blue-500/10 rounded-xl border border-blue-500/20 
-                            flex items-center justify-center gap-2 
-                            group-hover/edit:shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)]
-                            transition-all duration-300"
-                          >
-                            <span className="text-blue-400 group-hover/edit:text-blue-300">Edit</span>
-                            <span>✏️</span>
+                      {/* Blog Actions */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <Link
+                              to={`/dashboard/blog-likes/${blog._id}`}
+                              className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
+                            >
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                              </svg>
+                              <span>{blog.likes?.length || 0}</span>
+                            </Link>
                           </div>
-                        </Link>
-
-                        <button
-                          onClick={() => handleDelete(blog._id)}
-                          className="flex-1 relative group/delete"
-                        >
-                          <div className="px-4 py-2.5 bg-red-500/10 rounded-xl border border-red-500/20 
-                            flex items-center justify-center gap-2
-                            group-hover/delete:shadow-[0_0_20px_-5px_rgba(239,68,68,0.5)]
-                            transition-all duration-300"
-                          >
-                            <span className="text-red-400 group-hover/delete:text-red-300">Delete</span>
-                            <span>🗑️</span>
+                          <div className="flex items-center gap-2">
+                            <Link
+                              to={`/blog/update/${blog._id}`}
+                              className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(blog._id)}
+                              className="p-2 text-white/70 hover:text-red-400 hover:bg-white/10 rounded-lg transition-colors"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
                           </div>
-                        </button>
+                        </div>
                       </div>
                     </div>
                   </div>

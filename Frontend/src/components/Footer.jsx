@@ -8,15 +8,29 @@ const Footer = () => {
   const sections = [
     {
       title: "Explore",
-      links: ["Blogs", "Creators", "About ", "Contact", "Documentation"],
+      links: [
+        { name: "Blogs", path: "/blogs" },
+        { name: "Creators", path: "/creators" },
+        { name: "About", path: "/about" },
+        { name: "Contact", path: "/contact" }
+      ],
     },
     {
       title: "Legal",
-      links: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+      links: [
+        { name: "Privacy Policy", path: "/legal#privacy" },
+        { name: "Terms of Service", path: "/legal#terms" },
+        { name: "Cookie Policy", path: "/legal#cookies" }
+      ],
     },
     {
       title: "Community",
-      links: ["Forum", "Events", "Open Source", "Contributors"],
+      links: [
+        { name: "Forum", path: "/community#forum" },
+        { name: "Events", path: "/community#events" },
+        { name: "Open Source", path: "/community#opensource" },
+        { name: "Contributors", path: "/community#contributors" }
+      ],
     },
   ];
 
@@ -37,13 +51,13 @@ const Footer = () => {
             <Link to="/" className="flex items-center">
               {/* Logo Image */}
               <img
-                src={logo} // Use the imported logo
+                src={logo}
                 alt="StoryScape Logo"
-                className="h-5 w-5 mr-1" // Adjust size and spacing
+                className="h-5 w-5 mr-1"
               />
               {/* Logo Text */}
               <div className="items-center">
-                <span className=" font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
+                <span className="font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
                   Story
                   <span className="text-red-500 ruslan-display-regular">
                     Scape
@@ -65,16 +79,16 @@ const Footer = () => {
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <motion.li
-                    key={link}
+                    key={link.name}
                     whileHover={{ x: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <a
-                      href="#"
+                    <Link
+                      to={link.path}
                       className="text-gray-300 hover:text-white transition-colors text-sm"
                     >
-                      {link}
-                    </a>
+                      {link.name}
+                    </Link>
                   </motion.li>
                 ))}
               </ul>
@@ -112,7 +126,6 @@ const Footer = () => {
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 text-red-500 hover:text-red-400 transition-colors"
           whileHover={{ scale: 1.1 }}
-          xxx
           whileTap={{ scale: 0.9 }}
         >
           <BsArrowUpCircle className="w-8 h-8" />

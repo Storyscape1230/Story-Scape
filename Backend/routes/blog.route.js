@@ -1,5 +1,5 @@
 import express from "express";
-import { createBlog, deleteBlog, getAllBlogs, getMyBlogs, getSingleBlogs, updateBlog, uploadImage, getCreatorProfile, likeBlog, } from "../controller/blog.controller.js";
+import { createBlog, deleteBlog, getAllBlogs, getMyBlogs, getSingleBlogs, updateBlog, uploadImage, getCreatorProfile, likeBlog, getBlogLikes } from "../controller/blog.controller.js";
 import { isAdmin, isAuthenticated } from "../middleware/authUser.js";
 
 const router = express.Router();
@@ -13,6 +13,6 @@ router.put("/update/:id", isAuthenticated, isAdmin("admin"), updateBlog);
 router.post("/upload-image", isAuthenticated, isAdmin("admin"), uploadImage);
 router.get("/creator/:creatorId", isAuthenticated, getCreatorProfile);
 router.put("/like/:blogId", isAuthenticated, likeBlog);
-
+router.get("/likes/:blogId", isAuthenticated, getBlogLikes);
 
 export default router;

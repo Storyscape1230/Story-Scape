@@ -17,7 +17,10 @@ import Save from "./Pages/Save";
 import CreatorProfile from "./components/CreatorProfile";
 import ScrollToTop from "./components/ScrollToTop";
 import UserProfile from "./components/UserProfile";
+import Legal from "./Pages/Legal";
 import PropTypes from 'prop-types';
+import Community from "./Pages/Community";
+import BlogLikes from "./dashboard/BlogLikes";
 
 
 // Protected Route Component
@@ -61,8 +64,9 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/creators" element={<Creators />} />
-          <Route path="/creator/:creatorId" element={<CreatorProfile />} />
+          <Route exact path="/community" element={<Community />} />
           <Route exact path="/blog/:id" element={<Detail />} />
+          <Route exact path="/legal" element={<Legal />} />
 
           {/* Protected Routes */}
           <Route
@@ -80,6 +84,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/blog-likes/:blogId"
+            element={
+              <ProtectedRoute>
+                <BlogLikes />
               </ProtectedRoute>
             }
           />
