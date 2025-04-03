@@ -17,6 +17,7 @@ import Save from "./Pages/Save";
 import CreatorProfile from "./components/CreatorProfile";
 import ScrollToTop from "./components/ScrollToTop";
 import UserProfile from "./components/UserProfile";
+import Legal from "./Pages/Legal";
 import PropTypes from 'prop-types';
 
 
@@ -70,6 +71,7 @@ function App() {
           <Route exact path="/creators" element={<Creators />} />
           <Route path="/creator/:creatorId" element={<CreatorProfile />} />
           <Route exact path="/blog/:id" element={<Detail />} />
+          <Route exact path="/legal" element={<Legal />} />
 
           {/* Protected Routes */}
           <Route
