@@ -4,10 +4,9 @@ import Devotional from "../Home/Devotional";
 import Join from "../Home/Join";
 import LatestBlogs from "../Home/LatestBlogs";
 
-
 function Home() {
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-rose-100">
       <Hero />
       <Trending />
       <Devotional />

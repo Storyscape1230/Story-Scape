@@ -13,7 +13,7 @@ function LatestBlogs() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-rose-50 to-rose-100 py-20 px-6 sm:px-8">
+    <div className="py-20 px-6 sm:px-8">
       <div className="w-[85%] mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -25,7 +25,7 @@ function LatestBlogs() {
               Latest Blogs
               <span className="text-2xl">✨</span>
             </h2>
-            <p className="text-rose-600 text-lg">
+            <p className="text-black-600 text-lg">
               Explore our latest articles and stories
             </p>
           </div>
@@ -63,7 +63,7 @@ function LatestBlogs() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="group cursor-pointer bg-rose-50 p-4 rounded-2xl transition-all duration-300"
+                className="group cursor-pointer"
                 onClick={() => handleBlogClick(blog._id)}
               >
                 {/* Blog Card */}
@@ -73,7 +73,7 @@ function LatestBlogs() {
                     <img
                       src={blog.blogImage.url}
                       alt={blog.title}
-                      className="w-full h-full object-cover rounded-2xl group-hover:scale-[1.02] transition-all duration-300"
+                      className="w-full h-full object-cover rounded-xl group-hover:scale-[1.02] transition-all duration-300"
                     />
                     {/* Category Badge */}
                     <span className="absolute bottom-3 left-3 px-3 py-1.5 bg-white/90 backdrop-blur-sm text-rose-600 text-sm font-medium rounded-full">
@@ -82,7 +82,7 @@ function LatestBlogs() {
                   </div>
 
                   {/* Content */}
-                  <div className="space-y-3 bg-gradient-to-br from-rose-50 to-rose-100 p-4 rounded-xl shadow-sm">
+                  <div className="space-y-3">
                     {/* Admin Info */}
                     <div className="flex items-center space-x-3">
                       <div className="relative">
@@ -118,7 +118,7 @@ function LatestBlogs() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-rose-600 transition-colors line-clamp-2 h-14 leading-7">
+                    <h3 className="text-lg font-bold text-black-800 group-hover:text-rose-600 transition-colors line-clamp-2 h-14 leading-7">
                       {blog.title}
                     </h3>
                   </div>

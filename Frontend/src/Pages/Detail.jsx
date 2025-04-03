@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import Join from "../Home/Join";
+import LatestBlogs from "../Home/LatestBlogs";
 
 function Detail() {
   const { id } = useParams();
@@ -396,6 +397,7 @@ function Detail() {
 
       {/* Join Section */}
       <div className="mt-16">
+        <LatestBlogs />
         <Join />
       </div>
     </div>

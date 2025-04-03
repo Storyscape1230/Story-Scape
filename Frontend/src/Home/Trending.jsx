@@ -52,7 +52,7 @@ function Trending() {
 
   if (showLoading) {
     return (
-      <div className="bg-white py-20 px-6 sm:px-8">
+      <div className="py-20 px-6 sm:px-8">
         <div className="max-w-[90%] mx-auto">
           <div className="w-full">
             <Carousel
@@ -69,7 +69,7 @@ function Trending() {
             >
               {[1, 2, 3, 4, 5].map((index) => (
                 <div key={index} className="h-full px-2">
-                  <div className="w-full bg-white rounded-2xl shadow-lg overflow-hidden h-[60vh] relative">
+                  <div className="w-full bg-white rounded-xl shadow-sm overflow-hidden h-[60vh] relative">
                     <div className="absolute inset-0 overflow-hidden">
                       <div className="w-full h-full bg-gray-200 animate-pulse relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer"></div>
@@ -98,9 +98,8 @@ function Trending() {
   }
 
   return (
-    <div className="bg-white py-20 px-6 sm:px-8">
+    <div className="py-20 px-6 sm:px-8">
       <div className="max-w-[90%] mx-auto">
-        
         <div className="w-full">
           <Carousel
             responsive={responsive}
@@ -122,7 +121,7 @@ function Trending() {
                   className="h-full cursor-pointer px-2"
                   onClick={() => handleBlogClick(blog._id)}
                 >
-                  <div className="w-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden h-[60vh] relative group">
+                  <div className="w-full bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden h-[60vh] relative group">
                     <div className="absolute inset-0 overflow-hidden">
                       <img
                         src={blog.blogImage.url}
