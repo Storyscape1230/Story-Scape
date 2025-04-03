@@ -26,10 +26,10 @@ const Footer = () => {
     {
       title: "Community",
       links: [
-        { name: "Forum", path: "/forum" },
-        { name: "Events", path: "/events" },
-        { name: "Open Source", path: "/open-source" },
-        { name: "Contributors", path: "/contributors" }
+        { name: "Forum", path: "/community#forum" },
+        { name: "Events", path: "/community#events" },
+        { name: "Open Source", path: "/community#opensource" },
+        { name: "Contributors", path: "/community#contributors" }
       ],
     },
   ];
