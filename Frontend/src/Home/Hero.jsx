@@ -22,17 +22,17 @@ function Hero() {
   const sortedBlogs = [...blogs].reverse();
 
   return (
-    <div className="bg-gradient-to-red from-rose-50 to-white py-8 px-4">
+    <div className="bg-gradient-to-red from-rose-50 to-white py-16 px-4">
       <div className="mx-auto w-[90%]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Left big blog post */}
           <div className="md:col-span-1">
             <div className="bg-gradient-to-red overflow-hidden transition-all duration-300 group hover:bg-gradient-to-r hover:from-red-50 h-full rounded-lg">
-              <div className="overflow-hidden rounded-lg"> {/* Ensure rounded corners for the image container */}
+              <div className="h-[400px] overflow-hidden rounded-lg relative group">
                 <Link to={`/blog/${sortedBlogs[0]._id}`}>
                   <img
                     alt="Main blog image"
-                    className="w-full h-96 object-cover hover:scale-105 transition-all duration-300 rounded-lg" // Hover effect and rounded corners
+                    className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 ease-in-out group-hover:scale-110"
                     src={sortedBlogs[0].blogImage.url}
                   />
                 </Link>
@@ -52,8 +52,9 @@ function Hero() {
                     </p>
                     <p className="text-sm text-gray-500">Author</p>
                   </div>
+
                 </div>
-                <h1 className="text-3xl font-bold mb-2 text-gray-800 group-hover:text-red-600 transition-all duration-300">
+                <h1 className="text-4xl font-bold mb-2 text-gray-800 group-hover:text-red-600 transition-all duration-300 line-clamp-2 min-h-[4rem]">
                   <Link to={`/blog/${sortedBlogs[0]._id}`}>
                     {sortedBlogs[0].title}
                   </Link>
@@ -65,7 +66,7 @@ function Hero() {
                   <span className="mx-2">|</span>
                   <span>6 minute read</span>
                 </div>
-                <p className="text-gray-600 line-clamp-3">
+                <p className="text-xl text-gray-600 line-clamp-2">
                   {stripHtmlTags(sortedBlogs[0].about)}{" "}
                   {/* Render plain text */}
                 </p>
@@ -96,11 +97,11 @@ function Hero() {
                         </span>
                       </div>
                       <Link to={`/blog/${blog._id}`}>
-                        <h2 className="text-2xl font-semibold mb-2 text-gray-800 group-hover:text-red-600 transition-all duration-300">
+                        <h2 className="text-2xl font-semibold mb-2 text-gray-800 group-hover:text-red-600 transition-all duration-300 line-clamp-2 min-h-[3.5rem]">
                           {blog.title}
                         </h2>
                       </Link>
-                      <p className="text-gray-600 text-sm line-clamp-3">
+                      <p className="text-gray-600 text-sm line-clamp-4">
                         {stripHtmlTags(blog.about)} {/* Render plain text */}
                       </p>
                     </div>
@@ -109,11 +110,11 @@ function Hero() {
                   {/* Image on the right (37% width) */}
                   <Link
                     to={`/blog/${blog._id}`}
-                    className="md:w-[37%] flex-shrink-0 overflow-hidden rounded-lg" // Ensure rounded corners for the image container
+                    className="md:w-[37%] h-[200px] overflow-hidden rounded-lg relative group" // Added height and group
                   >
                     <img
                       alt="Blog image"
-                      className="w-full h-full object-cover hover:scale-105 transition-all duration-300 rounded-lg" // Hover effect and rounded corners
+                      className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 ease-in-out group-hover:scale-110"
                       src={blog.blogImage.url}
                     />
                   </Link>
