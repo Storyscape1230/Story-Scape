@@ -221,7 +221,6 @@ function CreateBlog() {
                         <option value="Business">Business</option>
                         <option value="Devotion">Devotion</option>
                         <option value="Travel">Travel</option>
-                        <option value="Sports">Sports</option>
                       </select>
                       <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
                         <svg className="w-5 h-5 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

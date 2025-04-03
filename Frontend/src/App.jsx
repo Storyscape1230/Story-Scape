@@ -123,6 +123,11 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            exact
+            path="/creator/:creatorId"
+            element={<CreatorProfile />}
+          />
         </Routes>
       </div>
 

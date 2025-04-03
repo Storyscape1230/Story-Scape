@@ -18,8 +18,7 @@ function Blogs() {
     "Olympics",
     "Business",
     "Devotion",
-    "Travel",
-    "Sports"
+    "Travel"
   ];
 
   // Use only predefined categories

@@ -241,7 +241,6 @@ function UpdateBlog() {
                       <option value="Business">Business</option>
                       <option value="Devotion">Devotion</option>
                       <option value="Travel">Travel</option>
-                      <option value="Sports">Sports</option>
                     </select>
                     <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
                       <svg
