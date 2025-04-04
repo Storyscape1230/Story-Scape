@@ -54,7 +54,7 @@ function Sidebar({ setComponent }) {
       <div
         className={`w-72 h-screen fixed top-0 left-0 bg-[#111827] transition-transform duration-300 transform sm:translate-x-0 ${
           show ? "translate-x-0" : "-translate-x-full"
-        } z-40 flex flex-col overflow-y-auto`}
+        } z-40 flex flex-col overflow-y-auto sidebar`}
       >
         {/* Decorative Lines */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

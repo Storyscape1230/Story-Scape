@@ -36,7 +36,7 @@ function Creators() {
       <div className="fixed top-20 left-10 w-24 h-24 bg-red-100 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
       <div className="fixed bottom-1/4 right-16 w-24 h-24 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[75%] mx-auto">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0 }}
@@ -76,14 +76,14 @@ function Creators() {
               {/* Card container */}
               <div className="h-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-red-100/50 hover:border-red-200 transition-colors">
                 {/* Full-width portrait */}
-                <div className="relative h-72 overflow-hidden">
+                <Link to={`/creator/${creator._id}`} className="block relative h-72 overflow-hidden">
                   <img
                     src={creator.photo.url}
                     alt={creator.name}
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-125"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-red-900/40 to-transparent"></div>
-                </div>
+                </Link>
 
                 {/* Profile badge */}
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">

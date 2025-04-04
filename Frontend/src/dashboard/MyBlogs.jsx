@@ -65,7 +65,7 @@ function MyBlogs() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen md:pl-72 flex flex-col relative bg-[#0B1120] overflow-hidden"
+      className="min-h-screen md:pl-72 flex flex-col relative bg-[#0B1120] overflow-hidden dashboard-content"
     >
       {/* Futuristic Particle Background */}
       <div className="absolute inset-0 overflow-hidden">

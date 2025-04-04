@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useState, useEffect } from 'react';
+import { motion } from "framer-motion";
 
 function Trending() {
   const { blogs } = useAuth();
   const navigate = useNavigate();
-  const [showLoading, setShowLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(true); 
   
   // Set up a timer to show loading for 2 seconds
   useEffect(() => {
@@ -68,27 +69,78 @@ function Trending() {
               partialVisible={false}
             >
               {[1, 2, 3, 4, 5].map((index) => (
-                <div key={index} className="h-full px-2">
+                <motion.div 
+                  key={index} 
+                  className="h-full px-2"
+                  initial={{ x: 100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ 
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                >
                   <div className="w-full bg-white rounded-xl shadow-sm overflow-hidden h-[60vh] relative">
                     <div className="absolute inset-0 overflow-hidden">
-                      <div className="w-full h-full bg-gray-200 animate-pulse relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer"></div>
+                      <div className="w-full h-full bg-gray-100 animate-pulse relative">
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+                          animate={{
+                            x: ["0%", "100%"],
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                        />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-90" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-70" />
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-8">
                       <div className="h-6 w-24 bg-gray-300 rounded-full animate-pulse relative mb-4">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer"></div>
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                          animate={{
+                            x: ["0%", "100%"],
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                        />
                       </div>
                       <div className="h-8 w-3/4 bg-gray-300 rounded animate-pulse relative mb-4">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer"></div>
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                          animate={{
+                            x: ["0%", "100%"],
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                        />
                       </div>
                       <div className="h-6 w-1/2 bg-gray-300 rounded animate-pulse relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer"></div>
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                          animate={{
+                            x: ["0%", "100%"],
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </Carousel>
           </div>

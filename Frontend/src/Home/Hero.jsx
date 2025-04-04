@@ -69,6 +69,7 @@ BlogCardSkeleton.defaultProps = {
 function Hero() {
   const { blogs } = useAuth();
   const [showLoading, setShowLoading] = useState(true);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   
   // Set up a timer to show loading for 2 seconds
   useEffect(() => {
@@ -83,11 +84,30 @@ function Hero() {
     // Clean up timer on unmount
     return () => clearTimeout(timer);
   }, []); // Empty dependency array means this runs once on mount
+
+  // Preload images while showing skeleton
+  useEffect(() => {
+    if (blogs && blogs.length > 0) {
+      const imageUrls = blogs.map(blog => blog.blogImage.url);
+      let loadedCount = 0;
+
+      imageUrls.forEach(url => {
+        const img = new Image();
+        img.onload = () => {
+          loadedCount++;
+          if (loadedCount === imageUrls.length) {
+            setImagesLoaded(true);
+          }
+        };
+        img.src = url;
+      });
+    }
+  }, [blogs]);
   
   // Reverse the blogs array to show the newest blog first
   const sortedBlogs = [...(blogs || [])].reverse();
 
-  if (showLoading) {
+  if (showLoading || !imagesLoaded) {
     return (
       <div className="py-16 px-4">
         <div className="mx-auto w-[90%]">
