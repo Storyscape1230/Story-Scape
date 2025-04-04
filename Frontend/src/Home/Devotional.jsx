@@ -1,8 +1,8 @@
 import { useAuth } from "../context/AuthProvider";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import { FloatingCrossPropTypes, CardPropTypes } from './PropTypes';
+import { useState, useRef } from "react";
+import { CardPropTypes } from './PropTypes';
 
 // Add custom styles for 3D effects
 const styles = `
@@ -46,6 +46,7 @@ const styles = `
     overflow: hidden;
     border-radius: 30px 30px 0 0;
     transform-style: preserve-3d;
+    perspective: 1000px;
   }
   
   .image-wrapper::after {
@@ -65,26 +66,27 @@ const styles = `
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1s ease;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-radius: 30px 30px 0 0;
     transform-style: preserve-3d;
+    backface-visibility: hidden;
   }
   
   .card-container:hover .image-wrapper img {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   
   .category-tag {
     position: absolute;
     top: 20px;
     left: 20px;
-    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    background: #FF0000;
     color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 6px 12px;
+    border-radius: 15px;
     font-weight: 600;
-    font-size: 14px;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    font-size: 12px;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
     transform: translateY(0) translateZ(20px);
     transition: all 0.5s ease;
     z-index: 10;
@@ -136,94 +138,15 @@ const styles = `
   .meta-icon {
     color: #FF6B6B;
   }
-  
-  .floating-icons {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 1;
-  }
-  
-  .floating-icon {
-    position: absolute;
-    opacity: 0.1;
-    transition: all 1s ease;
-  }
-  
-  .card-container:hover .floating-icon {
-    opacity: 0.3;
-    transform: translateY(-10px);
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0) translateZ(10px);
-    }
-    50% {
-      transform: translateY(-20px) translateZ(20px);
-    }
-  }
-  
-  .floating-cross {
-    position: absolute;
-    color: rgba(255, 107, 107, 0.15);
-    animation: float 6s ease-in-out infinite;
-  }
 `;
-
-const FloatingCross = ({ x, y, delay, size }) => {
-  return (
-    <motion.div
-      className="floating-cross"
-      initial={{ opacity: 0, x, y }}
-      animate={{ 
-        opacity: [0, 0.2, 0],
-        y: y - 50,
-        transition: { 
-          duration: 10 + Math.random() * 10,
-          delay,
-          repeat: Infinity,
-          repeatType: "reverse"
-        }
-      }}
-      style={{
-        fontSize: `${size}px`,
-        zIndex: 1
-      }}
-    >
-      ✝
-    </motion.div>
-  );
-};
-
-FloatingCross.propTypes = FloatingCrossPropTypes;
 
 function Devotional() {
   const { blogs } = useAuth();
   const navigate = useNavigate();
-  const [crosses, setCrosses] = useState([]);
   
   const devotionalBlogs = blogs?.filter(blog => blog.category === "Devotion")
     .reverse()
     .slice(0, 4);
-
-  useEffect(() => {
-    const newCrosses = [];
-    for (let i = 0; i < 20; i++) {
-      newCrosses.push({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        delay: Math.random() * 5,
-        size: 10 + Math.random() * 20
-      });
-    }
-    setCrosses(newCrosses);
-  }, []);
 
   const handleBlogClick = (blogId) => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -287,24 +210,6 @@ function Devotional() {
           transition: "scale 0.3s ease"
         }}
       >
-        <div className="floating-icons">
-          {[...Array(5)].map((_, i) => (
-            <div 
-              key={i}
-              className="floating-icon"
-              style={{
-                left: `${10 + i * 15}%`,
-                top: `${20 + i * 10}%`,
-                fontSize: `${15 + i * 5}px`,
-                color: i % 2 ? '#FF6B6B' : '#FF8E53',
-                animationDelay: `${i * 0.5}s`
-              }}
-            >
-              ✝
-            </div>
-          ))}
-        </div>
-        
         <div className="image-wrapper">
           <img
             src={blog.blogImage.url}
@@ -344,19 +249,6 @@ function Devotional() {
     <>
       <style>{styles}</style>
       <div className="py-24 px-6 sm:px-8 relative overflow-hidden">
-        {/* Animated floating crosses in background */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {crosses.map(cross => (
-            <FloatingCross 
-              key={cross.id}
-              x={`${cross.x}%`}
-              y={`${cross.y}%`}
-              delay={cross.delay}
-              size={cross.size}
-            />
-          ))}
-        </div>
-        
         {/* Decorative background elements */}
         <motion.div 
           className="absolute top-0 left-0 w-64 h-64 bg-rose-100 rounded-full filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2"
@@ -397,11 +289,11 @@ function Devotional() {
             >
               <span className="text-rose-500 text-lg font-medium tracking-wider uppercase">Daily Inspiration</span>
             </motion.div>
-            <h2 className="text-4xl sm:text-6xl font-bold text-rose-800 mb-6 leading-tight">
-              Spiritual <span className="text-amber-600">Nourishment</span>
+            <h2 className="text-4xl sm:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Spiritual <span className="text-red-500">Nourishment</span>
             </h2>
             <motion.p 
-              className="text-rose-600 max-w-2xl mx-auto text-lg leading-relaxed"
+              className="text-black-600 max-w-2xl mx-auto text-lg leading-relaxed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.3 }}

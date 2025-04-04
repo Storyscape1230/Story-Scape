@@ -165,23 +165,23 @@ function Hero() {
                 className="rounded-xl overflow-hidden transition-all flex-1 group"
               >
                 <div className="flex flex-col md:flex-row h-full">
-                  <div className="p-4 md:w-[63%] flex flex-col justify-between">
+                  <div className="p-4 md:w-[63%] my-2 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center mb-2">
+                      <div className="flex items-center mt-1">
                         <span className="text-rose-600 text-sm">
                           {blog.category}
                         </span>
-                        <span className="mx-2 text-gray-500 text-sm">|</span>
+                        <span className="mx-2 text-gray-500 text-sm ">|</span>
                         <span className="text-gray-500 text-sm">
                           6 min read
                         </span>
                       </div>
                       <Link to={`/blog/${blog._id}`}>
-                        <h2 className="text-2xl font-semibold mb-2 text-gray-900 group-hover:text-rose-600 transition-colors duration-300 line-clamp-2 min-h-[3.5rem]">
+                        <h2 className="text-2xl mt-3 font-semibold mb-2 text-gray-900 group-hover:text-rose-600 transition-colors duration-300 line-clamp-2 min-h-[3.5rem]">
                           {blog.title}
                         </h2>
                       </Link>
-                      <p className="text-gray-600 text-sm line-clamp-4">
+                      <p className="text-gray-600 mt-3 text-sm line-clamp-3  ">
                         {stripHtmlTags(blog.about)}
                       </p>
                     </div>

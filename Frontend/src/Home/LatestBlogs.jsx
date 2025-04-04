@@ -21,8 +21,8 @@ function LatestBlogs() {
           className="flex justify-between items-center mb-16"
         >
           <div>
-            <h2 className="text-4xl sm:text-5xl font-bold text-rose-800 mb-4 flex items-center gap-2">
-              Latest Blogs
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              Latest <span className="text-red-500">Blogs</span>
               <span className="text-2xl">✨</span>
             </h2>
             <p className="text-black-600 text-lg">
