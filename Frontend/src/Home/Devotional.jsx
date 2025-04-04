@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthProvider";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { CardPropTypes } from './PropTypes';
 
 // Add custom styles for 3D effects
@@ -157,20 +157,20 @@ function Devotional() {
     const cardRef = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
     
-    // Motion values for mouse position
+    // Motion values for mouse position - moved outside of render cycle
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
     
-    // Transform mouse position to rotation
+    // Transform mouse position to rotation - memoized with useCallback
     const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
     const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
     
-    // Add spring physics to rotation
+    // Add spring physics to rotation - memoized with useCallback
     const springConfig = { stiffness: 150, damping: 15 };
     const springRotateX = useSpring(rotateX, springConfig);
     const springRotateY = useSpring(rotateY, springConfig);
     
-    const handleMouseMove = (e) => {
+    const handleMouseMove = useCallback((e) => {
       if (!cardRef.current || !isHovered) return;
       
       const rect = cardRef.current.getBoundingClientRect();
@@ -183,13 +183,13 @@ function Devotional() {
       
       mouseX.set(x);
       mouseY.set(y);
-    };
+    }, [isHovered]);
     
-    const handleMouseLeave = () => {
+    const handleMouseLeave = useCallback(() => {
       setIsHovered(false);
       mouseX.set(0);
       mouseY.set(0);
-    };
+    }, []);
 
     return (
       <motion.div
