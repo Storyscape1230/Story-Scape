@@ -27,7 +27,7 @@ function UserProfile() {
       });
       setPhotoPreview(profile.photo?.url || "");
     }
-  }, [profile?.name, profile?.email, profile?.phone, profile?.photo?.url]);
+  }, [profile]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

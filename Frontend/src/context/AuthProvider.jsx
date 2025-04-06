@@ -1,10 +1,9 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "./AuthContext";
 
-export const AuthContext = createContext();
-
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
   const [profile, setProfile] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -76,18 +75,14 @@ export const AuthProvider = ({ children }) => {
 
   // Function to handle login
   const login = async (credentials) => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:8001/api/users/login",
-        credentials,
-        { withCredentials: true }
-      );
-      localStorage.setItem("jwt", data.token);
-      await fetchProfile();
-      return data;
-    } catch (error) {
-      throw error;
-    }
+    const { data } = await axios.post(
+      "http://localhost:8001/api/users/login",
+      credentials,
+      { withCredentials: true }
+    );
+    localStorage.setItem("jwt", data.token);
+    await fetchProfile();
+    return data;
   };
 
   // Function to handle logout
@@ -122,5 +117,4 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// Custom hook to use AuthContext
-export const useAuth = () => useContext(AuthContext);
+export default AuthProvider;
