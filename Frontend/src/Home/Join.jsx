@@ -16,7 +16,7 @@ const Join = () => {
   };
 
   return (
-    <div className="relative py-20 overflow-hidden">
+    <div className="relative py-24 overflow-hidden min-h-[400px]">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img 

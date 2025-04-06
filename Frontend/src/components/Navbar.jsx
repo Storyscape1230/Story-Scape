@@ -30,17 +30,37 @@ function Navbar() {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.get(
+      await axios.get(
         "http://localhost:8001/api/users/logout",
         { withCredentials: true }
       );
       localStorage.removeItem("jwt");
-      toast.success(data.message);
+      toast.success("Logged out successfully", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#000',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ef4444' 
+        },
+      });
       setIsAuthenticated(false);
       navigateTo("/login");
       setShowUserDropdown(false);
     } catch (error) {
-      toast.error("Failed to logout", error);
+      toast.error(error.response?.data?.message || "Failed to logout", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#000',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ef4444'
+        },
+      });
     }
   };
 
@@ -184,6 +204,8 @@ function Navbar() {
                         onClick={handleLogout}
                         className="flex items-center w-full px-4 py-2 text-sm text-gray-300 
                           hover:bg-gray-700/50 hover:text-red-400 transition-colors duration-200 group"
+                        data-form-type="other"
+                        autoComplete="off"
                       >
                         <svg className="mr-2 text-gray-400 group-hover:text-red-400 transition-colors 
                           duration-200" width="16" height="16" viewBox="0 0 24 24" fill="none" 

@@ -24,16 +24,36 @@ function Sidebar({ setComponent }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.get(
+      await axios.get(
         "http://localhost:8001/api/users/logout",
         { withCredentials: true }
       );
-      toast.success(data.message);
+      toast.success("Logged out successfully", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#000',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ef4444'
+        },
+      });
       localStorage.removeItem("jwt");
       setIsAuthenticated(false);
       navigateTo("/login");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to logout");
+      toast.error(error.response?.data?.message || "Failed to logout", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#000',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ef4444'
+        },
+      });
     }
   };
 
@@ -128,6 +148,8 @@ function Sidebar({ setComponent }) {
           <button
             onClick={handleLogout}
             className="group w-full relative p-3 flex items-center bg-transparent hover:bg-[#1f2937] rounded-md transition-all duration-300"
+            data-form-type="other"
+            autoComplete="off"
           >
             <div className="relative w-10 h-10 flex items-center justify-center">
               <FaSignOutAlt className="text-[#E5E7EB]/70 group-hover:text-red-500 text-lg transition-colors duration-300" />

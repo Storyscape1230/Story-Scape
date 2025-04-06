@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
@@ -8,6 +8,8 @@ import DecorativeElements from "../components/DecorativeElements";
 
 function Login() {
   const { setIsAuthenticated, setProfile } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
 
   const navigateTo = useNavigate();
   const [email, setEmail] = useState("");
@@ -15,20 +17,10 @@ function Login() {
   const [role, setRole] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  // Load saved credentials on component mount
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("savedEmail");
-    const savedRole = localStorage.getItem("savedRole");
-    
-    if (savedEmail && savedRole) {
-      setEmail(savedEmail);
-      setRole(savedRole);
-      setRememberMe(true);
-    }
-  }, []);
-
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setLoadingMessage("Verifying credentials...");
 
     try {
       const { data } = await axios.post(
@@ -53,23 +45,44 @@ function Login() {
         localStorage.removeItem("savedRole");
       }
       
-      toast.success(data.message || "User logged in successfully", {
+      // Add 2 second delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      toast.success("Login Successful!", {
         duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#000',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ef4444'
+        },
       });
+      
       setProfile(data);
       setIsAuthenticated(true);
       setEmail("");
       setPassword("");
       setRole("");
+      setIsLoading(false);
+      setLoadingMessage("");
       navigateTo("/");
     } catch (error) {
       console.log(error);
-      toast.error(
-        error.response?.data?.message || "Please fill the required fields",
-        {
-          duration: 3000,
-        }
-      );
+      setIsLoading(false);
+      setLoadingMessage("");
+      toast.error(error.response?.data?.message || "Invalid credentials", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#000',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '8px',
+          border: '1px solid #ef4444'
+        },
+      });
     }
   };
 
@@ -82,7 +95,7 @@ function Login() {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8"
       >
-        <form onSubmit={handleLogin} className="space-y-4" autoComplete="on">
+        <form onSubmit={handleLogin} className="space-y-4" autoComplete="off" data-form-type="other">
           <h1 className="text-center text-3xl font-extrabold mb-4 text-black-600">
             <span className="text-xl font-bold tracking-tight hover:text-red-500 transition-colors ruslan-display-regular">
               Story<span className="text-red-500 ruslan-display-regular">Scape</span>
@@ -96,7 +109,7 @@ function Login() {
             className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-red-300"
             required
             name="role"
-            autoComplete="username"
+            autoComplete="off"
           >
             <option value="">Select Role</option>
             <option value="user">User</option>
@@ -112,7 +125,9 @@ function Login() {
             className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-red-300"
             required
             name="email"
-            autoComplete="username"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
           />
 
           <motion.input
@@ -123,8 +138,8 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-red-300"
             required
-            name="password"
-            autoComplete="current-password"
+            name="new-password"
+            autoComplete="new-password"
           />
 
           <div className="flex items-center">
@@ -151,9 +166,17 @@ function Login() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-full py-3 mt-2 bg-red-500 text-white font-semibold rounded-xl shadow-md hover:bg-red-600 transition-colors"
+            disabled={isLoading}
+            className={`w-full py-3 mt-2 bg-red-500 text-white font-semibold rounded-xl shadow-md hover:bg-red-600 transition-colors ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
           >
-            Login
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                {loadingMessage}
+              </div>
+            ) : (
+              'Login'
+            )}
           </motion.button>
         </form>
       </motion.div>
