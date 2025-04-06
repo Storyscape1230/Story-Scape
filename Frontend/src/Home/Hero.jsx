@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';

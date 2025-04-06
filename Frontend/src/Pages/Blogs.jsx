@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import DecorativeElements from "../components/DecorativeElements";

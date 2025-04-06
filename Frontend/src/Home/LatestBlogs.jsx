@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 

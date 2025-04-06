@@ -9,7 +9,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "../src/pages/Dashboard";
 import Creators from "./pages/Creators";
-import { useAuth } from "./context/AuthProvider";
+import { useAuth } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import UpdateBlog from "./dashboard/UpdateBlog";
 import Detail from "./Pages/Detail";

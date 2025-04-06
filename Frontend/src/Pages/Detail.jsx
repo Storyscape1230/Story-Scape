@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart, FaEye, FaShareAlt, FaTimes } from "react-icons/fa";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import Join from "../Home/Join";

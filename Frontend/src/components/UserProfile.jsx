@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiEdit, FiMail, FiPhone, FiCalendar, FiUser, FiCamera, FiX } from "react-icons/fi";

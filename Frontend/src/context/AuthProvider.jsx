@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
   const fetchProfile = async () => {
     const token = localStorage.getItem("jwt");
     if (!token) {
-      console.warn("No token found, skipping profile fetch.");
       setLoading(false);
       setIsAuthenticated(false);
       return;

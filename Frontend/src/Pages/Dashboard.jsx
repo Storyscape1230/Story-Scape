@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import Sidebar from "../dashboard/Sidebar";
 import MyProfile from "../dashboard/MyProfile";
 import MyBlogs from "../dashboard/MyBlogs";

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import DecorativeElements from "../components/DecorativeElements";
