@@ -2,7 +2,7 @@ import { useAuth } from "../context/AuthProvider";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useCallback } from "react";
-import { CardPropTypes } from './PropTypes';
+import { CardPropTypes } from '../hooks/PropTypes.jsx';
 
 // Add custom styles for 3D effects
 const styles = `

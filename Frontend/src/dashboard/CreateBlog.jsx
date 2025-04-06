@@ -400,24 +400,6 @@ function CreateBlog() {
         </div>
       </div>
 
-      {/* Floating action elements */}
-      <motion.div 
-        className="fixed bottom-8 right-8 z-20"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-      >
-        <button 
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="p-3 bg-[#818CF8] rounded-full shadow-lg hover:bg-[#7DD3FC] transition-colors duration-300 flex items-center justify-center"
-        >
-          <svg className="w-6 h-6 text-[#0F172A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-          </svg>
-        </button>
-      </motion.div>
-
       {/* Custom Jodit Editor Styles */}
       <style>{`
         .custom-jodit .jodit-toolbar__box {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 
 function Save() {
   const [savedBlogs, setSavedBlogs] = useState([]);
@@ -51,6 +52,7 @@ function Save() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-red-50 to-pink-50 py-8 px-4">
+      <DecorativeElements />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -73,7 +75,7 @@ function Save() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-base text-gray-600 max-w-2xl mx-auto"
           >
-            All the stories you've saved for later reading in one place
+            All the stories you&apos;ve saved for later reading in one place
           </motion.p>
         </div>
 

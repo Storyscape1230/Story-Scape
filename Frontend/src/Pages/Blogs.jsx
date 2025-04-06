@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 
 // Loading Skeleton Component
 const BlogCardSkeleton = () => {
@@ -197,6 +198,7 @@ function Blogs() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 to-rose-100 py-8 px-4">
+      <DecorativeElements />
       <div className="max-w-[90%] mx-auto">
         {/* Header Section */}
         <motion.div

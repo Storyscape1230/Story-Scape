@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { LuImageUp } from "react-icons/lu";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 
 function Register() {
   const { setIsAuthenticated, setProfile } = useAuth();
@@ -72,6 +73,7 @@ function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-100 via-pink-100 to-red-100 p-4">
+      <DecorativeElements />
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

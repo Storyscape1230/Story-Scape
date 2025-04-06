@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import DecorativeElements from "../components/DecorativeElements";
 
 function Community() {
   const location = useLocation();
@@ -113,6 +114,7 @@ function Community() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-red-50 to-pink-50 py-12 px-4">
+      <DecorativeElements />
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div

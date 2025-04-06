@@ -1,8 +1,8 @@
-
 import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaPaperPlane } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 
 function Contact() {
   const {
@@ -41,6 +41,7 @@ function Contact() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-50 to-pink-50 py-12 px-4">
+      <DecorativeElements />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

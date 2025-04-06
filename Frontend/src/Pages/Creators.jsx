@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 
 function Creators() {
   const [creators, setCreators] = useState([]);
@@ -32,9 +33,7 @@ function Creators() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-amber-50 py-8 px-4">
-      {/* Decorative elements */}
-      <div className="fixed top-20 left-10 w-24 h-24 bg-red-100 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-      <div className="fixed bottom-1/4 right-16 w-24 h-24 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+      <DecorativeElements />
 
       <div className="max-w-[75%] mx-auto">
         {/* Header */}

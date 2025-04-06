@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 // Uncomment these when you have the images
 // import team1 from "../assets/krish.jpg";
 // import team2 from "../assets/aniket.jpg";
@@ -45,6 +46,7 @@ function About() {
 
   return (
     <div className="bg-gradient-to-r from-red-50 to-pink-50 py-8 px-4 min-h-screen">
+      <DecorativeElements />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -67,7 +69,7 @@ function About() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-base text-gray-600 max-w-2xl mx-auto"
           >
-            StoryScape is more than just a blog platform - it's a creative universe where stories come alive, 
+            StoryScape is more than just a blog platform - it&apos;s a creative universe where stories come alive, 
             crafted with passion by three dedicated developers.
           </motion.p>
         </div>

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { motion } from "framer-motion";
+import DecorativeElements from "../components/DecorativeElements";
 
 function Login() {
   const { setIsAuthenticated, setProfile } = useAuth();
@@ -74,6 +75,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-100 via-pink-100 to-red-100 p-4">
+      <DecorativeElements />
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
