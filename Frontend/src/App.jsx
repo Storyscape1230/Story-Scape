@@ -18,10 +18,9 @@ import CreatorProfile from "./components/CreatorProfile";
 import ScrollToTop from "./components/ScrollToTop";
 import UserProfile from "./components/UserProfile";
 import Legal from "./Pages/Legal";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Community from "./Pages/Community";
 import BlogLikes from "./dashboard/BlogLikes";
-
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -30,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) {
     return null;
-  }   
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
@@ -40,7 +39,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 function App() {
@@ -73,9 +72,7 @@ function App() {
             exact
             path="/"
             element={
-              <ProtectedRoute>
                 <Home />
-              </ProtectedRoute>
             }
           />
           <Route

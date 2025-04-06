@@ -10,6 +10,7 @@ import {
   saveBlog,
   updateProfile,
   checkSavedStatus,
+  contactForm
 } from "../controller/user.controller.js";
 import { isAuthenticated, isAdmin } from "../middleware/authUser.js";
 
@@ -27,8 +28,7 @@ router.put("/save-blog/:blogId", isAuthenticated, saveBlog);
 router.get("/saved-blogs", isAuthenticated, getSavedBlogs);
 router.get("/check-saved/:blogId", isAuthenticated, checkSavedStatus);
 router.delete("/remove-saved/:blogId", isAuthenticated, removeSavedBlog);
-
-// Admin-only routes
 router.get("/admins", isAuthenticated, getAdmins);
+router.post('/contact', contactForm);
 
 export default router;

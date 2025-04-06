@@ -9,13 +9,31 @@ function Contact() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (data) => {
-    // Simulate form submission success
-    toast.success("Message sent successfully!",data);
-    reset();
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("http://localhost:8001/api/users/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.message || result.error || "Failed to send message");
+      }
+  
+      toast.success(result.message);
+      reset();
+    } catch (error) {
+      console.error("Full error:", error);
+      toast.error(error.message || "Failed to send message. Please try again later.");
+    }
   };
 
   const contactInfo = [
@@ -23,20 +41,20 @@ function Contact() {
       icon: <FaPhone className="text-red-500 text-2xl" />,
       title: "Call Us",
       value: "+91 9316624108",
-      delay: 0.1
+      delay: 0.1,
     },
     {
       icon: <FaEnvelope className="text-red-500 text-2xl" />,
       title: "Email Us",
       value: "storyscape1230@gmail.com",
-      delay: 0.2
+      delay: 0.2,
     },
     {
       icon: <FaMapMarkerAlt className="text-red-500 text-2xl" />,
       title: "Visit Us",
       value: "Sabrgam, Surat, Gujarat",
-      delay: 0.3
-    }
+      delay: 0.3,
+    },
   ];
 
   return (
@@ -64,7 +82,7 @@ function Contact() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg text-gray-600 max-w-2xl mx-auto"
           >
-            We d love to hear from you! Whether you have questions, feedback, or just want to say hello, our team is ready to help.
+            Wed love to hear from you! Whether you have questions, feedback, or just want to say hello, our team is ready to help.
           </motion.p>
         </div>
 
@@ -86,11 +104,13 @@ function Contact() {
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.username ? 'border-red-300' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent placeholder-gray-400 text-gray-800 bg-gray-50`}
+                    className={`w-full px-4 py-3 rounded-lg border ${
+                      errors.username ? "border-red-300" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent placeholder-gray-400 text-gray-800 bg-gray-50`}
                     {...register("username", { required: "Name is required" })}
                   />
                   {errors.username && (
-                    <motion.span 
+                    <motion.span
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="text-sm text-red-500 font-medium block mt-1"
@@ -103,17 +123,19 @@ function Contact() {
                   <input
                     type="email"
                     placeholder="Your Email"
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-300' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent placeholder-gray-400 text-gray-800 bg-gray-50`}
-                    {...register("email", { 
+                    className={`w-full px-4 py-3 rounded-lg border ${
+                      errors.email ? "border-red-300" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent placeholder-gray-400 text-gray-800 bg-gray-50`}
+                    {...register("email", {
                       required: "Email is required",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Invalid email address"
-                      }
+                        message: "Invalid email address",
+                      },
                     })}
                   />
                   {errors.email && (
-                    <motion.span 
+                    <motion.span
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="text-sm text-red-500 font-medium block mt-1"
@@ -126,17 +148,19 @@ function Contact() {
                   <textarea
                     placeholder="Your Message"
                     rows="5"
-                    className={`w-full px-4 py-3 rounded-lg border ${errors.message ? 'border-red-300' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent placeholder-gray-400 text-gray-800 bg-gray-50`}
-                    {...register("message", { 
+                    className={`w-full px-4 py-3 rounded-lg border ${
+                      errors.message ? "border-red-300" : "border-gray-200"
+                    } focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-transparent placeholder-gray-400 text-gray-800 bg-gray-50`}
+                    {...register("message", {
                       required: "Message is required",
                       minLength: {
                         value: 10,
-                        message: "Message must be at least 10 characters"
-                      }
+                        message: "Message must be at least 10 characters",
+                      },
                     })}
                   />
                   {errors.message && (
-                    <motion.span 
+                    <motion.span
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="text-sm text-red-500 font-medium block mt-1"
@@ -149,9 +173,14 @@ function Contact() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   type="submit"
-                  className="w-full bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-300 font-semibold flex items-center justify-center space-x-2"
+                  disabled={isSubmitting}
+                  className={`w-full bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition duration-300 font-semibold flex items-center justify-center space-x-2 ${
+                    isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
                 >
-                  <span>Send Message</span>
+                  <span>
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </span>
                   <FaPaperPlane className="text-white" />
                 </motion.button>
               </form>
@@ -164,7 +193,7 @@ function Contact() {
               </h3>
               <ul className="space-y-6">
                 {contactInfo.map((item, index) => (
-                  <motion.li 
+                  <motion.li
                     key={index}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -175,7 +204,9 @@ function Contact() {
                       {item.icon}
                     </div>
                     <div>
-                      <h4 className="text-lg font-medium text-gray-700">{item.title}</h4>
+                      <h4 className="text-lg font-medium text-gray-700">
+                        {item.title}
+                      </h4>
                       <p className="text-gray-600">{item.value}</p>
                     </div>
                   </motion.li>
@@ -189,16 +220,15 @@ function Contact() {
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="mt-8 bg-white p-4 rounded-lg shadow-sm border border-gray-200"
               >
-                {/* <div className="h-40 bg-gray-100 rounded flex items-center justify-center text-gray-400">
-                  Map would go here
-                </div> */}
-                <p className="text-center mt-2 text-gray-600">Our location in Surat, Gujarat</p>
+                <p className="text-center mt-2 text-gray-600">
+                  Our location in Surat, Gujarat
+                </p>
               </motion.div>
             </div>
           </div>
         </div>
 
-        {/* Social Links (optional) */}
+        {/* Social Links */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -207,7 +237,7 @@ function Contact() {
         >
           <p className="text-gray-600 mb-4">Or connect with us on social media</p>
           <div className="flex justify-center space-x-4">
-            {['Twitter', 'Facebook', 'Instagram'].map((social, index) => (
+            {["Twitter", "Facebook", "Instagram"].map((social, index) => (
               <motion.a
                 key={index}
                 whileHover={{ y: -3 }}

@@ -3,9 +3,9 @@ import { v2 as cloudinary } from "cloudinary";
 import bcrypt from "bcryptjs";
 import createTokenAndSaveCookies from "../jwt/AuthToken.js";
 import { Blog } from "../models/blog.model.js";
-
+import nodemailer from 'nodemailer';
 /*----------------- Register ----------------*/
-const register = async (req, res) => {
+const register = async (req, res) => {  
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ message: "Please upload a file" });
@@ -243,6 +243,76 @@ const checkSavedStatus = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
+
+
+/*-------------- contact Form-------------------*/
+
+export const contactForm = async (req, res) => {
+  try {
+    console.log("Incoming contact request:", req.body); // Debug log
+
+    const { username, email, message } = req.body;
+
+    // Validate input
+    if (!username || !email || !message) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'All fields are required' 
+      });
+    }
+
+    // Validate email format
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Invalid email address format' 
+      });
+    }
+
+    console.log("Creating transporter..."); // Debug log
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    console.log("Preparing mail options..."); // Debug log
+    const mailOptions = {
+      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER, // Send to yourself
+      subject: `New Contact: ${username}`,
+      text: `Name: ${username}\nEmail: ${email}\nMessage: ${message}`,
+      html: `
+        <h3>New Contact Submission</h3>
+        <p><strong>Name:</strong> ${username}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `
+    };
+
+    console.log("Sending email..."); // Debug log
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent:", info.response); // Debug log
+
+    res.status(200).json({ 
+      success: true,
+      message: 'Message sent successfully' 
+    });
+
+  } catch (error) {
+    console.error("Email send error:", error); // Detailed error log
+    res.status(500).json({ 
+      success: false,
+      message: 'Failed to send message',
+      error: error.message // Include error details
+    });
+  }
+};
+
+
 
 /*----------------- Export All Controllers ----------------*/
 export { register, login, logout, getMyProfile, getAdmins, updateProfile, saveBlog, getSavedBlogs, removeSavedBlog, checkSavedStatus };
