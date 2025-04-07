@@ -52,7 +52,7 @@ function Sidebar({ setComponent }) {
           padding: '16px',
           borderRadius: '8px',
           border: '1px solid #ef4444'
-        },
+        },  
       });
     }
   };
