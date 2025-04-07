@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useCallback } from "react";
+import { useRef } from "react";
 import { CardPropTypes } from '../hooks/PropTypes.jsx';
 
 // Add custom styles for 3D effects
@@ -15,29 +15,9 @@ const styles = `
     background: #ffffff;
     border-radius: 30px;
     overflow: hidden;
-    transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transform-style: preserve-3d;
     will-change: transform;
-  }
-  
-  .card-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  }
-  
-  .card-container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 2;
-  }
-  
-  .card-container:hover::before {
-    opacity: 1;
   }
   
   .image-wrapper {
@@ -49,31 +29,13 @@ const styles = `
     perspective: 1000px;
   }
   
-  .image-wrapper::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 40%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  
-  .card-container:hover .image-wrapper::after {
-    opacity: 1;
-  }
-  
   .image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-radius: 30px 30px 0 0;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-  }
-  
-  .card-container:hover .image-wrapper img {
-    transform: scale(1.05);
   }
   
   .category-tag {
@@ -88,12 +50,7 @@ const styles = `
     font-size: 12px;
     box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
     transform: translateY(0) translateZ(20px);
-    transition: all 0.5s ease;
     z-index: 10;
-  }
-  
-  .card-container:hover .category-tag {
-    transform: translateY(-5px) translateZ(30px);
   }
   
   .content-wrapper {
@@ -109,12 +66,7 @@ const styles = `
     color: #2D3748;
     margin-bottom: 15px;
     line-height: 1.4;
-    transition: color 0.3s ease;
     transform-style: preserve-3d;
-  }
-  
-  .card-container:hover .title {
-    color: #FF6B6B;
   }
   
   .meta-info {
@@ -155,42 +107,7 @@ function Devotional() {
 
   const Card = ({ blog, index }) => {
     const cardRef = useRef(null);
-    const [isHovered, setIsHovered] = useState(false);
     
-    // Motion values for mouse position with reduced sensitivity
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    
-    // Transform mouse position to rotation with reduced angles
-    const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]);
-    const rotateY = useTransform(mouseX, [-0.5, 0.5], [-5, 5]);
-    
-    // Add spring physics with higher damping for smoother movement
-    const springConfig = { stiffness: 100, damping: 20 };
-    const springRotateX = useSpring(rotateX, springConfig);
-    const springRotateY = useSpring(rotateY, springConfig);
-    
-    const handleMouseMove = useCallback((e) => {
-      if (!cardRef.current || !isHovered) return;
-      
-      const rect = cardRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      // Calculate mouse position relative to center with reduced sensitivity
-      const x = (e.clientX - centerX) / (rect.width / 3);
-      const y = (e.clientY - centerY) / (rect.height / 3);
-      
-      mouseX.set(x);
-      mouseY.set(y);
-    }, [isHovered]);
-    
-    const handleMouseLeave = useCallback(() => {
-      setIsHovered(false);
-      mouseX.set(0);
-      mouseY.set(0);
-    }, []);
-
     return (
       <motion.div
         ref={cardRef}
@@ -200,14 +117,7 @@ function Devotional() {
         transition={{ delay: index * 0.1, type: "spring" }}
         className="card-container"
         onClick={() => handleBlogClick(blog._id)}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
         style={{
-          rotateX: springRotateX,
-          rotateY: springRotateY,
-          scale: isHovered ? 1.02 : 1,
-          transition: "scale 0.3s ease",
           transformStyle: "preserve-3d"
         }}
       >

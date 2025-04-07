@@ -9,23 +9,23 @@ import DecorativeElements from "../components/DecorativeElements";
 function About() {
   const teamMembers = [
     { 
-      name: "Aniket Parmar", 
+      name: "Ankit Parmar", 
       role: "Frontend Developer", 
-      // img: team1, 
+      
       description: "Specializes in crafting responsive, aesthetic front-end experiences using React and Tailwind CSS.",
       animationDelay: 0.1
     },
     { 
       name: "Krish Kukadiya ", 
       role: "Backend Developer", 
-      // img: team2, 
+     
       description: "Develops robust backend architecture, APIs, and database integration for StoryScape.",
       animationDelay: 0.2
     },
     { 
       name: "Dixit Thummar", 
       role: "UI/UX Designer & Deployment", 
-      // img: team3, 
+      
       description: "Focuses on design, user experience, and deployment strategies for a polished product.",
       animationDelay: 0.3
     }
@@ -39,7 +39,7 @@ function About() {
     "Real-time like & comment features"
   ];
 
-   // Scroll to top when component mounts
+   
     useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
@@ -53,7 +53,7 @@ function About() {
         transition={{ duration: 0.8 }}
         className="max-w-6xl mx-auto"
       >
-        {/* Hero Section */}
+     q  
         <div className="text-center mb-16">
           <motion.h1 
             initial={{ opacity: 0 }}

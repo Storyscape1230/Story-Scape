@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { LuImageUp } from "react-icons/lu";
 import JoditEditor from "jodit-react";
 import { motion } from "framer-motion";
-import { FiPlus, FiX, FiUpload } from "react-icons/fi";
+import {  FiUpload } from "react-icons/fi";
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
@@ -14,7 +14,7 @@ function CreateBlog() {
   const editor = useRef(null);
   const [about, setAbout] = useState("");
   const [tags, setTags] = useState([]);
-  const [currentTag, setCurrentTag] = useState("");
+ 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const changePhotoHandler = (e) => {
@@ -29,16 +29,8 @@ function CreateBlog() {
     }
   };
 
-  const addTag = () => {
-    if (currentTag && !tags.includes(currentTag)) {
-      setTags([...tags, currentTag]);
-      setCurrentTag("");
-    }
-  };
-
-  const removeTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
-  };
+ 
+  
 
   const handleCreateBlog = async (e) => {
     e.preventDefault();
@@ -274,7 +266,7 @@ function CreateBlog() {
                           <LuImageUp className="w-8 h-8 text-[#818CF8]" />
                         </div>
                         <h3 className="text-xl font-medium text-[#E2E8F0] mb-2">Upload Featured Image</h3>
-                        <p className="text-[#94A3B8]">Drag & drop or click to browse (Recommended: 1200x630)</p>
+                        
                       </div>
                     )}
                     <input
@@ -287,49 +279,8 @@ function CreateBlog() {
                   </div>
                 </div>
 
-                {/* Tags */}
-                <div className="space-y-3">
-                  <label className="block text-lg font-medium text-[#E2E8F0]">
-                    Tags
-                  </label>
-                  <div className="flex flex-wrap gap-2 items-center">
-                    {tags.map(tag => (
-                      <motion.div 
-                        key={tag}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="flex items-center bg-[#334155] rounded-full px-3 py-1"
-                      >
-                        <span className="text-[#E2E8F0] text-sm">{tag}</span>
-                        <button 
-                          type="button"
-                          onClick={() => removeTag(tag)}
-                          className="ml-2 text-[#94A3B8] hover:text-[#E2E8F0]"
-                        >
-                          <FiX size={16} />
-                        </button>
-                      </motion.div>
-                    ))}
-                    <div className="flex items-center">
-                      <input
-                        type="text"
-                        placeholder="Add tag..."
-                        value={currentTag}
-                        onChange={(e) => setCurrentTag(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && addTag()}
-                        className="px-3 py-1 bg-[#1E293B] border border-[#334155] rounded-l-lg text-[#E2E8F0] outline-none focus:border-[#818CF8] w-32"
-                      />
-                      <motion.button
-                        type="button"
-                        onClick={addTag}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-3 py-1 bg-[#818CF8] text-[#0F172A] rounded-r-lg flex items-center"
-                      >
-                        <FiPlus size={18} />
-                      </motion.button>
-                    </div>
-                  </div>
-                </div>
+               
+                
 
                 {/* Content Editor */}
                 <div className="space-y-3">

@@ -126,9 +126,9 @@ function Blogs() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showLoading, setShowLoading] = useState(true);
 
-  // Set up a timer to show loading for 1.5 seconds
+  
   useEffect(() => {
-    // Always start with loading state
+   
     setShowLoading(true);
     
     // Preload images in the background
@@ -157,9 +157,9 @@ function Blogs() {
       
       return () => clearTimeout(timer);
     }
-  }, [blogs]); // Re-run when blogs change
+  }, [blogs]); 
 
-  // Use blogs directly without reversing
+ 
   const sortedBlogs = blogs ? [...blogs].reverse() : [];
 
   // Predefined categories matching CreateBlog.jsx
@@ -181,10 +181,10 @@ function Blogs() {
     ? sortedBlogs 
     : sortedBlogs?.filter(blog => blog.category === selectedCategory);
 
-  // Calculate reading time
+
   const calculateReadingTime = (text) => {
     const words = text.split(' ').length;
-    return Math.ceil(words / 200); // 200 words per minute
+    return Math.ceil(words / 200); 
   };
 
   // Helper function to format category text
@@ -278,14 +278,14 @@ function Blogs() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-transparent"></div>
                         
-                        {/* Decorative Corner Accents */}
+                      
                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-rose-500/20 to-transparent rounded-full blur-xl transform -translate-y-16 translate-x-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-rose-500/20 to-transparent rounded-full blur-xl transform translate-y-16 -translate-x-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       </div>
 
-                      {/* Content Section with Creative Layout */}
+                     
                       <div className="relative -mt-12 mx-4 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/20">
-                        {/* Category Badge with Enhanced Style */}
+                     
                         <div className="absolute -top-4 left-6">
                           <span className="px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-bold rounded-full shadow-lg transform transition-transform duration-300 group-hover:scale-105">
                             {formatCategory(blog.category)}

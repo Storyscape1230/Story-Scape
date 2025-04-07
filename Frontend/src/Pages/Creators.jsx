@@ -61,20 +61,20 @@ function Creators() {
           </motion.p>
         </motion.div>
 
-        {/* Creative grid layout */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {creators.map((creator, index) => (
             <motion.div 
               key={creator._id}
               initial="offscreen"
               whileInView="onscreen"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0 }}
               variants={cardVariants}
               className="relative group"
             >
-              {/* Card container */}
+    
               <div className="h-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-red-100/50 hover:border-red-200 transition-colors">
-                {/* Full-width portrait */}
+          
                 <Link to={`/creator/${creator._id}`} className="block relative h-72 overflow-hidden">
                   <img
                     src={creator.photo.url}
@@ -84,12 +84,11 @@ function Creators() {
                   <div className="absolute inset-0 bg-gradient-to-t from-red-900/40 to-transparent"></div>
                 </Link>
 
-                {/* Profile badge */}
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
                   <span className="text-red-700 text-sm font-medium">#{index + 1}</span>
                 </div>
 
-                {/* Content overlay */}
+              
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
                   <div className="flex items-end justify-between">
                     <div>
@@ -119,10 +118,7 @@ function Creators() {
                   </div>
                 </div>
 
-                {/* Stats ribbon */}
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-2 rounded-full shadow-lg">
-                  <span className="text-sm font-medium">Featured Creator</span>
-                </div>
+                
               </div>
             </motion.div>
           ))}
